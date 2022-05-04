@@ -23,6 +23,7 @@ from informe import AnotherWindow2
 from game21 import Game21
 from Conecta4 import conecta
 from battleship import battleship
+from hangman import hangman
 # La aplicación consistiría en pulsar a jugar y se elige el juego que se desea jugar,
 #  saltaría la pantalla del juego y al acabar, salta el asistente para registrar tu puntuación en un informe
 # en estadísticas se guarda las estadísticas locales en una base de datos, y el botón salir sale
@@ -55,6 +56,7 @@ class MainWindow(QMainWindow):
         self.button5 = QPushButton("21Game")
         self.button6 = QPushButton("Conecta4")
         self.button7 = QPushButton("Destruir la flota")
+        self.button8 = QPushButton("Ahorcado")
         self.text_label = QLabel()
         self.text_label.setText("Hello World!")
         self.button1.setStyleSheet("border:7px solid #ff0000")
@@ -63,24 +65,28 @@ class MainWindow(QMainWindow):
         self.button5.setStyleSheet("border:7px solid #ff0000")
         self.button6.setStyleSheet("border:7px solid #ff0000")
         self.button7.setStyleSheet("border:7px solid #ff0000")
+        self.button8.setStyleSheet("border:7px solid #ff0000")
         self.button1.setMinimumSize(50,50)
         self.button2.setMinimumSize(50,50)
         self.button3.setMinimumSize(50,50)
         self.button5.setMinimumSize(50,50)
         self.button6.setMinimumSize(50,50)
         self.button7.setMinimumSize(50,50)
+        self.button8.setMinimumSize(50,50)
         self.button1.clicked.connect(self.button_clicked)
         self.button2.clicked.connect(self.button2_clicked)
         self.button3.clicked.connect(self.button3_clicked)
         self.button5.clicked.connect(self.button5_clicked)
         self.button6.clicked.connect(self.button6_clicked)
         self.button7.clicked.connect(self.button7_clicked)
+        self.button8.clicked.connect(self.button8_clicked)
         self.w = AnotherWindow()
         self.w2 = AnotherWindow2()
         
         self.w3= Game21()
         self.w4= conecta()
         self.w5= battleship()
+        self.w6= hangman()
         #self.w3.juego()
         self.button4 = QPushButton()
         self.button4.setText("Salir")
@@ -91,6 +97,7 @@ class MainWindow(QMainWindow):
         self.layout.addWidget(self.button5)
         self.layout.addWidget(self.button6)
         self.layout.addWidget(self.button7)
+        self.layout.addWidget(self.button8)
         self.contenedor.setLayout(self.layout)
         self.setCentralWidget(self.contenedor)
 
@@ -275,3 +282,10 @@ class MainWindow(QMainWindow):
         else:
             self.w5.show()
             self.w5.main()
+    def button8_clicked(self,s):
+        if self.w6.isVisible():
+            self.w6.hide()
+
+        else:
+            self.w6.show()
+            self.w6.main()
