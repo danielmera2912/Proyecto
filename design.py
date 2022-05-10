@@ -66,39 +66,22 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_2)
 
-        self.dificultadText = QLineEdit(self.groupBox)
-        self.dificultadText.setObjectName(u"dificultadText")
+        self.scoreText = QLineEdit(self.groupBox)
+        self.scoreText.setObjectName(u"scoreText")
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.dificultadText)
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.scoreText)
 
         self.label_3 = QLabel(self.groupBox)
         self.label_3.setObjectName(u"label_3")
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.dificultadText)
-
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_3)
-        
-        self.label_4 = QLabel(self.groupBox)
-        self.label_4.setObjectName(u"label_4")
-
-        self.tiempoText = QLineEdit(self.groupBox)
-        self.tiempoText.setObjectName(u"tiempoText")
-        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.tiempoText)
-        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_4)
-
-
-        self.label_5 = QLabel(self.groupBox)
-        self.label_5.setObjectName(u"label_5")
 
         self.juegoText = QLineEdit(self.groupBox)
         self.juegoText.setObjectName(u"juegoText")
-        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.juegoText)
-        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_5)
 
-        self.scoreText = QLineEdit(self.groupBox)
-        self.scoreText.setObjectName(u"scoreText")
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.juegoText)
 
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.scoreText)
+
 
 
         self.verticalLayout_2.addWidget(self.groupBox)
@@ -151,10 +134,8 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(shortcut)
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Estadísticas", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Nombre", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Dificultad", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Puntuación", None))
-        self.label_4.setText(QCoreApplication.translate("MainWindow", u"Tiempo", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Juego", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Puntuación", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Juego", None))
         self.menuRegistro.setTitle(QCoreApplication.translate("MainWindow", u"Registro", None))
         self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
     # retranslateUi

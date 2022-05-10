@@ -23,6 +23,7 @@ from copy import deepcopy
 class conecta(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.puntuacion=100
         self.space = " "
         self.figura1 = "|x|"
         self.figura2 = "|o|"
@@ -85,8 +86,6 @@ class conecta(QMainWindow):
     def colocar_pieza(self, tablero, jugador, figura):
         fila=-1
         while(fila==-1):
-            # if("|-|" in tablero):
-            #     print("xDD")
             columna = self.pedir_columna(figura)
             fila= self.pedir_fila(columna,tablero)
         if(fila<=6 and columna<=7):
@@ -117,6 +116,7 @@ class conecta(QMainWindow):
         return True
 
     def juego(self):
+        self.puntuacion=100
         tablero= self.crear_tablero()
         self.mostrar_tablero(tablero)
         figura=self.figura1
@@ -138,7 +138,8 @@ class conecta(QMainWindow):
                     ...
                 elif eleccion == "n":
                     break
-
+    def obtenerPuntuacion(self):
+        return self.puntuacion
     def rejugar(self):
         while True:
             eleccion = input("¿Quieres jugar otra partida? (s/n) ").lower()

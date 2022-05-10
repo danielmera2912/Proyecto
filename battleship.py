@@ -23,6 +23,7 @@ from copy import deepcopy
 class battleship(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.puntuacion=0
         self.space = " "
         self.figura1 = "|·|"
         self.figura2 = "|o|"
@@ -30,8 +31,9 @@ class battleship(QMainWindow):
         self.jugador2 = 2
         self.barcos_rotos1=0
         self.barcos_rotos2=0
+        self.barcosTotales=0
         self.acierto=False
-        self.setWindowTitle("Conecta4")
+        self.setWindowTitle("Battleship")
 
         self.contenedor= QWidget()
         self.layout = QVBoxLayout()
@@ -74,9 +76,9 @@ class battleship(QMainWindow):
 
     def mostrar_tablero(self,tablero,jugador):
         if(jugador==1):
-            print("Tablero del jugador 1. Ha perdido "+str(self.barcos_rotos1)+" barcos. Y le queda "+str(17-self.barcos_rotos1)+" barcos.")
+            print("Tablero del jugador 1. Ha perdido "+str(self.barcos_rotos1)+" barcos. Y le queda "+str(int(self.barcosTotales-self.barcos_rotos1))+" barcos.")
         else:
-            print("Tablero del jugador 2. Ha perdido "+str(self.barcos_rotos2)+" barcos. Y le queda "+str(17-self.barcos_rotos2)+" barcos.")
+            print("Tablero del jugador 2. Ha perdido "+str(self.barcos_rotos2)+" barcos. Y le queda "+str(int(self.barcosTotales-self.barcos_rotos2))+" barcos.")
         print("")
         print("|0 ||A||B||C||D||E||F||G||H||I||J|")
         for i in range(10):
@@ -118,6 +120,7 @@ class battleship(QMainWindow):
             if(tablero[fila][columna]=="| |"):
                 tablero[fila][columna]="|z|"
                 salida=0
+        self.barcosTotales=self.barcosTotales+1
     def establecer_barcos_dos_horizontal(self, tablero):
         salida=-1
         while(salida==-1):
@@ -133,6 +136,7 @@ class battleship(QMainWindow):
                 tablero[fila][columna]="|z|"
                 tablero[fila][columna2]="|z|"
                 salida=0
+        self.barcosTotales=self.barcosTotales+2
     def establecer_barcos_dos_vertical(self, tablero):
         salida=-1
         while(salida==-1):
@@ -148,6 +152,7 @@ class battleship(QMainWindow):
                 tablero[fila][columna]="|z|"
                 tablero[fila2][columna]="|z|"
                 salida=0
+        self.barcosTotales=self.barcosTotales+2
     def establecer_barcos_tres_horizontal(self, tablero):
         salida=-1
         while(salida==-1):
@@ -167,6 +172,7 @@ class battleship(QMainWindow):
                 tablero[fila][columna2]="|z|"
                 tablero[fila][columna3]="|z|"
                 salida=0
+        self.barcosTotales=self.barcosTotales+3
     def establecer_barcos_tres_vertical(self, tablero):
         salida=-1
         while(salida==-1):
@@ -186,6 +192,7 @@ class battleship(QMainWindow):
                 tablero[fila2][columna]="|z|"
                 tablero[fila3][columna]="|z|"
                 salida=0
+        self.barcosTotales=self.barcosTotales+3
     def establecer_barcos(self, tablero):
         self.establecer_barcos_dos_vertical(tablero)
         self.establecer_barcos_dos_vertical(tablero)
@@ -199,25 +206,34 @@ class battleship(QMainWindow):
 
 
     def comprobar_ganador(self):
-        if(self.barcos_rotos1==17):
+        if(self.barcos_rotos1==self.barcosTotales):
             print("Gana el jugador 1")
+            self.puntuacion= 100-(self.barcos_rotos2*2)
             return True
-        elif(self.barcos_rotos2==17):
+        elif(self.barcos_rotos2==self.barcosTotales):
             print("Gana el jugador 2")
+            self.puntuacion= 100-(self.barcos_rotos1*2)
             return True
         else:
             return False
 
 
     def juego(self):
+        self.puntuacion=0
+        self.barcosTotales=0
+        self.barcos_rotos1=0
+        self.barcos_rotos2=0
         tablero1= self.crear_tablero()
         tablero_visible1 = self.crear_tablero()
         tablero2= self.crear_tablero()
         tablero_visible2 = self.crear_tablero()
         self.establecer_barcos(tablero1)
         self.establecer_barcos(tablero2)
+        self.barcosTotales=self.barcosTotales/2
         self.mostrar_tablero(tablero_visible1,self.jugador1)
         self.mostrar_tablero(tablero_visible2,self.jugador2)
+        # self.mostrar_tablero(tablero1,self.jugador1)
+        # self.mostrar_tablero(tablero2,self.jugador2)
         figura=self.figura1
         jugador= self.jugador2
         cont=1
@@ -231,7 +247,7 @@ class battleship(QMainWindow):
                     if(self.acierto==False):
                         jugador= self.jugador1
                         break
-                    elif(self.barcos_rotos2==17):
+                    elif(self.barcos_rotos2==self.barcosTotales):
                         break
             else:
                 while True:
@@ -241,7 +257,7 @@ class battleship(QMainWindow):
                     if(self.acierto==False):
                         jugador= self.jugador2
                         break
-                    elif(self.barcos_rotos1==17):
+                    elif(self.barcos_rotos1==self.barcosTotales):
                         break
             cont=cont+1
             if(self.comprobar_ganador()==False):
@@ -252,6 +268,8 @@ class battleship(QMainWindow):
                     break
             else:
                 break
+    def obtenerPuntuacion(self):
+        return self.puntuacion
     def rejugar(self):
         while True:
             eleccion = input("¿Quieres jugar otra partida? (s/n) ").lower()

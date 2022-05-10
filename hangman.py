@@ -24,7 +24,7 @@ class hangman(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Hangman")
-
+        self.puntuacion= 0
         self.contenedor= QWidget()
         self.layout = QVBoxLayout()
         self.contenedor.setLayout(self.layout)
@@ -42,6 +42,7 @@ class hangman(QMainWindow):
             else:
                 return letra
     def juego(self):
+        self.puntuacion=0
         letrasUsadas= []
         palabraSecreta= self.introducir_palabraSecreta()
         palabraOculta= []
@@ -88,8 +89,12 @@ class hangman(QMainWindow):
                     print("Te quedan "+str(vidas)+" vidas")
         if(acierto==len(palabraSecreta)):
                     print("Victoria, la palabra secreta SÍ era "+palabraSecreta)
+                    self.puntuacion= (vidas*5)+(acierto*3)
         else:
             print("Derrota, la palabra secreta era "+palabraSecreta)
+            self.puntuacion=0
+    def obtenerPuntuacion(self):
+        return self.puntuacion
     def rejugar(self):
         while True:
             eleccion = input("¿Quieres jugar otra partida? (s/n) ").lower()

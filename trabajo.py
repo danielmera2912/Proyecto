@@ -73,21 +73,16 @@ class MainWindow(QMainWindow):
         self.button6.setMinimumSize(50,50)
         self.button7.setMinimumSize(50,50)
         self.button8.setMinimumSize(50,50)
-        self.button1.clicked.connect(self.button_clicked)
+        # self.button1.clicked.connect(self.button_clicked)
         self.button2.clicked.connect(self.button2_clicked)
         self.button3.clicked.connect(self.button3_clicked)
         self.button5.clicked.connect(self.button5_clicked)
         self.button6.clicked.connect(self.button6_clicked)
         self.button7.clicked.connect(self.button7_clicked)
         self.button8.clicked.connect(self.button8_clicked)
-        self.w = AnotherWindow()
+        
         self.w2 = AnotherWindow2()
         
-        self.w3= Game21()
-        self.w4= conecta()
-        self.w5= battleship()
-        self.w6= hangman()
-        #self.w3.juego()
         self.button4 = QPushButton()
         self.button4.setText("Salir")
         self.button4.clicked.connect(self.button4_clicked)
@@ -100,10 +95,8 @@ class MainWindow(QMainWindow):
         self.layout.addWidget(self.button8)
         self.contenedor.setLayout(self.layout)
         self.setCentralWidget(self.contenedor)
-
-        
+    def button_clicked(self, s, puntuacion, juego):
         self.wizard = QWizard()
-
         self.wizard.setWizardStyle(QWizard.ModernStyle)
 
         self.wizard.setPixmap(QWizard.WatermarkPixmap,QPixmap('Watermark.png'))
@@ -111,147 +104,50 @@ class MainWindow(QMainWindow):
         self.wizard.setPixmap(QWizard.BannerPixmap,QPixmap('Banner.png'))
 
         page1 = QWizardPage()
-        page1.setTitle('Introduzca tu nombre y el juego jugado')
+        page1.setTitle('Introduzca tu nombre')
         self.nombre = QLineEdit()
-        self.juegoB= QComboBox()
-        query = QSqlQuery("SELECT DISTINCT juego FROM estadisticas",db=db)
-        while query.next():
-            self.juegoB.addItem(query.value(0))
         hLayout1 = QHBoxLayout(page1)
         hLayout1.addWidget(self.nombre)
-        hLayout1.addWidget(self.juegoB)
         page1.registerField('miCampo1*', self.nombre,self.nombre.text(),'textChanged')
-        page1.registerField('miCampo1.2', self.juegoB,self.juegoB.currentText())
         self.wizard.addPage(page1)
 
         page2 = QWizardPage()
-        page2.setTitle('Nivel de dificultad elegido')
-        dificultadN = random.randint(1, 3)
-        if(dificultadN==1):
-            self.dificultad = QLabel("Fácil")
-        elif(dificultadN==2):
-            self.dificultad = QLabel("Normal")
-        else:
-            self.dificultad = QLabel("Difícil")
+        page2.setTitle('Juego elegido')
+        self.juegoElegido = QLabel(juego)
         hLayout2 = QHBoxLayout(page2)
-        hLayout2.addWidget(self.dificultad)
+        hLayout2.addWidget(self.juegoElegido)
 
         self.wizard.addPage(page2)
 
         page3 = QWizardPage()
         page3.setTitle('Puntuación obtenida')
-        self.score = str(random.randint(0, 300))
+        self.score = str(puntuacion)
         self.puntuacion = QLabel(self.score)
         hLayout3 = QHBoxLayout(page3)
         hLayout3.addWidget(self.puntuacion)
-        
-        self.wizard.addPage(page3)
-
-        page4 = QWizardPage()
-        page4.setTitle('Tiemplo empleado en la partida')
-        tiempoH = str(random.randint(0, 3))
-        tiempoM= str(random.randint(0, 59))
-        tiempoS= str(random.randint(0, 59))
-        self.tiempoTotal= (tiempoH*60)+tiempoM
-        formato= tiempoH+":"+tiempoM+":"+tiempoS
-        self.tiempo = QLabel(formato)
-        hLayout4 = QHBoxLayout(page4)
-        hLayout4.addWidget(self.tiempo)
-        page4.setFinalPage(True)
-
+        page3.setFinalPage(True)
         next = self.wizard.button(QWizard.NextButton)
 
         finish = self.wizard.button(QWizard.FinishButton)
-        finish.clicked.connect(self.generate)
-
-        self.wizard.addPage(page4)
+        self.wizard.addPage(page3)
         
-    def generate(self):
-        self.puntMax = QSqlQuery("SELECT MAX(score) FROM estadisticas WHERE juego='"+self.juegoB.currentText()+"'",db=db)
-        self.puntMax.next()
-        self.data = {
-            'nombre': self.nombre.text(),
-            'dificultad': self.dificultad.text(),
-            'puntuacion': self.puntuacion.text(),
-            'tiempo': self.tiempo.text(),
-            'juego': self.juegoB.currentText(),
-            'puntuación máxima del juego': str(self.puntMax.value(0))
-        }
-        query = QSqlQuery("SELECT score FROM estadisticas",db=db)
-        
-        query.next()
-        scor1= query.value(0)
-        query.next()
-        scor2= query.value(0)
-        query.next()
-        scor3= query.value(0)
-        if(scor1 is None):
-            scor1=0
-        if(scor2 is None):
-            scor2=0
-        if(scor3 is None):
-            scor3=0
-        plt = pg.plot([scor1,scor2,scor3,int(self.score)])
-
-        # Creamos una instancia de exportación con el ítem que queremos exportar
-        exporter = pg.exporters.ImageExporter(plt.plotItem)
-
-        # Establecemos los parámetros de la exportación (anchura)
-        exporter.parameters()['width'] = 100   # (afecta a la altura de forma proporcional)
-
-        # Elegimos el nombre del archivo en el que exportamos la gráfica como imagen
-        exporter.export('graphic.png')
-
-        outfile = "result.pdf"
-
-        template = PdfReader("template.pdf", decompress=False).pages[0]
-        template_obj = pagexobj(template)
-
-        canvas = Canvas(outfile)
-
-        xobj_name = makerl(canvas, template_obj)
-        canvas.doForm(xobj_name)
-
-        ystart = 820
-        today = datetime.today()
-        canvas.drawString(510, ystart, today.strftime('%F'))
-
-        canvas.drawString(165, ystart-57, self.data['nombre'])
-        canvas.drawString(165, ystart-97, self.data['dificultad'])
-        canvas.drawString(165, ystart-137, self.data['puntuacion'])
-        canvas.drawString(165, ystart-177, self.data['tiempo'])
-        canvas.drawString(165, ystart-220, self.data['juego'])
-        canvas.drawString(300, ystart-265, self.data['puntuación máxima del juego'])
-        canvas.drawImage("graphic.png", 50, ystart-350, width=None,height=None,mask=None)
-
-
-
-
-
-
-        canvas.save()
-        layout2 = QVBoxLayout()
-        
-        self.web = QWebEngineView()
-        
-        plt.hide()
-        self.web.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
-        
-        #rutaConPDF = Path("template.pdf")
-        #self.web.load(QUrl(rutaConPDF.absolute().as_uri()))
-        #layout2.addWidget(self.web)
-        #layout2.addWidget(self.button4)
-        #contenedor2= QWidget()
-        #contenedor2.setLayout(layout2)
-        #self.setCentralWidget(contenedor2)
-        
-        QMessageBox.information(self, "Finalizado", "Se ha generado el PDF")
-        self.w2.show()
-        
-    def button_clicked(self, s):
+        finish.clicked.connect(self.insertar)
         self.wizard.show()
+    def insertar(self):
+        nombre=self.nombre.text()
+        puntuacion=self.puntuacion.text()
+        juego=self.juegoElegido.text()
+        self.modelo = QSqlRelationalTableModel(db=db)
+        self.modelo.setTable("estadisticas")
+        self.modelo.select()
+        nuevaFila = self.modelo.rowCount()
+        self.modelo.insertRow(nuevaFila)
+        self.modelo.setData(self.modelo.index(nuevaFila, 0), nombre)
+        self.modelo.setData(self.modelo.index(nuevaFila, 1), puntuacion)
+        self.modelo.setData(self.modelo.index(nuevaFila, 2), juego)
+        self.modelo.submit()
     def button2_clicked(self, checked):
-        
+        self.w = AnotherWindow()
         if self.w.isVisible():
             self.w.hide()
 
@@ -262,30 +158,50 @@ class MainWindow(QMainWindow):
     def button4_clicked(self,s):
         self.setCentralWidget(self.contenedor)
     def button5_clicked(self,s):
+        self.w3= Game21()
         if self.w3.isVisible():
             self.w3.hide()
+            self.w3.close()
 
         else:
             self.w3.show()
             self.w3.main()
+        puntuacion= self.w3.obtenerPuntuacion()
+        self.button_clicked(s, puntuacion, "BlackJack")
+        self.w3.close()
     def button6_clicked(self,s):
+        self.w4= conecta()
         if self.w4.isVisible():
             self.w4.hide()
+            self.w4.close()
 
         else:
             self.w4.show()
             self.w4.main()
+        puntuacion= self.w4.obtenerPuntuacion()
+        self.button_clicked(s, puntuacion, "Conecta4")
+        self.w4.close()
     def button7_clicked(self,s):
+        self.w5= battleship()
         if self.w5.isVisible():
             self.w5.hide()
+            self.w5.close()
 
         else:
             self.w5.show()
             self.w5.main()
+        puntuacion= self.w5.obtenerPuntuacion()
+        self.button_clicked(s, puntuacion, "Battleship")
+        self.w5.close()
     def button8_clicked(self,s):
+        self.w6= hangman()
         if self.w6.isVisible():
             self.w6.hide()
+            self.w6.close()
 
         else:
             self.w6.show()
             self.w6.main()
+        puntuacion= self.w6.obtenerPuntuacion()
+        self.button_clicked(s, puntuacion, "Hangman")
+        self.w6.close()

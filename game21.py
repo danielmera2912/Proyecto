@@ -99,27 +99,13 @@ class Game21(QMainWindow):
         self.contenedor= QWidget()
         self.layout = QVBoxLayout()
         self.contenedor.setLayout(self.layout)
-        self.setCentralWidget(self.contenedor)
-
-
-        #print(random.randrange(10))
-        #self.cartas.append(self.crearCarta(1,"B"))
-        #self.layout.addWidget(self.cartas[0])
-        #self.layout.addWidget(self.cartas[x-1])
-        #self.cartas= BarajaCartas()
-        #self.cartas.barajar()
-        #self.cartas.mostrarBaraja()
-        #self.baraja= self.cartas.cartas
-        
-
-
-        
-        
+        self.setCentralWidget(self.contenedor)     
+        self.puntuacion=0
     def juego(self):
+        self.puntuacion=0
         self.baraja= BarajaCartas()
         self.mano = Mano(self.baraja, True)
         self.mano2 = Mano(self.baraja, False)
-        #self.mano.comienzoPartida()
         self.mano.robarCarta()
         self.mano2.robarCarta()
         respuesta='s'
@@ -159,29 +145,39 @@ class Game21(QMainWindow):
         print(self.mano2.valor)
         if(self.mano.valor==21 and self.mano2.valor!=21):
             print("Jugador ha ganado")
+            self.puntuacion=100
         elif(self.mano.valor==21 and self.mano2.valor==21):
             print("Empate")
-        elif(self.mano2.valor==21 and self.mano.valor==21):
+            self.puntuacion= 30
+        elif(self.mano2.valor==21 and self.mano.valor!=21):
             print("IA ha ganado")
+            self.puntuacion= 0
         else:
             if(self.mano.valor>21 and self.mano2.valor<21):
                 print("IA ha ganado")
+                self.puntuacion= 0
             elif(self.mano2.valor>21 and self.mano.valor<21):
                 print("Jugador ha ganado")
+                self.puntuacion= 80
             else:
                 if(self.mano.valor>21 and self.mano2.valor>21):
                     if(self.mano.valor<self.mano2.valor):
                         print("Jugador ha ganado")
+                        self.puntuacion= 50
                     elif(self.mano2.valor<self.mano.valor):
                         print("IA ha ganado")
+                        self.puntuacion= 0
                 elif(self.mano.valor<21 and self.mano2.valor<21):
                     if(self.mano.valor>self.mano2.valor):
                         print("Jugador ha ganado")
+                        self.puntuacion= 80
                     elif(self.mano2.valor>self.mano.valor):
                         print("IA ha ganado")
+                        self.puntuacion= 0
         
         
-        
+    def obtenerPuntuacion(self):
+        return self.puntuacion
     def crearCarta(self, numeroCarta, paloCarta):
         card1 = QLabel()
         card1.setText(str(numeroCarta)+paloCarta)
