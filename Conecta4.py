@@ -33,7 +33,17 @@ class conecta(QMainWindow):
         self.setWindowTitle("Conecta4")
 
         self.contenedor= QWidget()
-        self.layout = QVBoxLayout()
+        self.layout = QHBoxLayout()
+        self.layout2 = QHBoxLayout()
+        self.vacio1 = QLabel("|-|")
+        self.vacio2 = QLabel("|x|")
+        self.layout2.addWidget(self.vacio1)
+        self.layout2.addWidget(self.vacio1)
+        self.layout2.addWidget(self.vacio2)
+        self.layout.addLayout(self.layout2)
+        self.layout.addLayout(self.layout2)
+        self.layout.addLayout(self.layout2)
+        self.layout.addLayout(self.layout2)
         self.contenedor.setLayout(self.layout)
         self.setCentralWidget(self.contenedor)
     def pedir_columna(self,figura):

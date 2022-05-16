@@ -75,7 +75,7 @@ class MainWindow(QMainWindow):
         self.button8.setMinimumSize(50,50)
         # self.button1.clicked.connect(self.button_clicked)
         self.button2.clicked.connect(self.button2_clicked)
-        self.button3.clicked.connect(self.button3_clicked)
+        self.button3.clicked.connect(self.close)
         self.button5.clicked.connect(self.button5_clicked)
         self.button6.clicked.connect(self.button6_clicked)
         self.button7.clicked.connect(self.button7_clicked)
@@ -153,34 +153,22 @@ class MainWindow(QMainWindow):
 
         else:
             self.w.show()
-    def button3_clicked(self, s):
-        self.close()
     def button4_clicked(self,s):
         self.setCentralWidget(self.contenedor)
     def button5_clicked(self,s):
         self.w3= Game21()
-        if self.w3.isVisible():
-            self.w3.hide()
-            self.w3.close()
-
-        else:
-            self.w3.show()
-            self.w3.main()
+        self.w3.showMaximized()
+        self.w3.button3.clicked.connect(self.asistente)
+            
+    def asistente(self,s):
+        self.w3.close()
         puntuacion= self.w3.obtenerPuntuacion()
         self.button_clicked(s, puntuacion, "BlackJack")
-        self.w3.close()
+    def closeEvent(self, event):
+        print("---")
     def button6_clicked(self,s):
         self.w4= conecta()
-        if self.w4.isVisible():
-            self.w4.hide()
-            self.w4.close()
-
-        else:
-            self.w4.show()
-            self.w4.main()
-        puntuacion= self.w4.obtenerPuntuacion()
-        self.button_clicked(s, puntuacion, "Conecta4")
-        self.w4.close()
+        self.w4.showMaximized()
     def button7_clicked(self,s):
         self.w5= battleship()
         if self.w5.isVisible():
