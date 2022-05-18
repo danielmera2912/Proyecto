@@ -268,7 +268,7 @@ class battleship(QMainWindow):
                     break
             else:
                 break
-    def obtenerPuntuacion(self):
+    def obtener_puntuacion(self):
         return self.puntuacion
     def rejugar(self):
         while True:

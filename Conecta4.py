@@ -23,50 +23,117 @@ from copy import deepcopy
 class conecta(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.turnoTexto= "Es el turno del jugador "
         self.puntuacion=100
+        self.tablero = []
         self.space = " "
         self.figura1 = "|x|"
         self.figura2 = "|o|"
-        self.jugador1 = 1
-        self.jugador2 = 2
+        self.figura0= "|-|"
         self.conecta = 4
+        self.jugador=1
         self.setWindowTitle("Conecta4")
-
+        self.layoutV = QVBoxLayout()
+        self.b1 = QPushButton("1")
+        self.b2 = QPushButton("2")
+        self.b3 = QPushButton("3")
+        self.b4 = QPushButton("4")
+        self.b5 = QPushButton("5")
+        self.b6 = QPushButton("6")
+        self.b7 = QPushButton("7")
+        self.fin = QPushButton("Fin del juego")
+        if(self.jugador==1):
+            figura=" (x)"
+        else:
+            figura=" (o)"
+        self.turno = QPushButton(str(self.turnoTexto)+str(self.jugador)+str(figura))
         self.contenedor= QWidget()
-        self.layout = QHBoxLayout()
-        self.layout2 = QHBoxLayout()
-        self.vacio1 = QLabel("|-|")
-        self.vacio2 = QLabel("|x|")
-        self.layout2.addWidget(self.vacio1)
-        self.layout2.addWidget(self.vacio1)
-        self.layout2.addWidget(self.vacio2)
-        self.layout.addLayout(self.layout2)
-        self.layout.addLayout(self.layout2)
-        self.layout.addLayout(self.layout2)
-        self.layout.addLayout(self.layout2)
-        self.contenedor.setLayout(self.layout)
+        self.contenedor.setLayout(self.crear_tablero())
+        self.b1.clicked.connect(lambda: self.colocar_ficha(0, self.jugador))
+        self.b2.clicked.connect(lambda: self.colocar_ficha(1, self.jugador))
+        self.b3.clicked.connect(lambda: self.colocar_ficha(2,self.jugador))
+        self.b4.clicked.connect(lambda: self.colocar_ficha(3,self.jugador))
+        self.b5.clicked.connect(lambda: self.colocar_ficha(4,self.jugador))
+        self.b6.clicked.connect(lambda: self.colocar_ficha(5,self.jugador))
+        self.b7.clicked.connect(lambda: self.colocar_ficha(6,self.jugador))
         self.setCentralWidget(self.contenedor)
-    def pedir_columna(self,figura):
-        while True:
-            try:
-                respuesta= True
-                while(respuesta):
-                    fila= int(input("Ingresa la columna para ubicar tu ficha: "+figura+" "))-1
-                    if(0<=fila<7):
-                        respuesta=False
-                return fila
-            except:
-                continue
+    def colocar_ficha(self,columna,jugador):
+        fila= self.pedir_fila(columna)
+        if(self.tablero[fila][columna]==self.figura0):
+            if(jugador==1):
+                self.tablero[fila][columna]=self.figura1
+                self.jugador=2
+            else:
+                self.tablero[fila][columna]=self.figura2
+                self.jugador=1
+        else:
+            print("Columna no válida")
+        
+        self.actualizar_tablero()
 
-    def pedir_fila(self,columna,tablero):
+    def clearLayout(self, layout):
+        if layout is not None:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    if(widget!=self.fin):
+                        widget.deleteLater()
+                else:
+                    self.clearLayout(item.layout())
+    def actualizar_tablero(self):
+        self.clearLayout(self.layoutV)
+        for fila in range(6):
+            layoutH = QHBoxLayout()
+            for columna in range(7):
+                vacio = QLabel(self.tablero[fila][columna])
+                layoutH.addWidget(vacio)
+            self.layoutV.addLayout(layoutH)
+        if(self.jugador==1):
+            figura=" (x)"
+        else:
+            figura=" (o)"
+        if(self.juegoFin()==True):
+            self.turno = QPushButton("Juego finalizado porque el tablero está lleno.")
+        else:
+            self.turno = QPushButton(str(self.turnoTexto)+str(self.jugador)+str(figura))
+        self.b1 = QPushButton("1")
+        self.b2 = QPushButton("2")
+        self.b3 = QPushButton("3")
+        self.b4 = QPushButton("4")
+        self.b5 = QPushButton("5")
+        self.b6 = QPushButton("6")
+        self.b7 = QPushButton("7")
+        # self.fin = QPushButton("Fin del juego")
+        self.b1.clicked.connect(lambda: self.colocar_ficha(0, self.jugador))
+        self.b2.clicked.connect(lambda: self.colocar_ficha(1, self.jugador))
+        self.b3.clicked.connect(lambda: self.colocar_ficha(2,self.jugador))
+        self.b4.clicked.connect(lambda: self.colocar_ficha(3,self.jugador))
+        self.b5.clicked.connect(lambda: self.colocar_ficha(4,self.jugador))
+        self.b6.clicked.connect(lambda: self.colocar_ficha(5,self.jugador))
+        self.b7.clicked.connect(lambda: self.colocar_ficha(6,self.jugador))
+        layoutH2 = QHBoxLayout()
+        layoutH2.addWidget(self.b1)
+        layoutH2.addWidget(self.b2)
+        layoutH2.addWidget(self.b3)
+        layoutH2.addWidget(self.b4)
+        layoutH2.addWidget(self.b5)
+        layoutH2.addWidget(self.b6)
+        layoutH2.addWidget(self.b7)
+        layoutH3= QHBoxLayout()
+        layoutH3.addWidget(self.fin)
+        layoutH3.addWidget(self.turno)
+        self.layoutV.addLayout(layoutH2)
+        self.layoutV.addLayout(layoutH3)
+    def pedir_fila(self,columna):
         fila_libre=5
         while True:
             try:
                 respuesta= True
                 while(respuesta):
-                    if(tablero[fila_libre][columna]!="|-|"):
+                    if(self.tablero[fila_libre][columna]!="|-|"):
                         fila_libre=fila_libre-1
-                    elif(tablero[fila_libre][columna]=="|-|"):
+                    elif(self.tablero[fila_libre][columna]=="|-|"):
                         fila= fila_libre
                         respuesta=False
                 return fila
@@ -74,81 +141,37 @@ class conecta(QMainWindow):
                 return -1
 
     def crear_tablero(self):
-        tablero = []
-        for fila in range(6):
-            tablero.append([])
-            for columna in range(7):
-                tablero[fila].append("|-|")
-        return tablero
-
-
-    def mostrar_tablero(self,tablero):
-        for i in range(6):
-            print("")
-            for j in range(7):
-                print(tablero[i][j], end="")
-        print("")
-        print("---------------------")
-        print("|1||2||3||4||5||6||7|")
-        print("")
         
-
-    def colocar_pieza(self, tablero, jugador, figura):
-        fila=-1
-        while(fila==-1):
-            columna = self.pedir_columna(figura)
-            fila= self.pedir_fila(columna,tablero)
-        if(fila<=6 and columna<=7):
-            if(tablero[fila][columna]=="|-|"):
-                if(jugador==1):
-                    tablero[fila][columna]="|x|"
-                else:
-                    tablero[fila][columna]="|o|"
-            else:
-                print("Columna no válida")
-        else:
-            print("Columna no válida")
-        self.mostrar_tablero(tablero)
-
-
-   
-
-    def obtener_conteo(self,fila, columna, figura, tablero):
-        ...
-
-    def comprobar_ganador(self,jugador, tablero):
-        ...
-
-    def juegoFin(self,tablero):
-        for columna in range(len(tablero[0])):
-            if self.pedir_fila(columna, tablero) != -1:
+        
+        for fila in range(6):
+            layoutH = QHBoxLayout()
+            self.tablero.append([])
+            for columna in range(7):
+                self.tablero[fila].append(self.figura0)
+                vacio = QLabel(self.tablero[fila][columna])
+                layoutH.addWidget(vacio)
+            self.layoutV.addLayout(layoutH)
+        layoutH2 = QHBoxLayout()
+        layoutH2.addWidget(self.b1)
+        layoutH2.addWidget(self.b2)
+        layoutH2.addWidget(self.b3)
+        layoutH2.addWidget(self.b4)
+        layoutH2.addWidget(self.b5)
+        layoutH2.addWidget(self.b6)
+        layoutH2.addWidget(self.b7)
+        self.layoutV.addLayout(layoutH2)
+        layoutH3 = QHBoxLayout()
+        layoutH3.addWidget(self.fin)
+        layoutH3.addWidget(self.turno)
+        self.layoutV.addLayout(layoutH3)
+        return self.layoutV
+    def juegoFin(self):
+        for columna in range(len(self.tablero[0])):
+            if self.pedir_fila(columna) != -1:
                 return False
         return True
 
-    def juego(self):
-        self.puntuacion=100
-        tablero= self.crear_tablero()
-        self.mostrar_tablero(tablero)
-        figura=self.figura1
-        cont=1
-        while True:
-            if(cont%2):
-                self.colocar_pieza(tablero,self.jugador1,figura)
-                figura=self.figura2
-            else:
-                self.colocar_pieza(tablero,self.jugador2,figura)
-                figura=self.figura1
-            cont=cont+1
-            if(self.juegoFin(tablero)==True):
-                    print("Juego finalizado porque el tablero está lleno.")
-                    break
-            else:
-                eleccion = input("¿Volver a colocar ficha? (s/n) "+figura+" ").lower()
-                if eleccion == "s":
-                    ...
-                elif eleccion == "n":
-                    break
-    def obtenerPuntuacion(self):
+    def obtener_puntuacion(self):
         return self.puntuacion
     def rejugar(self):
         while True:

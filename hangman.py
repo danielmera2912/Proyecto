@@ -93,7 +93,7 @@ class hangman(QMainWindow):
         else:
             print("Derrota, la palabra secreta era "+palabraSecreta)
             self.puntuacion=0
-    def obtenerPuntuacion(self):
+    def obtener_puntuacion(self):
         return self.puntuacion
     def rejugar(self):
         while True:

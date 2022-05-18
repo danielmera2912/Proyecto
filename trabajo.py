@@ -113,9 +113,9 @@ class MainWindow(QMainWindow):
 
         page2 = QWizardPage()
         page2.setTitle('Juego elegido')
-        self.juegoElegido = QLabel(juego)
+        self.juego_elegido = QLabel(juego)
         hLayout2 = QHBoxLayout(page2)
-        hLayout2.addWidget(self.juegoElegido)
+        hLayout2.addWidget(self.juego_elegido)
 
         self.wizard.addPage(page2)
 
@@ -136,7 +136,7 @@ class MainWindow(QMainWindow):
     def insertar(self):
         nombre=self.nombre.text()
         puntuacion=self.puntuacion.text()
-        juego=self.juegoElegido.text()
+        juego=self.juego_elegido.text()
         self.modelo = QSqlRelationalTableModel(db=db)
         self.modelo.setTable("estadisticas")
         self.modelo.select()
@@ -158,17 +158,11 @@ class MainWindow(QMainWindow):
     def button5_clicked(self,s):
         self.w3= Game21()
         self.w3.showMaximized()
-        self.w3.button3.clicked.connect(self.asistente)
-            
-    def asistente(self,s):
-        self.w3.close()
-        puntuacion= self.w3.obtenerPuntuacion()
-        self.button_clicked(s, puntuacion, "BlackJack")
-    def closeEvent(self, event):
-        print("---")
+        self.w3.button3.clicked.connect(lambda: self.asistente(s, self.w3, "BlackJack"))
     def button6_clicked(self,s):
         self.w4= conecta()
         self.w4.showMaximized()
+        self.w4.fin.clicked.connect(lambda: self.asistente(s, self.w4, "Conecta4"))
     def button7_clicked(self,s):
         self.w5= battleship()
         if self.w5.isVisible():
@@ -178,7 +172,7 @@ class MainWindow(QMainWindow):
         else:
             self.w5.show()
             self.w5.main()
-        puntuacion= self.w5.obtenerPuntuacion()
+        puntuacion= self.w5.obtener_puntuacion()
         self.button_clicked(s, puntuacion, "Battleship")
         self.w5.close()
     def button8_clicked(self,s):
@@ -190,6 +184,12 @@ class MainWindow(QMainWindow):
         else:
             self.w6.show()
             self.w6.main()
-        puntuacion= self.w6.obtenerPuntuacion()
+        puntuacion= self.w6.obtener_puntuacion()
         self.button_clicked(s, puntuacion, "Hangman")
         self.w6.close()
+    def asistente(self,s, ventana, nombre_juego):
+        ventana.close()
+        puntuacion= ventana.obtener_puntuacion()
+        self.button_clicked(s, puntuacion, nombre_juego)
+    def closeEvent(self, event):
+            print("---")
