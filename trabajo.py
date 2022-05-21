@@ -55,7 +55,7 @@ class MainWindow(QMainWindow):
         self.button3 = QPushButton("Salir")
         self.button5 = QPushButton("21Game")
         self.button6 = QPushButton("Conecta4")
-        self.button7 = QPushButton("Destruir la flota")
+        self.button7 = QPushButton("Hundir la flota")
         self.button8 = QPushButton("Ahorcado")
         self.text_label = QLabel()
         self.text_label.setText("Hello World!")
@@ -165,16 +165,19 @@ class MainWindow(QMainWindow):
         self.w4.fin.clicked.connect(lambda: self.asistente(s, self.w4, "Conecta4"))
     def button7_clicked(self,s):
         self.w5= battleship()
-        if self.w5.isVisible():
-            self.w5.hide()
-            self.w5.close()
+        self.w5.showMaximized()
+        self.w5.fin.clicked.connect(lambda: self.asistente(s, self.w5, "BattleShip"))
+        # self.w5= battleship()
+        # if self.w5.isVisible():
+        #     self.w5.hide()
+        #     self.w5.close()
 
-        else:
-            self.w5.show()
-            self.w5.main()
-        puntuacion= self.w5.obtener_puntuacion()
-        self.button_clicked(s, puntuacion, "Battleship")
-        self.w5.close()
+        # else:
+        #     self.w5.show()
+        #     self.w5.main()
+        # puntuacion= self.w5.obtener_puntuacion()
+        # self.button_clicked(s, puntuacion, "Battleship")
+        # self.w5.close()
     def button8_clicked(self,s):
         self.w6= hangman()
         if self.w6.isVisible():

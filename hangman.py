@@ -25,14 +25,18 @@ class hangman(QMainWindow):
         super().__init__()
         self.setWindowTitle("Hangman")
         self.puntuacion= 0
+        self.diccionario= ["HARRY POTTER", "LAS CRONICAS DE NARNIA", "ABECEDARIO", "DICCIONARIO", "COCHE", "VEHICULO AEREO", "BOTELLA DE AGUA", "RECICLAJE", "COLORES", "TETERA", "CHOCOLATE BLANCO", "PIZZA DE CUATRO QUESOS"]
         self.contenedor= QWidget()
         self.layout = QVBoxLayout()
         self.contenedor.setLayout(self.layout)
         self.setCentralWidget(self.contenedor)
-    def introducir_palabraSecreta(self):
+    def introducir_palabra_secreta(self):
         palabra= str(input("Introduce la palabra secreta: "))
         palabra = palabra.upper()
         return palabra
+    def palabra_aleatoria(self):
+        numero= random.randrange(len(self.diccionario))
+        return self.diccionario[numero]
     def pedir_letra(self):
         letras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z']
         while(True):
@@ -44,21 +48,21 @@ class hangman(QMainWindow):
     def juego(self):
         self.puntuacion=0
         letrasUsadas= []
-        palabraSecreta= self.introducir_palabraSecreta()
-        palabraOculta= []
+        palabra_secreta= self.palabra_aleatoria()
+        palabra_oculta= []
         espacios= 0
-        for x in range(len(palabraSecreta)):
-            if(palabraSecreta[x]==" "):
-                palabraOculta.append(" ")
+        for x in range(len(palabra_secreta)):
+            if(palabra_secreta[x]==" "):
+                palabra_oculta.append(" ")
                 espacios=espacios+1
             else:
-                palabraOculta.append("_")
-        palabraSecreta.find(" ")
+                palabra_oculta.append("_")
+        palabra_secreta.find(" ")
         vidas= 3
         acierto= espacios
-        print(" ".join(palabraOculta))
+        print(" ".join(palabra_oculta))
         while(True):
-            if(vidas==0 or acierto==len(palabraSecreta)):
+            if(vidas==0 or acierto==len(palabra_secreta)):
                 break
             else:
                 letra= self.pedir_letra()
@@ -69,29 +73,29 @@ class hangman(QMainWindow):
             
             else:
                 letrasUsadas.append(letra)
-                if(letra in palabraSecreta):
+                if(letra in palabra_secreta):
                     contador=0
-                    for i in palabraSecreta:
+                    for i in palabra_secreta:
                         if(i==letra):
-                            palabraOculta[contador]=letra
+                            palabra_oculta[contador]=letra
                             acierto=acierto+1
                         contador=contador+1
                     print("Letra acertada.")
-                    print(" ".join(palabraOculta))
+                    print(" ".join(palabra_oculta))
                     print("Letras usadas: ")
                     print(", ".join(letrasUsadas))
                 else:
                     print("Letra no acertada.")
-                    print(" ".join(palabraOculta))
+                    print(" ".join(palabra_oculta))
                     print("Letras usadas: ")
                     print(", ".join(letrasUsadas))
                     vidas=vidas-1
                     print("Te quedan "+str(vidas)+" vidas")
-        if(acierto==len(palabraSecreta)):
-                    print("Victoria, la palabra secreta SÍ era "+palabraSecreta)
+        if(acierto==len(palabra_secreta)):
+                    print("Victoria, la palabra secreta SÍ era "+palabra_secreta)
                     self.puntuacion= (vidas*5)+(acierto*3)
         else:
-            print("Derrota, la palabra secreta era "+palabraSecreta)
+            print("Derrota, la palabra secreta era "+palabra_secreta)
             self.puntuacion=0
     def obtener_puntuacion(self):
         return self.puntuacion

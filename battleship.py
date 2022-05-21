@@ -24,48 +24,142 @@ class battleship(QMainWindow):
     def __init__(self):
         super().__init__()
         self.puntuacion=0
+        self.barcos_totales=0
+        self.barcos_rotos1=0
+        self.barcos_rotos2=0
+        self.tablero1 = []
+        self.tablero2 = []
+        self.tablero_botones1 = []
+        self.tablero_botones2 = []
+        self.tablero_botones = []
         self.space = " "
+        self.figura0 = "| |"
         self.figura1 = "|·|"
         self.figura2 = "|o|"
         self.jugador1 = 1
         self.jugador2 = 2
         self.barcos_rotos1=0
         self.barcos_rotos2=0
-        self.barcosTotales=0
+        self.barcos_totales=0
         self.acierto=False
         self.setWindowTitle("Battleship")
-
+        self.turno = QPushButton("Comienza el jugador que desee")
+        self.layoutH = QHBoxLayout()
+        self.fin = QPushButton("Fin del juego")
+        self.fin.setEnabled(False)
+        self.layoutPrincipal = QVBoxLayout()
+        self.layoutSecundario = QHBoxLayout()
+        self.tablero1_visible= self.crear_tablero_visible(1)
+        self.tablero2_visible= self.crear_tablero_visible(2)
+        self.tablero1_no_visible= self.crear_tablero_no_visible()
+        self.tablero2_no_visible= self.crear_tablero_no_visible()
+        self.establecer_barcos(self.tablero1_no_visible)
+        self.establecer_barcos(self.tablero2_no_visible)
+        self.barcos_totales=self.barcos_totales/2
+        self.layoutSecundario.addLayout(self.tablero1_visible)
+        self.layoutSecundario.addLayout(self.tablero2_visible)
+        self.cabecera = QHBoxLayout()
+        self.texto1 = QPushButton("Tablero del Jugador 1")
+        self.texto2 = QPushButton("Tablero del Jugador 2")
+        self.cabecera.addWidget(self.texto1)
+        self.cabecera.addWidget(self.texto2)
+        self.layoutH3 = QHBoxLayout()
+        self.layoutH3.addWidget(self.fin)
+        self.layoutH3.addWidget(self.turno)
+        self.datos_jugador1 = QPushButton("Jugador 1 posee "+str(int(self.barcos_totales))+" fragmentos de barcos.")
+        self.datos_jugador2 = QPushButton("Jugador 2 posee "+str(int(self.barcos_totales))+" fragmentos de barcos.")
+        self.layoutH4 = QHBoxLayout()
+        self.layoutH4.addWidget(self.datos_jugador1)
+        self.layoutH4.addWidget(self.datos_jugador2)
+        self.layoutPrincipal.addLayout(self.cabecera)
+        self.layoutPrincipal.addLayout(self.layoutSecundario)
+        self.layoutPrincipal.addLayout(self.layoutH3)
+        self.layoutPrincipal.addLayout(self.layoutH4)
         self.contenedor= QWidget()
-        self.layout = QVBoxLayout()
-        self.contenedor.setLayout(self.layout)
+        self.contenedor.setLayout(self.layoutPrincipal)
+        figura=self.figura1
+        self.jugador= self.jugador2
+        self.cont=1
         self.setCentralWidget(self.contenedor)
-    def pedir_columna(self,tablero_visible):
+        
+        for fila in range(10):
+            for columna in range(10):
+                self.tablero_botones1[fila][columna].clicked.connect(self.colocar_pieza_tablero)
+                self.tablero_botones1[fila][columna].fila= fila
+                self.tablero_botones1[fila][columna].columna= columna
+                self.tablero_botones1[fila][columna].jugador= 1
+                self.tablero_botones2[fila][columna].clicked.connect(self.colocar_pieza_tablero)
+                self.tablero_botones2[fila][columna].fila= fila
+                self.tablero_botones2[fila][columna].columna= columna
+                self.tablero_botones2[fila][columna].jugador= 2
+        # self.comenzar_juego()
+    def mensaje(self):
+        print("mensaje")
+    def comenzar_juego(self):
         while True:
-            try:
-                respuesta= True
-                while(respuesta):
-                    columna= int(input("Ingresa la columna para ubicar tu ficha: "))-1
-                    if(0<=columna<10 and (tablero_visible[0][columna]=="| |" or tablero_visible[1][columna]=="| |" or tablero_visible[2][columna]=="| |" or tablero_visible[3][columna]=="| |" or tablero_visible[4][columna]=="| |" or tablero_visible[5][columna]=="| |" or tablero_visible[6][columna]=="| |" or tablero_visible[7][columna]=="| |" or tablero_visible[8][columna]=="| |" or tablero_visible[9][columna]=="| |")):
-                        respuesta= False
-                    else:
-                        respuesta=True
-                return columna
-            except:
-                continue
-
-    def pedir_fila(self,columna, tablero_visible):
-        while True:
-            try:
-                respuesta= True
-                while(respuesta):
-                    fila= int(input("Ingresa la fila para ubicar tu ficha:"))-1
-                    if(0<=fila<10 and tablero_visible[fila][columna]=="| |"):
-                        respuesta=False
-                return fila
-            except:
-                continue
-
-    def crear_tablero(self):
+            if(self.cont%2):
+                while True:
+                    for fila in range(10):
+                        for columna in range(10):
+                             self.tablero_botones1[fila][columna].setEnabled(True)
+                             self.tablero_botones2[fila][columna].setEnabled(False)
+                    if(self.acierto==False):
+                        self.jugador= self.jugador1
+                        break
+                    elif(self.barcos_rotos2==self.barcos_totales):
+                        break
+            else:
+                while True:
+                    for fila in range(10):
+                        for columna in range(10):
+                             self.tablero_botones1[fila][columna].setEnabled(False)
+                             self.tablero_botones2[fila][columna].setEnabled(True)
+                    if(self.acierto==False):
+                        self.jugador= self.jugador2
+                        break
+                    elif(self.barcos_rotos1==self.barcos_totales):
+                        break
+            
+    def crear_tablero_visible(self, jugador):
+        self.layoutV = QVBoxLayout()
+        layoutH2= QHBoxLayout()
+        layoutH2.addWidget(QPushButton(str("A")))
+        layoutH2.addWidget(QPushButton(str("B")))
+        layoutH2.addWidget(QPushButton(str("C")))
+        layoutH2.addWidget(QPushButton(str("D")))
+        layoutH2.addWidget(QPushButton(str("E")))
+        layoutH2.addWidget(QPushButton(str("F")))
+        layoutH2.addWidget(QPushButton(str("G")))
+        layoutH2.addWidget(QPushButton(str("H")))
+        layoutH2.addWidget(QPushButton(str("I")))
+        layoutH2.addWidget(QPushButton(str("J")))
+        self.layoutV.addLayout(layoutH2)
+        for fila in range(10):
+            layoutH = QHBoxLayout()
+            layoutH.addWidget(QPushButton(str(fila+1)))
+            
+            if(jugador==1):
+                self.tablero1.append([])
+                self.tablero_botones1.append([])
+            else:
+                self.tablero2.append([])
+                self.tablero_botones2.append([])
+            for columna in range(10):
+               
+                if(jugador==1):
+                    self.tablero1[fila].append("F"+str(fila+1)+".C"+str(columna+1))
+                    # vacio = QPushButton()
+                    vacio = QPushButton(self.tablero1[fila][columna])
+                    self.tablero_botones1[fila].append(vacio)
+                else:
+                    self.tablero2[fila].append("F"+str(fila+1)+".C"+str(columna+1))
+                    # vacio = QPushButton()
+                    vacio = QPushButton(self.tablero2[fila][columna])
+                    self.tablero_botones2[fila].append(vacio)
+                layoutH.addWidget(vacio)
+            self.layoutV.addLayout(layoutH)
+        return self.layoutV
+    def crear_tablero_no_visible(self):
         tablero = []
         for fila in range(10):
             tablero.append([])
@@ -73,45 +167,87 @@ class battleship(QMainWindow):
                 tablero[fila].append("| |")
         return tablero
 
-
-    def mostrar_tablero(self,tablero,jugador):
-        if(jugador==1):
-            print("Tablero del jugador 1. Ha perdido "+str(self.barcos_rotos1)+" barcos. Y le queda "+str(int(self.barcosTotales-self.barcos_rotos1))+" barcos.")
-        else:
-            print("Tablero del jugador 2. Ha perdido "+str(self.barcos_rotos2)+" barcos. Y le queda "+str(int(self.barcosTotales-self.barcos_rotos2))+" barcos.")
-        print("")
-        print("|0 ||A||B||C||D||E||F||G||H||I||J|")
-        for i in range(10):
-            if(i+1<10):
-                print(str("|"+str(i+1)+" |"), end="")
-            else:
-                print(str("|"+str(i+1)+"|"), end="")
-            for j in range(10):
-                print(tablero[i][j], end="")
-            print("")
-        print("")
-
-
-    def colocar_pieza(self, tablero, tablero_visible, jugador):
-        fila=-1
-        while(fila==-1):
-            print("Tu turno jugador "+str(jugador))
-            columna = self.pedir_columna(tablero_visible)
-            fila= self.pedir_fila(columna, tablero_visible)
-        if(fila<=10 and columna<=10):
-            if(tablero[fila][columna]=="| |"):
-                tablero_visible[fila][columna]="|·|"
+    def colocar_pieza_tablero(self):
+        button = self.sender()
+        if(button.jugador==1):
+            if(self.tablero1_no_visible[button.fila][button.columna]=="| |"):
+                self.tablero1[button.fila][button.columna]="|·|"
                 self.acierto=False
+                self.tablero_botones1[button.fila][button.columna].setText("·")
+                self.tablero_botones1[button.fila][button.columna].setStyleSheet("background-color: red")
+                self.cont=self.cont+1
             else:
-                tablero_visible[fila][columna]="|X|"
+                self.tablero1[button.fila][button.columna]="|X|"
+                self.tablero_botones1[button.fila][button.columna].setText("X")
+                self.tablero_botones1[button.fila][button.columna].setStyleSheet("background-color: green")
                 self.acierto=True
-                if(jugador==1):
-                    self.barcos_rotos1=self.barcos_rotos1+1
+                self.barcos_rotos1=self.barcos_rotos1+1
+                self.cont=self.cont+1
+                self.datos_jugador1.setText("Jugador 1 posee "+str(int(self.barcos_totales-self.barcos_rotos1))+" fragmentos de barcos.")
+                self.datos_jugador2.setText("Jugador 2 posee "+str(int(self.barcos_totales-self.barcos_rotos2))+" fragmentos de barcos.")
+            if(self.comprobar_ganador()==False):
+                if(self.acierto==False):
+                    for fila in range(10):
+                        for columna in range(10):
+                                self.tablero_botones1[fila][columna].setEnabled(False)
+                                self.tablero_botones2[fila][columna].setEnabled(True)
+                    self.turno.setText("Turno del jugador 1")
+        elif(button.jugador==2):
+            if(self.tablero2_no_visible[button.fila][button.columna]=="| |"):
+                self.tablero2[button.fila][button.columna]="|·|"
+                self.acierto=False
+                self.tablero_botones2[button.fila][button.columna].setText("·")
+                self.tablero_botones2[button.fila][button.columna].setStyleSheet("background-color: red")
+                self.cont=self.cont+1
+            else:
+                self.tablero2[button.fila][button.columna]="|X|"
+                self.tablero_botones2[button.fila][button.columna].setText("X")
+                self.tablero_botones2[button.fila][button.columna].setStyleSheet("background-color: green")
+                self.acierto=True
+                self.barcos_rotos2=self.barcos_rotos2+1
+                self.cont=self.cont+1
+                self.datos_jugador1.setText("Jugador 1 posee "+str(int(self.barcos_totales-self.barcos_rotos1))+" fragmentos de barcos.")
+                self.datos_jugador2.setText("Jugador 2 posee "+str(int(self.barcos_totales-self.barcos_rotos2))+" fragmentos de barcos.")
+            if(self.acierto==False):
+                for fila in range(10):
+                    for columna in range(10):
+                            self.tablero_botones1[fila][columna].setEnabled(True)
+                            self.tablero_botones2[fila][columna].setEnabled(False)
+                self.turno.setText("Turno del jugador 2")
+    def clearLayout(self, layout):
+        if layout is not None:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    if(widget!=self.fin):
+                        widget.deleteLater()
                 else:
-                    self.barcos_rotos2=self.barcos_rotos2+1
-        else:
-            print("Columna no válida")
-
+                    self.clearLayout(item.layout())
+    def actualizar_tablero(self):
+        self.clearLayout(self.layoutV)
+        layoutH2= QHBoxLayout()
+        layoutH2.addWidget(QPushButton(str("A")))
+        layoutH2.addWidget(QPushButton(str("B")))
+        layoutH2.addWidget(QPushButton(str("C")))
+        layoutH2.addWidget(QPushButton(str("D")))
+        layoutH2.addWidget(QPushButton(str("E")))
+        layoutH2.addWidget(QPushButton(str("F")))
+        layoutH2.addWidget(QPushButton(str("G")))
+        layoutH2.addWidget(QPushButton(str("H")))
+        layoutH2.addWidget(QPushButton(str("I")))
+        layoutH2.addWidget(QPushButton(str("J")))
+        self.layoutV.addLayout(layoutH2)
+        for fila in range(10):
+            layoutH = QHBoxLayout()
+            layoutH.addWidget(QPushButton(str(fila+1)))
+            self.tablero1.append([])
+            for columna in range(10):
+                self.tablero1[fila].append("F"+str(fila+1)+".C"+str(columna+1))
+                # vacio = QPushButton()
+                vacio = QPushButton(self.tablero[fila][columna])
+                layoutH.addWidget(vacio)
+            self.layoutV.addLayout(layoutH)
     def establecer_barcos_solo(self, tablero):
         salida=-1
         while(salida==-1):
@@ -120,7 +256,7 @@ class battleship(QMainWindow):
             if(tablero[fila][columna]=="| |"):
                 tablero[fila][columna]="|z|"
                 salida=0
-        self.barcosTotales=self.barcosTotales+1
+        self.barcos_totales=self.barcos_totales+1
     def establecer_barcos_dos_horizontal(self, tablero):
         salida=-1
         while(salida==-1):
@@ -136,7 +272,7 @@ class battleship(QMainWindow):
                 tablero[fila][columna]="|z|"
                 tablero[fila][columna2]="|z|"
                 salida=0
-        self.barcosTotales=self.barcosTotales+2
+        self.barcos_totales=self.barcos_totales+2
     def establecer_barcos_dos_vertical(self, tablero):
         salida=-1
         while(salida==-1):
@@ -152,7 +288,7 @@ class battleship(QMainWindow):
                 tablero[fila][columna]="|z|"
                 tablero[fila2][columna]="|z|"
                 salida=0
-        self.barcosTotales=self.barcosTotales+2
+        self.barcos_totales=self.barcos_totales+2
     def establecer_barcos_tres_horizontal(self, tablero):
         salida=-1
         while(salida==-1):
@@ -172,7 +308,7 @@ class battleship(QMainWindow):
                 tablero[fila][columna2]="|z|"
                 tablero[fila][columna3]="|z|"
                 salida=0
-        self.barcosTotales=self.barcosTotales+3
+        self.barcos_totales=self.barcos_totales+3
     def establecer_barcos_tres_vertical(self, tablero):
         salida=-1
         while(salida==-1):
@@ -192,7 +328,7 @@ class battleship(QMainWindow):
                 tablero[fila2][columna]="|z|"
                 tablero[fila3][columna]="|z|"
                 salida=0
-        self.barcosTotales=self.barcosTotales+3
+        self.barcos_totales=self.barcos_totales+3
     def establecer_barcos(self, tablero):
         self.establecer_barcos_dos_vertical(tablero)
         self.establecer_barcos_dos_vertical(tablero)
@@ -206,68 +342,27 @@ class battleship(QMainWindow):
 
 
     def comprobar_ganador(self):
-        if(self.barcos_rotos1==self.barcosTotales):
-            print("Gana el jugador 1")
+        if(self.barcos_rotos1==self.barcos_totales):
+            self.turno.setText("Gana el jugador 1")
             self.puntuacion= 100-(self.barcos_rotos2*2)
+            self.fin.setEnabled(True)
+            for fila in range(10):
+                for columna in range(10):
+                        self.tablero_botones1[fila][columna].setEnabled(False)
+                        self.tablero_botones2[fila][columna].setEnabled(False)
             return True
-        elif(self.barcos_rotos2==self.barcosTotales):
-            print("Gana el jugador 2")
+        elif(self.barcos_rotos2==self.barcos_totales):
+            self.turno.setText("Gana el jugador 2")
             self.puntuacion= 100-(self.barcos_rotos1*2)
+            self.fin.setEnabled(True)
+            for fila in range(10):
+                for columna in range(10):
+                        self.tablero_botones1[fila][columna].setEnabled(False)
+                        self.tablero_botones2[fila][columna].setEnabled(False)
             return True
         else:
             return False
 
-
-    def juego(self):
-        self.puntuacion=0
-        self.barcosTotales=0
-        self.barcos_rotos1=0
-        self.barcos_rotos2=0
-        tablero1= self.crear_tablero()
-        tablero_visible1 = self.crear_tablero()
-        tablero2= self.crear_tablero()
-        tablero_visible2 = self.crear_tablero()
-        self.establecer_barcos(tablero1)
-        self.establecer_barcos(tablero2)
-        self.barcosTotales=self.barcosTotales/2
-        self.mostrar_tablero(tablero_visible1,self.jugador1)
-        self.mostrar_tablero(tablero_visible2,self.jugador2)
-        # self.mostrar_tablero(tablero1,self.jugador1)
-        # self.mostrar_tablero(tablero2,self.jugador2)
-        figura=self.figura1
-        jugador= self.jugador2
-        cont=1
-        while True:
-            if(cont%2):
-                while True:
-                    self.colocar_pieza(tablero1, tablero_visible1,jugador)
-                    self.mostrar_tablero(tablero_visible1,self.jugador1)
-                    self.mostrar_tablero(tablero_visible2,self.jugador2)
-                    
-                    if(self.acierto==False):
-                        jugador= self.jugador1
-                        break
-                    elif(self.barcos_rotos2==self.barcosTotales):
-                        break
-            else:
-                while True:
-                    self.colocar_pieza(tablero2,tablero_visible2,jugador)
-                    self.mostrar_tablero(tablero_visible1,self.jugador1)
-                    self.mostrar_tablero(tablero_visible2,self.jugador2)
-                    if(self.acierto==False):
-                        jugador= self.jugador2
-                        break
-                    elif(self.barcos_rotos1==self.barcosTotales):
-                        break
-            cont=cont+1
-            if(self.comprobar_ganador()==False):
-                eleccion = input("¿Volver a colocar ficha? (s/n) jugador"+str(jugador)+" ").lower()
-                if eleccion == "s":
-                    ...
-                elif eleccion == "n":
-                    break
-            else:
-                break
     def obtener_puntuacion(self):
         return self.puntuacion
     def rejugar(self):
@@ -284,3 +379,6 @@ class battleship(QMainWindow):
             juego = self.juego()
             if not self.rejugar():
                 break
+class tablero():
+    def __init__(self):
+        super().__init__()
