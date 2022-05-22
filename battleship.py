@@ -42,6 +42,7 @@ class battleship(QMainWindow):
         self.barcos_rotos2=0
         self.barcos_totales=0
         self.acierto=False
+        self.botones_usados= []
         self.setWindowTitle("Battleship")
         self.turno = QPushButton("Comienza el jugador que desee")
         self.layoutH = QHBoxLayout()
@@ -92,9 +93,6 @@ class battleship(QMainWindow):
                 self.tablero_botones2[fila][columna].fila= fila
                 self.tablero_botones2[fila][columna].columna= columna
                 self.tablero_botones2[fila][columna].jugador= 2
-        # self.comenzar_juego()
-    def mensaje(self):
-        print("mensaje")
     def comenzar_juego(self):
         while True:
             if(self.cont%2):
@@ -170,6 +168,7 @@ class battleship(QMainWindow):
     def colocar_pieza_tablero(self):
         button = self.sender()
         if(button.jugador==1):
+            self.botones_usados.append(self.tablero_botones1[button.fila][button.columna])
             if(self.tablero1_no_visible[button.fila][button.columna]=="| |"):
                 self.tablero1[button.fila][button.columna]="|·|"
                 self.acierto=False
@@ -191,8 +190,18 @@ class battleship(QMainWindow):
                         for columna in range(10):
                                 self.tablero_botones1[fila][columna].setEnabled(False)
                                 self.tablero_botones2[fila][columna].setEnabled(True)
+                    
                     self.turno.setText("Turno del jugador 1")
+                else:
+                    for fila in range(10):
+                        for columna in range(10):
+                                self.tablero_botones1[fila][columna].setEnabled(True)
+                                self.tablero_botones2[fila][columna].setEnabled(False)
+                    self.turno.setText("Turno del jugador 2")
+                for i in range(len(self.botones_usados)):
+                        self.botones_usados[i].setEnabled(False)
         elif(button.jugador==2):
+            self.botones_usados.append(self.tablero_botones2[button.fila][button.columna])
             if(self.tablero2_no_visible[button.fila][button.columna]=="| |"):
                 self.tablero2[button.fila][button.columna]="|·|"
                 self.acierto=False
@@ -208,12 +217,21 @@ class battleship(QMainWindow):
                 self.cont=self.cont+1
                 self.datos_jugador1.setText("Jugador 1 posee "+str(int(self.barcos_totales-self.barcos_rotos1))+" fragmentos de barcos.")
                 self.datos_jugador2.setText("Jugador 2 posee "+str(int(self.barcos_totales-self.barcos_rotos2))+" fragmentos de barcos.")
-            if(self.acierto==False):
-                for fila in range(10):
-                    for columna in range(10):
-                            self.tablero_botones1[fila][columna].setEnabled(True)
-                            self.tablero_botones2[fila][columna].setEnabled(False)
-                self.turno.setText("Turno del jugador 2")
+            if(self.comprobar_ganador()==False):
+                if(self.acierto==False):
+                    for fila in range(10):
+                        for columna in range(10):
+                                self.tablero_botones1[fila][columna].setEnabled(True)
+                                self.tablero_botones2[fila][columna].setEnabled(False)
+                    self.turno.setText("Turno del jugador 2")
+                else:
+                    for fila in range(10):
+                        for columna in range(10):
+                                self.tablero_botones1[fila][columna].setEnabled(False)
+                                self.tablero_botones2[fila][columna].setEnabled(True)
+                    self.turno.setText("Turno del jugador 1")
+                for i in range(len(self.botones_usados)):
+                        self.botones_usados[i].setEnabled(False)
     def clearLayout(self, layout):
         if layout is not None:
             while layout.count():
@@ -379,6 +397,3 @@ class battleship(QMainWindow):
             juego = self.juego()
             if not self.rejugar():
                 break
-class tablero():
-    def __init__(self):
-        super().__init__()
