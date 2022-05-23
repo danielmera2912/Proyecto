@@ -167,29 +167,10 @@ class MainWindow(QMainWindow):
         self.w5= battleship()
         self.w5.showMaximized()
         self.w5.fin.clicked.connect(lambda: self.asistente(s, self.w5, "BattleShip"))
-        # self.w5= battleship()
-        # if self.w5.isVisible():
-        #     self.w5.hide()
-        #     self.w5.close()
-
-        # else:
-        #     self.w5.show()
-        #     self.w5.main()
-        # puntuacion= self.w5.obtener_puntuacion()
-        # self.button_clicked(s, puntuacion, "Battleship")
-        # self.w5.close()
     def button8_clicked(self,s):
         self.w6= hangman()
-        if self.w6.isVisible():
-            self.w6.hide()
-            self.w6.close()
-
-        else:
-            self.w6.show()
-            self.w6.main()
-        puntuacion= self.w6.obtener_puntuacion()
-        self.button_clicked(s, puntuacion, "Hangman")
-        self.w6.close()
+        self.w6.showMaximized()
+        self.w6.fin.clicked.connect(lambda: self.asistente(s, self.w6, "Hangman"))
     def asistente(self,s, ventana, nombre_juego):
         ventana.close()
         puntuacion= ventana.obtener_puntuacion()
