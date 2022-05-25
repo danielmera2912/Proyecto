@@ -121,8 +121,8 @@ class conecta(QMainWindow):
         layoutH2.addWidget(self.b6)
         layoutH2.addWidget(self.b7)
         layoutH3= QHBoxLayout()
-        layoutH3.addWidget(self.fin)
         layoutH3.addWidget(self.turno)
+        layoutH3.addWidget(self.fin)
         self.layoutV.addLayout(layoutH2)
         self.layoutV.addLayout(layoutH3)
     def pedir_fila(self,columna):
@@ -161,8 +161,8 @@ class conecta(QMainWindow):
         layoutH2.addWidget(self.b7)
         self.layoutV.addLayout(layoutH2)
         layoutH3 = QHBoxLayout()
-        layoutH3.addWidget(self.fin)
         layoutH3.addWidget(self.turno)
+        layoutH3.addWidget(self.fin)
         self.layoutV.addLayout(layoutH3)
         return self.layoutV
     def juegoFin(self):

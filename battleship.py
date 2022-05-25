@@ -121,6 +121,7 @@ class battleship(QMainWindow):
     def crear_tablero_visible(self, jugador):
         self.layoutV = QVBoxLayout()
         layoutH2= QHBoxLayout()
+        layoutH2.addWidget(QPushButton(str("0")))
         layoutH2.addWidget(QPushButton(str("A")))
         layoutH2.addWidget(QPushButton(str("B")))
         layoutH2.addWidget(QPushButton(str("C")))
