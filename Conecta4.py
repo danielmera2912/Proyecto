@@ -20,9 +20,25 @@ import pyqtgraph.exporters
 from PySide6 import QtWidgets, QtGui
 import random
 from copy import deepcopy
+from PySide6.QtMultimedia import QSoundEffect
 class conecta(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.sonido_victoria = QSoundEffect()
+        self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
+        self.sonido_victoria.setVolume(0.25)
+        self.sonido_derrota = QSoundEffect()
+        self.sonido_derrota.setSource(QUrl.fromLocalFile("derrota.wav"))
+        self.sonido_derrota.setVolume(0.25)
+        self.sonido_acierto = QSoundEffect()
+        self.sonido_acierto.setSource(QUrl.fromLocalFile("acierto.wav"))
+        self.sonido_acierto.setVolume(0.25)
+        self.sonido_fallo = QSoundEffect()
+        self.sonido_fallo.setSource(QUrl.fromLocalFile("fallo.wav"))
+        self.sonido_fallo.setVolume(0.25)
+        self.sonido_click = QSoundEffect()
+        self.sonido_click.setSource(QUrl.fromLocalFile("click.wav"))
+        self.sonido_click.setVolume(0.25)
         self.turnoTexto= "Es el turno del jugador "
         self.puntuacion=100
         self.tablero = []
@@ -58,6 +74,7 @@ class conecta(QMainWindow):
         self.b7.clicked.connect(lambda: self.colocar_ficha(6,self.jugador))
         self.setCentralWidget(self.contenedor)
     def colocar_ficha(self,columna,jugador):
+        self.sonido_click.play()
         fila= self.pedir_fila(columna)
         if(self.tablero[fila][columna]==self.figura0):
             if(jugador==1):

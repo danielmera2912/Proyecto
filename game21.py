@@ -18,6 +18,7 @@ from design import Ui_MainWindow
 import pyqtgraph as pg
 import pyqtgraph.exporters
 from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6.QtMultimedia import QSoundEffect
 class Mano():
     def __init__(self, baraja, info):
         super().__init__()
@@ -26,12 +27,16 @@ class Mano():
         self.cartas= baraja
         self.cartas.barajar()
         self.info=info
+        self.sonido_click = QSoundEffect()
+        self.sonido_click.setSource(QUrl.fromLocalFile("click.wav"))
+        self.sonido_click.setVolume(0.25)
         
     def comienzoPartida(self):
         for i in range(3):
             robo= self.cartas.cartas.pop()
             self.mano.append(robo)
     def robar_carta(self):
+        self.sonido_click.play()
         try:
             robo= self.cartas.cartas.pop()
             self.mano.append(robo)
@@ -108,6 +113,19 @@ class Game21(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("21 Game")
+        self.sonido_victoria = QSoundEffect()
+        self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
+        self.sonido_victoria.setVolume(0.25)
+        self.sonido_derrota = QSoundEffect()
+        self.sonido_derrota.setSource(QUrl.fromLocalFile("derrota.wav"))
+        self.sonido_derrota.setVolume(0.25)
+        self.sonido_acierto = QSoundEffect()
+        self.sonido_acierto.setSource(QUrl.fromLocalFile("acierto.wav"))
+        self.sonido_acierto.setVolume(0.25)
+        self.sonido_fallo = QSoundEffect()
+        self.sonido_fallo.setSource(QUrl.fromLocalFile("fallo.wav"))
+        self.sonido_fallo.setVolume(0.25)
+        
         self.puntuacion=0
         self.ganador=True
         self.contenedor= QWidget()
@@ -288,6 +306,7 @@ class Game21(QMainWindow):
             self.button1.setEnabled(False)
             self.button2.setEnabled(False)
             self.button3.setEnabled(True)
+            self.sonido_victoria.play()
             self.robar.addWidget(self.victoria)
             self.robar.addWidget(puntuacionLabel)
             self.robar.addWidget(self.button3)
@@ -295,6 +314,7 @@ class Game21(QMainWindow):
             self.button1.setEnabled(False)
             self.button2.setEnabled(False)
             self.button3.setEnabled(True)
+            self.sonido_derrota.play()
             self.robar.addWidget(self.derrota)
             self.robar.addWidget(puntuacionLabel)
             self.robar.addWidget(self.button3)

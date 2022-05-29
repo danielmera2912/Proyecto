@@ -20,11 +20,26 @@ import pyqtgraph.exporters
 from PySide6 import QtWidgets, QtGui
 import random
 from copy import deepcopy
+from PySide6.QtMultimedia import QSoundEffect
 class hangman(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Hangman")
-
+        self.sonido_victoria = QSoundEffect()
+        self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
+        self.sonido_victoria.setVolume(0.25)
+        self.sonido_derrota = QSoundEffect()
+        self.sonido_derrota.setSource(QUrl.fromLocalFile("derrota.wav"))
+        self.sonido_derrota.setVolume(0.25)
+        self.sonido_acierto = QSoundEffect()
+        self.sonido_acierto.setSource(QUrl.fromLocalFile("acierto.wav"))
+        self.sonido_acierto.setVolume(0.25)
+        self.sonido_fallo = QSoundEffect()
+        self.sonido_fallo.setSource(QUrl.fromLocalFile("fallo.wav"))
+        self.sonido_fallo.setVolume(0.25)
+        self.sonido_click = QSoundEffect()
+        self.sonido_click.setSource(QUrl.fromLocalFile("click.wav"))
+        self.sonido_click.setVolume(0.25)
         self.fase= QLabel()
         fase2  = QLabel()
         fase3  = QLabel()
@@ -194,6 +209,7 @@ class hangman(QMainWindow):
 
         if(letra in self.letrasUsadas):
             self.actualizador.setText("Letra repetida")
+            self.sonido_click.play()
         else:
             self.letrasUsadas.append(letra)
             if(letra in self.palabra_secreta):
@@ -205,10 +221,12 @@ class hangman(QMainWindow):
                     contador=contador+1
                 self.actualizador.setText("Letra acertada.")
                 boton.setStyleSheet("background-color: green")
+                self.sonido_acierto.play()
                 self.palabra_visible.setText(" ".join(self.palabra_oculta))
             else:
                 self.actualizador.setText("Letra no acertada.")
                 boton.setStyleSheet("background-color: red")
+                self.sonido_fallo.play()
                 self.palabra_visible.setText(" ".join(self.palabra_oculta))
                 self.vidas=self.vidas-1
                 if(self.vidas==6):
@@ -230,9 +248,11 @@ class hangman(QMainWindow):
             if(self.acierto==len(self.palabra_secreta)):
                 self.actualizador.setText("Victoria, la palabra secreta SÍ era "+self.palabra_secreta)
                 self.puntuacion= (self.vidas*5)+(self.acierto*3)
+                self.sonido_victoria.play()
             else:
                 self.actualizador.setText("Derrota, la palabra secreta era "+self.palabra_secreta)
                 self.puntuacion=0
+                self.sonido_derrota.play()
             self.bQ.setEnabled(False)
             self.bW.setEnabled(False)
             self.bE.setEnabled(False)

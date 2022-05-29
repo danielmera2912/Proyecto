@@ -20,9 +20,27 @@ import pyqtgraph.exporters
 from PySide6 import QtWidgets, QtGui
 import random
 from copy import deepcopy
+from PySide6.QtMultimedia import QSoundEffect
 class battleship(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.sonido_victoria = QSoundEffect()
+        self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
+        self.sonido_victoria.setVolume(0.25)
+        self.sonido_derrota = QSoundEffect()
+        self.sonido_derrota.setSource(QUrl.fromLocalFile("derrota.wav"))
+        self.sonido_derrota.setVolume(0.25)
+        self.sonido_acierto = QSoundEffect()
+        self.sonido_acierto.setSource(QUrl.fromLocalFile("acierto.wav"))
+        self.sonido_acierto.setVolume(0.25)
+        self.sonido_fallo = QSoundEffect()
+        self.sonido_fallo.setSource(QUrl.fromLocalFile("fallo.wav"))
+        self.sonido_fallo.setVolume(0.25)
+        self.sonido_click = QSoundEffect()
+        self.sonido_click.setSource(QUrl.fromLocalFile("click.wav"))
+        self.sonido_click.setVolume(0.25)
+        
+        
         self.puntuacion=0
         self.barcos_totales=0
         self.barcos_rotos1=0
@@ -47,7 +65,7 @@ class battleship(QMainWindow):
         self.turno = QPushButton("Comienza el jugador que desee")
         self.layoutH = QHBoxLayout()
         self.fin = QPushButton("Fin del juego")
-        self.fin.setEnabled(False)
+        #self.fin.setEnabled(False)
         self.layoutPrincipal = QVBoxLayout()
         self.layoutSecundario = QHBoxLayout()
         self.tablero1_visible= self.crear_tablero_visible(1)
@@ -93,30 +111,30 @@ class battleship(QMainWindow):
                 self.tablero_botones2[fila][columna].fila= fila
                 self.tablero_botones2[fila][columna].columna= columna
                 self.tablero_botones2[fila][columna].jugador= 2
-    def comenzar_juego(self):
-        while True:
-            if(self.cont%2):
-                while True:
-                    for fila in range(10):
-                        for columna in range(10):
-                             self.tablero_botones1[fila][columna].setEnabled(True)
-                             self.tablero_botones2[fila][columna].setEnabled(False)
-                    if(self.acierto==False):
-                        self.jugador= self.jugador1
-                        break
-                    elif(self.barcos_rotos2==self.barcos_totales):
-                        break
-            else:
-                while True:
-                    for fila in range(10):
-                        for columna in range(10):
-                             self.tablero_botones1[fila][columna].setEnabled(False)
-                             self.tablero_botones2[fila][columna].setEnabled(True)
-                    if(self.acierto==False):
-                        self.jugador= self.jugador2
-                        break
-                    elif(self.barcos_rotos1==self.barcos_totales):
-                        break
+    # def comenzar_juego(self):
+    #     while True:
+    #         if(self.cont%2):
+    #             while True:
+    #                 for fila in range(10):
+    #                     for columna in range(10):
+    #                          self.tablero_botones1[fila][columna].setEnabled(True)
+    #                          self.tablero_botones2[fila][columna].setEnabled(False)
+    #                 if(self.acierto==False):
+    #                     self.jugador= self.jugador1
+    #                     break
+    #                 elif(self.barcos_rotos2==self.barcos_totales):
+    #                     break
+    #         else:
+    #             while True:
+    #                 for fila in range(10):
+    #                     for columna in range(10):
+    #                          self.tablero_botones1[fila][columna].setEnabled(False)
+    #                          self.tablero_botones2[fila][columna].setEnabled(True)
+    #                 if(self.acierto==False):
+    #                     self.jugador= self.jugador2
+    #                     break
+    #                 elif(self.barcos_rotos1==self.barcos_totales):
+    #                     break
             
     def crear_tablero_visible(self, jugador):
         self.layoutV = QVBoxLayout()
@@ -167,6 +185,7 @@ class battleship(QMainWindow):
         return tablero
 
     def colocar_pieza_tablero(self):
+        self.sonido_click.play()
         button = self.sender()
         if(button.jugador==1):
             self.botones_usados.append(self.tablero_botones1[button.fila][button.columna])
@@ -176,6 +195,7 @@ class battleship(QMainWindow):
                 self.tablero_botones1[button.fila][button.columna].setText("·")
                 self.tablero_botones1[button.fila][button.columna].setStyleSheet("background-color: red")
                 self.cont=self.cont+1
+                self.sonido_fallo.play()
             else:
                 self.tablero1[button.fila][button.columna]="|X|"
                 self.tablero_botones1[button.fila][button.columna].setText("X")
@@ -185,6 +205,7 @@ class battleship(QMainWindow):
                 self.cont=self.cont+1
                 self.datos_jugador1.setText("Jugador 1 posee "+str(int(self.barcos_totales-self.barcos_rotos1))+" fragmentos de barcos.")
                 self.datos_jugador2.setText("Jugador 2 posee "+str(int(self.barcos_totales-self.barcos_rotos2))+" fragmentos de barcos.")
+                self.sonido_acierto.play()
             if(self.comprobar_ganador()==False):
                 if(self.acierto==False):
                     for fila in range(10):
@@ -201,6 +222,8 @@ class battleship(QMainWindow):
                     self.turno.setText("Turno del jugador 2")
                 for i in range(len(self.botones_usados)):
                         self.botones_usados[i].setEnabled(False)
+            else:
+                self.sonido_victoria.play()
         elif(button.jugador==2):
             self.botones_usados.append(self.tablero_botones2[button.fila][button.columna])
             if(self.tablero2_no_visible[button.fila][button.columna]=="| |"):
@@ -209,6 +232,7 @@ class battleship(QMainWindow):
                 self.tablero_botones2[button.fila][button.columna].setText("·")
                 self.tablero_botones2[button.fila][button.columna].setStyleSheet("background-color: red")
                 self.cont=self.cont+1
+                self.sonido_fallo.play()
             else:
                 self.tablero2[button.fila][button.columna]="|X|"
                 self.tablero_botones2[button.fila][button.columna].setText("X")
@@ -218,6 +242,7 @@ class battleship(QMainWindow):
                 self.cont=self.cont+1
                 self.datos_jugador1.setText("Jugador 1 posee "+str(int(self.barcos_totales-self.barcos_rotos1))+" fragmentos de barcos.")
                 self.datos_jugador2.setText("Jugador 2 posee "+str(int(self.barcos_totales-self.barcos_rotos2))+" fragmentos de barcos.")
+                self.sonido_acierto.play()
             if(self.comprobar_ganador()==False):
                 if(self.acierto==False):
                     for fila in range(10):
@@ -233,6 +258,8 @@ class battleship(QMainWindow):
                     self.turno.setText("Turno del jugador 1")
                 for i in range(len(self.botones_usados)):
                         self.botones_usados[i].setEnabled(False)
+            else:
+                self.sonido_victoria.play()
     def clearLayout(self, layout):
         if layout is not None:
             while layout.count():

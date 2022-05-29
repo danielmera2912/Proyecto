@@ -24,6 +24,7 @@ from game21 import Game21
 from Conecta4 import conecta
 from battleship import battleship
 from hangman import hangman
+from PySide6.QtMultimedia import QSoundEffect
 # La aplicación consistiría en pulsar a jugar y se elige el juego que se desea jugar,
 #  saltaría la pantalla del juego y al acabar, salta el asistente para registrar tu puntuación en un informe
 # en estadísticas se guarda las estadísticas locales en una base de datos, y el botón salir sale
@@ -45,6 +46,14 @@ except ImportError:
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.sonido_victoria = QSoundEffect()
+        self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
+        self.sonido_victoria.setVolume(0.25)
+        self.sonido_musica = QSoundEffect()
+        self.sonido_musica.setSource(QUrl.fromLocalFile("music.wav"))
+        self.sonido_musica.setVolume(0.01)
+        self.sonido_musica.setLoopCount(QSoundEffect.Infinite)
+        self.sonido_musica.play()
         self.setWindowIcon(QtGui.QIcon(os.path.join(basedir, 'sg.ico')))
         #app.setWindowIcon(QtGui.QIcon('sg.ico'))
         self.setWindowTitle("App SimpGam")
@@ -172,6 +181,8 @@ class MainWindow(QMainWindow):
         self.w6.showMaximized()
         self.w6.fin.clicked.connect(lambda: self.asistente(s, self.w6, "Hangman"))
     def asistente(self,s, ventana, nombre_juego):
+        if(nombre_juego=="Conecta4"):
+            self.sonido_victoria.play()
         ventana.close()
         puntuacion= ventana.obtener_puntuacion()
         self.button_clicked(s, puntuacion, nombre_juego)
