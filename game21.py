@@ -35,8 +35,9 @@ class Mano():
         for i in range(3):
             robo= self.cartas.cartas.pop()
             self.mano.append(robo)
-    def robar_carta(self):
-        self.sonido_click.play()
+    def robar_carta(self, robo_manual):
+        if(robo_manual==True):
+            self.sonido_click.play()
         try:
             robo= self.cartas.cartas.pop()
             self.mano.append(robo)
@@ -156,8 +157,8 @@ class Game21(QMainWindow):
         self.robar.addWidget(self.button3)
         self.mano1 = Mano(self.baraja, True)
         self.mano2 = Mano(self.baraja, False)
-        self.mano1.robar_carta()
-        self.mano2.robar_carta()
+        self.mano1.robar_carta(False)
+        self.mano2.robar_carta(False)
         self.num_cartas_restantes= (self.baraja.num_cartas)-2
         self.cartas_restantes= QPushButton()
         self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
@@ -184,7 +185,7 @@ class Game21(QMainWindow):
         self.contenedor.setLayout(self.pagelayout)
         self.setCentralWidget(self.contenedor)
     def robo(self):
-        self.mano1.robar_carta()
+        self.mano1.robar_carta(True)
         for i in reversed(range(self.cartas_robar.count())): 
             self.cartas_robar.itemAt(i).widget().setParent(None)
         if(self.num_cartas_restantes>0):
@@ -197,7 +198,7 @@ class Game21(QMainWindow):
             self.mis_cartas.addWidget(self.mano1.mano[x].cartaJugable)
         if(self.mano2.valor<=self.mano1.valor and self.mano2.valor<21):
                     if(self.mano2.valor<10):
-                        self.mano2.robar_carta()
+                        self.mano2.robar_carta(True)
                         for i in reversed(range(self.cartas_robar.count())): 
                             self.cartas_robar.itemAt(i).widget().setParent(None)
                         self.num_cartas_restantes= self.num_cartas_restantes-1
@@ -210,7 +211,7 @@ class Game21(QMainWindow):
                     elif(self.mano2.valor>10 and self.mano2.valor<15):
                         chances= random.randrange(10)
                         if(chances>4):
-                            self.mano2.robar_carta()
+                            self.mano2.robar_carta(True)
                             for i in reversed(range(self.cartas_robar.count())): 
                                 self.cartas_robar.itemAt(i).widget().setParent(None)
                             self.num_cartas_restantes= self.num_cartas_restantes-1
@@ -223,7 +224,7 @@ class Game21(QMainWindow):
                     elif(self.mano2.valor>15 and self.mano2.valor<20):
                         chances= random.randrange(3)
                         if(chances==2):
-                            self.mano2.robar_carta()
+                            self.mano2.robar_carta(True)
                             for i in reversed(range(self.cartas_robar.count())): 
                                 self.cartas_robar.itemAt(i).widget().setParent(None)
                             self.num_cartas_restantes= self.num_cartas_restantes-1
@@ -236,7 +237,7 @@ class Game21(QMainWindow):
                     elif(self.mano2.valor==20):
                         chances= random.randrange(10)
                         if(chances==5):
-                            self.mano2.robar_carta()
+                            self.mano2.robar_carta(True)
                             for i in reversed(range(self.cartas_robar.count())): 
                                 self.cartas_robar.itemAt(i).widget().setParent(None)
                             self.num_cartas_restantes= self.num_cartas_restantes-1
@@ -325,36 +326,36 @@ class Game21(QMainWindow):
         self.baraja= BarajaCartas()
         self.mano1 = Mano(self.baraja, True)
         self.mano2 = Mano(self.baraja, False)
-        self.mano1.robar_carta()
-        self.mano2.robar_carta()
+        self.mano1.robar_carta(True)
+        self.mano2.robar_carta(True)
         respuesta='s'
         while(respuesta=='s'):
             respuesta= input("¿Quieres robar una carta? (s/n): ")
             if(respuesta=='s'):
-                self.mano1.robar_carta()
+                self.mano1.robar_carta(True)
                 self.mano1.info_mano()
                 if(self.mano2.valor<=self.mano1.valor and self.mano2.valor<21):
                     if(self.mano2.valor<10):
                         print("IA ha robado carta")
-                        self.mano2.robar_carta()
+                        self.mano2.robar_carta(True)
                         self.mano2.info_mano()
                     elif(self.mano2.valor>10 and self.mano2.valor<15):
                         chances= random.randrange(10)
                         if(chances>4):
                             print("IA ha robado carta")
-                            self.mano2.robar_carta()
+                            self.mano2.robar_carta(True)
                             self.mano2.info_mano()
                     elif(self.mano2.valor>15 and self.mano2.valor<20):
                         chances= random.randrange(3)
                         if(chances==2):
                             print("IA ha robado carta")
-                            self.mano2.robar_carta()
+                            self.mano2.robar_carta(True)
                             self.mano2.info_mano()
                     elif(self.mano2.valor==20):
                         chances= random.randrange(10)
                         if(chances==5):
                             print("IA ha robado carta")
-                            self.mano2.robar_carta()
+                            self.mano2.robar_carta(True)
                             self.mano2.info_mano()
         print("Mano del jugador:")
         self.mano1.mostrar_mano()
