@@ -1,10 +1,20 @@
-from PySide6.QtMultimediaWidgets import QVideoWidget
-from PySide6.QtCore import QUrl
-from PySide6.QtWidgets import  QApplication
-from PySide6.QtWidgets import QApplication, QComboBox, QMainWindow, QPushButton, QWizard, QWizardPage, QLineEdit, QHBoxLayout, QLabel, QWidget, QAbstractItemView, QVBoxLayout, QMessageBox, QFormLayout, QTextEdit, QSpinBox
-from PySide6.QtMultimedia import QSoundEffect
-import sys
-class MusicList(QMainWindow):
+import random
+from PySide6 import QtWidgets
+from trabajo import MainWindow
+
+class Window(QtWidgets.QMainWindow):
+
     def __init__(self):
-        super(MusicList, self).__init__()
-        
+        super().__init__()
+        lol= input()
+        lol=lol.replace('"','')
+        lol=lol.replace(';','')
+        lol=lol.replace("'","")
+        lol=lol.replace('?','')
+        lol=lol.replace('-','')
+        lol=lol.replace('!','')
+        print(lol)
+app = QtWidgets.QApplication([])
+w = Window()
+w.show()
+app.exec()

@@ -21,7 +21,9 @@ from PySide6 import QtWidgets, QtGui
 import random
 from copy import deepcopy
 from PySide6.QtMultimedia import QSoundEffect
-class hangman(QMainWindow):
+
+from juego import Juego
+class hangman(QMainWindow, Juego):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Hangman")
@@ -41,13 +43,6 @@ class hangman(QMainWindow):
         self.sonido_click.setSource(QUrl.fromLocalFile("click.wav"))
         self.sonido_click.setVolume(0.25)
         self.fase= QLabel()
-        fase2  = QLabel()
-        fase3  = QLabel()
-        fase4  = QLabel()
-        fase5  = QLabel()
-        fase6  = QLabel()
-        fase7  = QLabel()
-        fase8  = QLabel()
 
         self.img1  = QPixmap("img2/fase1.png")
         self.img2  = QPixmap("img2/fase2.png")
@@ -60,7 +55,6 @@ class hangman(QMainWindow):
 
         self.fase.setPixmap(self.img1)
 
-        self.puntuacion= 0
         self.texto_letras_usadas = "Letras utilizadas: "
         self.diccionario= ["HARRY POTTER", "LAS CRONICAS DE NARNIA", "ABECEDARIO", "DICCIONARIO", "COCHE", "VEHICULO AEREO", "BOTELLA DE AGUA", "RECICLAJE", "COLORES", "TETERA", "CHOCOLATE BLANCO", "PIZZA DE CUATRO QUESOS"]
         self.palabra_visible= QLabel()
@@ -73,7 +67,7 @@ class hangman(QMainWindow):
         self.c12 = QHBoxLayout()
         self.c13 = QHBoxLayout()
         self.c2 = QHBoxLayout()
-        self.fin = QPushButton("Fin del juego")
+        self.fin = QPushButton(self.texto_cerrar)
         self.actualizador= QPushButton("¡Comienza a jugar!")
         self.c2.addWidget(self.actualizador)
         self.c2.addWidget(self.fin)
@@ -280,9 +274,6 @@ class hangman(QMainWindow):
             self.bB.setEnabled(False)
             self.bN.setEnabled(False)
             self.bM.setEnabled(False)
-
-    def obtener_puntuacion(self):
-        return self.puntuacion
     def comprobar_final(self):
         if(self.acierto==len(self.palabra_secreta)):
             return True

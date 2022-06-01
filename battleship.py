@@ -21,7 +21,9 @@ from PySide6 import QtWidgets, QtGui
 import random
 from copy import deepcopy
 from PySide6.QtMultimedia import QSoundEffect
-class battleship(QMainWindow):
+
+from juego import Juego
+class battleship(QMainWindow, Juego):
     def __init__(self):
         super().__init__()
         self.sonido_victoria = QSoundEffect()
@@ -41,7 +43,7 @@ class battleship(QMainWindow):
         self.sonido_click.setVolume(0.25)
         
         
-        self.puntuacion=0
+        
         self.barcos_totales=0
         self.barcos_rotos1=0
         self.barcos_rotos2=0
@@ -64,7 +66,7 @@ class battleship(QMainWindow):
         self.setWindowTitle("Battleship")
         self.turno = QPushButton("Comienza el jugador que desee")
         self.layoutH = QHBoxLayout()
-        self.fin = QPushButton("Fin del juego")
+        self.fin = QPushButton(self.texto_cerrar)
         #self.fin.setEnabled(False)
         self.layoutPrincipal = QVBoxLayout()
         self.layoutSecundario = QHBoxLayout()
@@ -111,31 +113,6 @@ class battleship(QMainWindow):
                 self.tablero_botones2[fila][columna].fila= fila
                 self.tablero_botones2[fila][columna].columna= columna
                 self.tablero_botones2[fila][columna].jugador= 2
-    # def comenzar_juego(self):
-    #     while True:
-    #         if(self.cont%2):
-    #             while True:
-    #                 for fila in range(10):
-    #                     for columna in range(10):
-    #                          self.tablero_botones1[fila][columna].setEnabled(True)
-    #                          self.tablero_botones2[fila][columna].setEnabled(False)
-    #                 if(self.acierto==False):
-    #                     self.jugador= self.jugador1
-    #                     break
-    #                 elif(self.barcos_rotos2==self.barcos_totales):
-    #                     break
-    #         else:
-    #             while True:
-    #                 for fila in range(10):
-    #                     for columna in range(10):
-    #                          self.tablero_botones1[fila][columna].setEnabled(False)
-    #                          self.tablero_botones2[fila][columna].setEnabled(True)
-    #                 if(self.acierto==False):
-    #                     self.jugador= self.jugador2
-    #                     break
-    #                 elif(self.barcos_rotos1==self.barcos_totales):
-    #                     break
-            
     def crear_tablero_visible(self, jugador):
         self.layoutV = QVBoxLayout()
         layoutH2= QHBoxLayout()
@@ -165,12 +142,10 @@ class battleship(QMainWindow):
                
                 if(jugador==1):
                     self.tablero1[fila].append("F"+str(fila+1)+".C"+str(columna+1))
-                    # vacio = QPushButton()
                     vacio = QPushButton(self.tablero1[fila][columna])
                     self.tablero_botones1[fila].append(vacio)
                 else:
                     self.tablero2[fila].append("F"+str(fila+1)+".C"+str(columna+1))
-                    # vacio = QPushButton()
                     vacio = QPushButton(self.tablero2[fila][columna])
                     self.tablero_botones2[fila].append(vacio)
                 layoutH.addWidget(vacio)
@@ -290,10 +265,20 @@ class battleship(QMainWindow):
             self.tablero1.append([])
             for columna in range(10):
                 self.tablero1[fila].append("F"+str(fila+1)+".C"+str(columna+1))
-                # vacio = QPushButton()
                 vacio = QPushButton(self.tablero[fila][columna])
                 layoutH.addWidget(vacio)
             self.layoutV.addLayout(layoutH)
+    def establecer_barcos_tipo(self, tablero, numero, linea=None):
+        if(numero==1 and linea==None):
+            self.establecer_barcos_solo(tablero)
+        elif(numero==2 and linea=='V'):
+            self.establecer_barcos_dos_vertical(tablero)
+        elif(numero==2 and linea=='H'):
+            self.establecer_barcos_dos_horizontal(tablero)
+        elif(numero==3 and linea=='V'):
+            self.establecer_barcos_tres_vertical(tablero)
+        elif(numero==3 and linea=='H'):
+            self.establecer_barcos_tres_horizontal(tablero)
     def establecer_barcos_solo(self, tablero):
         salida=-1
         while(salida==-1):
@@ -376,15 +361,13 @@ class battleship(QMainWindow):
                 salida=0
         self.barcos_totales=self.barcos_totales+3
     def establecer_barcos(self, tablero):
-        self.establecer_barcos_dos_vertical(tablero)
-        self.establecer_barcos_dos_vertical(tablero)
-        self.establecer_barcos_dos_horizontal(tablero)
-        self.establecer_barcos_dos_horizontal(tablero)
-        self.establecer_barcos_tres_vertical(tablero)
-        self.establecer_barcos_tres_horizontal(tablero)
-        self.establecer_barcos_solo(tablero)
-        self.establecer_barcos_solo(tablero)
-        self.establecer_barcos_solo(tablero)
+        for x in range(3):
+            self.establecer_barcos_tipo(tablero,1)
+        for x in range(2):
+            self.establecer_barcos_tipo(tablero,2,'V')
+            self.establecer_barcos_tipo(tablero,2,'H')
+        self.establecer_barcos_tipo(tablero,3,'V')
+        self.establecer_barcos_tipo(tablero,3,'H')
 
 
     def comprobar_ganador(self):
@@ -409,8 +392,8 @@ class battleship(QMainWindow):
         else:
             return False
 
-    def obtener_puntuacion(self):
-        return self.puntuacion
+    # def obtener_puntuacion(self):
+    #     return self.puntuacion
     def rejugar(self):
         while True:
             eleccion = input("¿Quieres jugar otra partida? (s/n) ").lower()

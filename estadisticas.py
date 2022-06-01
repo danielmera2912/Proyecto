@@ -43,11 +43,10 @@ class AnotherWindow(QMainWindow, Ui_MainWindow):
         self.tabla.setSelectionMode(QAbstractItemView.SingleSelection)
         self.tabla.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.tabla.selectionModel().selectionChanged.connect(self.seleccion)
-        self.actionModificar.triggered.connect(self.modificar)
-        self.actionInsertar.triggered.connect(self.nueva)
-        self.actionEliminar.triggered.connect(self.borrar)
         self.fila = -1
-
+        self.nombreText.setVisible(False)
+        self.scoreText.setVisible(False)
+        self.juegoText.setVisible(False)
 
 
 

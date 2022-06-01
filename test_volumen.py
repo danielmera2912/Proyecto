@@ -16,7 +16,7 @@ class introducirDatos (QMainWindow):
         
         window=AnotherWindow()
         nuevaFila = window.modelo.rowCount()
-        while(nuevaFila<=120):
+        while(nuevaFila<=170):
             window.modelo.insertRow(nuevaFila)
             window.tabla.selectRow(nuevaFila)
             window.modelo.setData(window.modelo.index(nuevaFila, 0), "José")

@@ -19,6 +19,8 @@ import pyqtgraph as pg
 import pyqtgraph.exporters
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtMultimedia import QSoundEffect
+
+from juego import Juego
 class Mano():
     def __init__(self, baraja, info):
         super().__init__()
@@ -62,8 +64,8 @@ class Carta():
         self.palo=palo
         self.paloT= ""
         self.textCard= (palo+str(numero))
-        self.cartaJugable = self.crear_carta(self.textCard)
-        self.cartaNoJugable = self.crear_carta("dorso")
+        self.carta_jugable = self.crear_carta(self.textCard)
+        self.carta_no_jugable = self.crear_carta("dorso")
     def crear_carta(self, textCard):
         card= QLabel()
         carta_completa= 'img/'+textCard+'.png'
@@ -110,10 +112,10 @@ class BarajaCartas():
     def mostrar_baraja(self):
         for x in range(0,len(self.cartas)):
             self.cartas[x].info_carta()
-class Game21(QMainWindow):
+class BlackJack(QMainWindow, Juego):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("21 Game")
+        self.setWindowTitle("BlackJack")
         self.sonido_victoria = QSoundEffect()
         self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
         self.sonido_victoria.setVolume(0.25)
@@ -126,8 +128,6 @@ class Game21(QMainWindow):
         self.sonido_fallo = QSoundEffect()
         self.sonido_fallo.setSource(QUrl.fromLocalFile("fallo.wav"))
         self.sonido_fallo.setVolume(0.25)
-        
-        self.puntuacion=0
         self.ganador=True
         self.contenedor= QWidget()
         self.cartas_rival = QHBoxLayout()
@@ -139,22 +139,18 @@ class Game21(QMainWindow):
         self.baraja= BarajaCartas()
         self.victoria = QLabel("Enhorabuena, ¡Has ganado!")
         self.derrota = QLabel("Lo siento, ¡Has perdido!")
-        self.button1 = QPushButton("Robar carta")
-        self.button2 = QPushButton("Pasar turno")
-        self.button3 = QPushButton("Salir del juego")
-        self.button1.setStyleSheet("border:7px solid #ff0000")
-        self.button2.setStyleSheet("border:7px solid #ff0000")
-        self.button3.setStyleSheet("border:7px solid #ff0000")
+        self.pasar_turno = QPushButton("Pasar turno")
+        self.fin = QPushButton(self.texto_cerrar)
+        self.pasar_turno.setStyleSheet("border:7px solid #ff0000")
+        self.fin.setStyleSheet("border:7px solid #ff0000")
         self.victoria.setStyleSheet("border:7px solid #ff0000")
         self.derrota.setStyleSheet("border:7px solid #ff0000")
-        self.button1.setMinimumSize(50,50)
-        self.button2.setMinimumSize(50,50)
-        self.button3.setMinimumSize(50,50)
+        self.pasar_turno.setMinimumSize(50,50)
+        self.fin.setMinimumSize(50,50)
         self.victoria.setMinimumSize(50,50)
         self.derrota.setMinimumSize(50,50)
-        #self.robar.addWidget(self.button1)
-        self.robar.addWidget(self.button2)
-        self.robar.addWidget(self.button3)
+        self.robar.addWidget(self.pasar_turno)
+        self.robar.addWidget(self.fin)
         self.mano1 = Mano(self.baraja, True)
         self.mano2 = Mano(self.baraja, False)
         self.mano1.robar_carta(False)
@@ -170,16 +166,14 @@ class Game21(QMainWindow):
         self.cartas_robar.addWidget(self.cartas_restantes)
         self.cartas_robar.addWidget(self.cartas_restantes_texto)
         for x in range(0,len(self.mano1.mano)):
-            self.mis_cartas.addWidget(self.mano1.mano[x].cartaJugable)
+            self.mis_cartas.addWidget(self.mano1.mano[x].carta_jugable)
         for x in range(0,len(self.mano2.mano)):
-            self.cartas_rival.addWidget(self.mano2.mano[x].cartaNoJugable)
+            self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
         self.cartas_restantes.clicked.connect(self.robo)
-        self.button2.clicked.connect(self.fin)    
+        self.pasar_turno.clicked.connect(self.finalizar_turno)    
         self.pagelayout = QVBoxLayout()
         self.pagelayout.addLayout(self.cartas_rival)
-        self.pagelayout.addLayout(self.vacio1)
         self.pagelayout.addLayout(self.cartas_robar)
-        self.pagelayout.addLayout(self.vacio2)
         self.pagelayout.addLayout(self.mis_cartas)
         self.pagelayout.addLayout(self.robar)
         self.contenedor.setLayout(self.pagelayout)
@@ -195,7 +189,7 @@ class Game21(QMainWindow):
         self.cartas_robar.addWidget(self.cartas_restantes_texto)
         self.mano1.info_mano()
         for x in range(0,len(self.mano1.mano)):
-            self.mis_cartas.addWidget(self.mano1.mano[x].cartaJugable)
+            self.mis_cartas.addWidget(self.mano1.mano[x].carta_jugable)
         if(self.mano2.valor<=self.mano1.valor and self.mano2.valor<21):
                     if(self.mano2.valor<10):
                         self.mano2.robar_carta(True)
@@ -207,7 +201,7 @@ class Game21(QMainWindow):
                         self.cartas_robar.addWidget(self.cartas_restantes_texto)
                         self.mano2.info_mano()
                         for x in range(0,len(self.mano2.mano)):
-                            self.cartas_rival.addWidget(self.mano2.mano[x].cartaNoJugable)
+                            self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
                     elif(self.mano2.valor>10 and self.mano2.valor<15):
                         chances= random.randrange(10)
                         if(chances>4):
@@ -220,7 +214,7 @@ class Game21(QMainWindow):
                             self.cartas_robar.addWidget(self.cartas_restantes_texto)
                             self.mano2.info_mano()
                             for x in range(0,len(self.mano2.mano)):
-                                self.cartas_rival.addWidget(self.mano2.mano[x].cartaNoJugable)
+                                self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
                     elif(self.mano2.valor>15 and self.mano2.valor<20):
                         chances= random.randrange(3)
                         if(chances==2):
@@ -233,7 +227,7 @@ class Game21(QMainWindow):
                             self.cartas_robar.addWidget(self.cartas_restantes_texto)
                             self.mano2.info_mano()
                             for x in range(0,len(self.mano2.mano)):
-                                self.cartas_rival.addWidget(self.mano2.mano[x].cartaNoJugable)
+                                self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
                     elif(self.mano2.valor==20):
                         chances= random.randrange(10)
                         if(chances==5):
@@ -246,10 +240,9 @@ class Game21(QMainWindow):
                             self.cartas_robar.addWidget(self.cartas_restantes_texto)
                             self.mano2.info_mano()
                             for x in range(0,len(self.mano2.mano)):
-                                self.cartas_rival.addWidget(self.mano2.mano[x].cartaNoJugable)
-    def fin(self):
+                                self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
+    def finalizar_turno(self):
         print("Mano del jugador:")
-        self.mano1.mostrar_mano()
         print(self.mano1.valor)
         print("Mano de la IA")
         self.mano2.mostrar_mano()
@@ -297,7 +290,7 @@ class Game21(QMainWindow):
         for i in reversed(range(self.cartas_rival.count())): 
             self.cartas_rival.itemAt(i).widget().setParent(None)
         for x in range(0,len(self.mano2.mano)):
-            self.cartas_rival.addWidget(self.mano2.mano[x].cartaJugable)
+            self.cartas_rival.addWidget(self.mano2.mano[x].carta_jugable)
         self.celebrar()
     def celebrar(self):
         puntuacionLabel= QLabel("La puntuación obtenida es "+str(self.puntuacion))
@@ -306,101 +299,19 @@ class Game21(QMainWindow):
         for i in reversed(range(self.robar.count())): 
             self.robar.itemAt(i).widget().setParent(None)
         if(self.ganador):
-            self.button1.setEnabled(False)
-            self.button2.setEnabled(False)
-            self.button3.setEnabled(True)
+            self.pasar_turno.setEnabled(False)
+            self.fin.setEnabled(True)
             self.sonido_victoria.play()
             self.robar.addWidget(self.victoria)
             self.robar.addWidget(puntuacionLabel)
-            self.robar.addWidget(self.button3)
+            self.robar.addWidget(self.fin)
         else:
-            self.button1.setEnabled(False)
-            self.button2.setEnabled(False)
-            self.button3.setEnabled(True)
+            self.pasar_turno.setEnabled(False)
+            self.fin.setEnabled(True)
             self.sonido_derrota.play()
             self.robar.addWidget(self.derrota)
             self.robar.addWidget(puntuacionLabel)
-            self.robar.addWidget(self.button3)
-    def juego(self):
-        self.puntuacion=0
-        self.baraja= BarajaCartas()
-        self.mano1 = Mano(self.baraja, True)
-        self.mano2 = Mano(self.baraja, False)
-        self.mano1.robar_carta(True)
-        self.mano2.robar_carta(True)
-        respuesta='s'
-        while(respuesta=='s'):
-            respuesta= input("¿Quieres robar una carta? (s/n): ")
-            if(respuesta=='s'):
-                self.mano1.robar_carta(True)
-                self.mano1.info_mano()
-                if(self.mano2.valor<=self.mano1.valor and self.mano2.valor<21):
-                    if(self.mano2.valor<10):
-                        print("IA ha robado carta")
-                        self.mano2.robar_carta(True)
-                        self.mano2.info_mano()
-                    elif(self.mano2.valor>10 and self.mano2.valor<15):
-                        chances= random.randrange(10)
-                        if(chances>4):
-                            print("IA ha robado carta")
-                            self.mano2.robar_carta(True)
-                            self.mano2.info_mano()
-                    elif(self.mano2.valor>15 and self.mano2.valor<20):
-                        chances= random.randrange(3)
-                        if(chances==2):
-                            print("IA ha robado carta")
-                            self.mano2.robar_carta(True)
-                            self.mano2.info_mano()
-                    elif(self.mano2.valor==20):
-                        chances= random.randrange(10)
-                        if(chances==5):
-                            print("IA ha robado carta")
-                            self.mano2.robar_carta(True)
-                            self.mano2.info_mano()
-        print("Mano del jugador:")
-        self.mano1.mostrar_mano()
-        print(self.mano1.valor)
-        print("Mano de la IA")
-        self.mano2.mostrar_mano()
-        print(self.mano2.valor)
-        if(self.mano1.valor==21 and self.mano2.valor!=21):
-            print("Jugador ha ganado")
-            self.puntuacion=100
-        elif(self.mano1.valor==21 and self.mano2.valor==21):
-            print("Empate")
-            self.puntuacion= 30
-        elif(self.mano2.valor==21 and self.mano1.valor!=21):
-            print("IA ha ganado")
-            self.puntuacion= 0
-        else:
-            if(self.mano1.valor>21 and self.mano2.valor<21):
-                print("IA ha ganado")
-                self.puntuacion= 0
-            elif(self.mano2.valor>21 and self.mano1.valor<21):
-                print("Jugador ha ganado")
-                self.puntuacion= 80
-            else:
-                if(self.mano1.valor>21 and self.mano2.valor>21):
-                    if(self.mano1.valor<self.mano2.valor):
-                        print("Jugador ha ganado")
-                        self.puntuacion= 50
-                    elif(self.mano2.valor<self.mano1.valor):
-                        print("IA ha ganado")
-                        self.puntuacion= 0
-                elif(self.mano1.valor<21 and self.mano2.valor<21):
-                    if(self.mano1.valor>self.mano2.valor):
-                        print("Jugador ha ganado")
-                        self.puntuacion= 80
-                    elif(self.mano2.valor>self.mano1.valor):
-                        print("IA ha ganado")
-                        self.puntuacion= 0
-                else:
-                    print("EMPATE")
-                    self.puntuacion=30
-        
-    def obtener_puntuacion(self):
-        return self.puntuacion
-    
+            self.robar.addWidget(self.fin)
 
     def rejugar(self):
         while True:

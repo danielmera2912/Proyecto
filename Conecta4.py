@@ -21,7 +21,9 @@ from PySide6 import QtWidgets, QtGui
 import random
 from copy import deepcopy
 from PySide6.QtMultimedia import QSoundEffect
-class conecta(QMainWindow):
+
+from juego import Juego
+class conecta(QMainWindow, Juego):
     def __init__(self):
         super().__init__()
         self.sonido_victoria = QSoundEffect()
@@ -57,7 +59,7 @@ class conecta(QMainWindow):
         self.b5 = QPushButton("5")
         self.b6 = QPushButton("6")
         self.b7 = QPushButton("7")
-        self.fin = QPushButton("Fin del juego")
+        self.fin = QPushButton(self.texto_cerrar)
         if(self.jugador==1):
             figura=" (x)"
         else:
@@ -188,8 +190,6 @@ class conecta(QMainWindow):
                 return False
         return True
 
-    def obtener_puntuacion(self):
-        return self.puntuacion
     def rejugar(self):
         while True:
             eleccion = input("¿Quieres jugar otra partida? (s/n) ").lower()

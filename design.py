@@ -54,37 +54,37 @@ class Ui_MainWindow(object):
         self.label = QLabel(self.groupBox)
         self.label.setObjectName(u"label")
 
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
+        #self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
 
         self.nombreText = QLineEdit(self.groupBox)
         self.nombreText.setObjectName(u"nombreText")
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.nombreText)
+        #self.formLayout.setWidget(0, QFormLayout.FieldRole, self.nombreText)
 
         self.label_2 = QLabel(self.groupBox)
         self.label_2.setObjectName(u"label_2")
 
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_2)
+        #self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_2)
 
         self.scoreText = QLineEdit(self.groupBox)
         self.scoreText.setObjectName(u"scoreText")
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.scoreText)
+        #self.formLayout.setWidget(1, QFormLayout.FieldRole, self.scoreText)
 
         self.label_3 = QLabel(self.groupBox)
         self.label_3.setObjectName(u"label_3")
 
-        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_3)
+        #self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_3)
 
         self.juegoText = QLineEdit(self.groupBox)
         self.juegoText.setObjectName(u"juegoText")
 
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.juegoText)
+        #self.formLayout.setWidget(2, QFormLayout.FieldRole, self.juegoText)
 
 
 
 
-        self.verticalLayout_2.addWidget(self.groupBox)
+        #self.verticalLayout_2.addWidget(self.groupBox)
 
         self.tabla = QTableView(self.centralwidget)
         self.tabla.setObjectName(u"tabla")
@@ -92,26 +92,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.tabla)
 
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QMenuBar(MainWindow)
-        self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 800, 24))
-        self.menuRegistro = QMenu(self.menubar)
-        self.menuRegistro.setObjectName(u"menuRegistro")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QStatusBar(MainWindow)
-        self.statusbar.setObjectName(u"statusbar")
-        MainWindow.setStatusBar(self.statusbar)
-        self.toolBar = QToolBar(MainWindow)
-        self.toolBar.setObjectName(u"toolBar")
-        MainWindow.addToolBar(Qt.TopToolBarArea, self.toolBar)
 
-        self.menubar.addAction(self.menuRegistro.menuAction())
-        self.menuRegistro.addAction(self.actionInsertar)
-        self.menuRegistro.addAction(self.actionModificar)
-        self.menuRegistro.addAction(self.actionEliminar)
-        self.toolBar.addAction(self.actionInsertar)
-        self.toolBar.addAction(self.actionModificar)
-        self.toolBar.addAction(self.actionEliminar)
+        # self.toolBar.addAction(self.actionModificar)
+        # self.toolBar.addAction(self.actionEliminar)
 
         self.retranslateUi(MainWindow)
 
@@ -120,23 +103,4 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.actionInsertar.setText(QCoreApplication.translate("MainWindow", u"Insertar", None))
-#if QT_CONFIG(shortcut)
-        self.actionInsertar.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+I", None))
-#endif // QT_CONFIG(shortcut)
-        self.actionModificar.setText(QCoreApplication.translate("MainWindow", u"Modificar", None))
-#if QT_CONFIG(shortcut)
-        self.actionModificar.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+M", None))
-#endif // QT_CONFIG(shortcut)
-        self.actionEliminar.setText(QCoreApplication.translate("MainWindow", u"Eliminar", None))
-#if QT_CONFIG(shortcut)
-        self.actionEliminar.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+D", None))
-#endif // QT_CONFIG(shortcut)
-        self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Estadísticas", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Nombre", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Puntuación", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Juego", None))
-        self.menuRegistro.setTitle(QCoreApplication.translate("MainWindow", u"Registro", None))
-        self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
-    # retranslateUi
 
