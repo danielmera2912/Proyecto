@@ -5,3 +5,12 @@ class Juego:
         return self.puntuacion
     def rejugar(self):
         ...
+    def fondo(self):
+        stylesheet = """
+            QMainWindow {
+                background-image: url("fondo2.png"); 
+                background-repeat: no-repeat; 
+                background-position: center;
+            }
+        """
+        self.setStyleSheet(stylesheet)

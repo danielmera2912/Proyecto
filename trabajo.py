@@ -3,9 +3,10 @@ from pathlib import Path
 import random
 import sys, os
 import textwrap
+from tkinter import CENTER
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QApplication, QComboBox, QMainWindow, QPushButton, QWizard, QWizardPage, QLineEdit, QHBoxLayout, QLabel, QWidget, QAbstractItemView, QVBoxLayout, QMessageBox, QFormLayout, QTextEdit, QSpinBox
-from Qt import QtGui
+from Qt import QtCore, QtGui
 from reportlab.pdfgen.canvas import Canvas
 from pdfrw import PdfReader
 from pdfrw.buildxobj import pagexobj
@@ -58,6 +59,32 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("App SimpGam")
         self.contenedor= QWidget()
         self.layout = QVBoxLayout()
+        self.titulo = QLabel("SimpleGames")
+        self.titulo.setStyleSheet("background-color: #64C5DA;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 74px;"
+                                        "min-width: 10em;"
+                                        "margin:80px;"
+                                        "padding: 6px;")
+        self.titulo.setAlignment(Qt.AlignCenter)
+        # self.titulo.setMaximumWidth(30)
+        self.creditos = QLabel("Creado por Daniel Mera Sachse")
+        self.creditos.setStyleSheet("background-color: #64C5DA;"
+                                        "color: white;"
+                                    "border-style: outset;"
+                                    "border-width: 2px;"
+                                    "border-radius: 210px;"
+                                    "border-color: blue;"
+                                    "font: 8px;"
+                                    "min-width: 10em;"
+                                    "margin:80px;"
+                                    "padding: 6px;")
+        self.titulo.setAlignment(Qt.AlignCenter)
+        self.ayuda = QPushButton("Ayuda")
         self.boton_jugar = QPushButton("Jugar")
         self.boton_estadisticas = QPushButton("Estadísticas")
         self.boton_salir = QPushButton("Salir")
@@ -71,22 +98,79 @@ class MainWindow(QMainWindow):
         self.boton_battleship.setVisible(False)
         self.boton_hangman.setVisible(False)
         self.boton_back.setVisible(False)
-        self.boton_jugar.setStyleSheet("border:7px solid #ff0000")
-        self.boton_estadisticas.setStyleSheet("border:7px solid #ff0000")
-        self.boton_salir.setStyleSheet("border:7px solid #ff0000")
-        self.boton_blackjack.setStyleSheet("border:7px solid #ff0000")
-        self.boton_conecta.setStyleSheet("border:7px solid #ff0000")
-        self.boton_battleship.setStyleSheet("border:7px solid #ff0000")
-        self.boton_hangman.setStyleSheet("border:7px solid #ff0000")
-        self.boton_back.setStyleSheet("border:7px solid #ff0000")
-        self.boton_jugar.setMinimumSize(50,50)
-        self.boton_estadisticas.setMinimumSize(50,50)
-        self.boton_salir.setMinimumSize(50,50)
-        self.boton_blackjack.setMinimumSize(50,50)
-        self.boton_conecta.setMinimumSize(50,50)
-        self.boton_battleship.setMinimumSize(50,50)
-        self.boton_hangman.setMinimumSize(50,50)
-        self.boton_back.setMinimumSize(50,50)
+        self.boton_jugar.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
+        self.boton_estadisticas.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
+        self.boton_salir.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
+        self.boton_blackjack.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
+        self.boton_conecta.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
+        self.boton_battleship.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
+        self.boton_hangman.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
+        self.boton_back.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
+ 
         self.boton_jugar.clicked.connect(lambda: self.visibilidad_menu(0))
         self.boton_estadisticas.clicked.connect(self.boton_estadisticas_clicked)
         self.boton_salir.clicked.connect(self.close)
@@ -95,14 +179,17 @@ class MainWindow(QMainWindow):
         self.boton_battleship.clicked.connect(self.boton_battleship_clicked)
         self.boton_hangman.clicked.connect(self.boton_hangman_clicked)
         self.boton_back.clicked.connect(lambda: self.visibilidad_menu(1))
-        self.layout.addWidget(self.boton_jugar)
-        self.layout.addWidget(self.boton_estadisticas)
-        self.layout.addWidget(self.boton_salir)
-        self.layout.addWidget(self.boton_blackjack)
-        self.layout.addWidget(self.boton_conecta)
-        self.layout.addWidget(self.boton_battleship)
-        self.layout.addWidget(self.boton_hangman)
-        self.layout.addWidget(self.boton_back)
+
+        self.layout.addWidget(self.titulo)
+        self.layout.addWidget(self.boton_jugar, 0, Qt.AlignCenter)
+        self.layout.addWidget(self.boton_estadisticas, 0, Qt.AlignCenter)
+        self.layout.addWidget(self.boton_salir, 0, Qt.AlignCenter)
+        self.layout.addWidget(self.boton_blackjack, 0, Qt.AlignCenter)
+        self.layout.addWidget(self.boton_conecta, 0, Qt.AlignCenter)
+        self.layout.addWidget(self.boton_battleship, 0, Qt.AlignCenter)
+        self.layout.addWidget(self.boton_hangman, 0, Qt.AlignCenter)
+        self.layout.addWidget(self.boton_back, 0, Qt.AlignCenter)
+        self.layout.addWidget(self.creditos, 0, Qt.AlignRight)
         self.contenedor.setLayout(self.layout)
         self.setCentralWidget(self.contenedor)
     def visibilidad_menu(self, accion):
@@ -115,6 +202,7 @@ class MainWindow(QMainWindow):
             self.boton_battleship.setVisible(True)
             self.boton_hangman.setVisible(True)
             self.boton_back.setVisible(True)
+            self.creditos.setVisible(True)
         else:
             self.boton_jugar.setVisible(True)
             self.boton_estadisticas.setVisible(True)
@@ -124,6 +212,7 @@ class MainWindow(QMainWindow):
             self.boton_battleship.setVisible(False)
             self.boton_hangman.setVisible(False)
             self.boton_back.setVisible(False)
+            self.creditos.setVisible(True)
     def button_clicked(self, s, puntuacion, juego):
         self.wizard = QWizard()
         self.wizard.setWizardStyle(QWizard.ModernStyle)
@@ -172,11 +261,11 @@ class MainWindow(QMainWindow):
         self.modelo.setData(self.modelo.index(nuevaFila, 2), juego)
         self.modelo.submit()
     def boton_estadisticas_clicked(self, checked):
-        self.w = AnotherWindow()
-        if self.w.isVisible():
-            self.w.hide()
+        self.estadisticas = AnotherWindow()
+        if self.estadisticas.isVisible():
+            self.estadisticas.hide()
         else:
-            self.w.show()
+            self.estadisticas.show()
     def button4_clicked(self,s):
         self.setCentralWidget(self.contenedor)
     def boton_blackjack_clicked(self,s):

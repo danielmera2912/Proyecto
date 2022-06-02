@@ -21,12 +21,12 @@ from PySide6 import QtWidgets, QtGui
 import random
 from copy import deepcopy
 from PySide6.QtMultimedia import QSoundEffect
-
 from juego import Juego
 class hangman(QMainWindow, Juego):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Hangman")
+        self.fondo()
         self.sonido_victoria = QSoundEffect()
         self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
         self.sonido_victoria.setVolume(0.25)
@@ -58,6 +58,7 @@ class hangman(QMainWindow, Juego):
         self.texto_letras_usadas = "Letras utilizadas: "
         self.diccionario= ["HARRY POTTER", "LAS CRONICAS DE NARNIA", "ABECEDARIO", "DICCIONARIO", "COCHE", "VEHICULO AEREO", "BOTELLA DE AGUA", "RECICLAJE", "COLORES", "TETERA", "CHOCOLATE BLANCO", "PIZZA DE CUATRO QUESOS"]
         self.palabra_visible= QLabel()
+        self.palabra_visible.setStyleSheet("font: bold 24px;")
         self.contenedor= QWidget()
         self.layout = QVBoxLayout()
         self.c1 = QVBoxLayout()
@@ -68,7 +69,25 @@ class hangman(QMainWindow, Juego):
         self.c13 = QHBoxLayout()
         self.c2 = QHBoxLayout()
         self.fin = QPushButton(self.texto_cerrar)
+        self.fin.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.actualizador= QPushButton("¡Comienza a jugar!")
+        self.actualizador.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.c2.addWidget(self.actualizador)
         self.c2.addWidget(self.fin)
 
@@ -100,8 +119,8 @@ class hangman(QMainWindow, Juego):
         self.bN= QPushButton("N")
         self.bM= QPushButton("M")
 
-        self.c00.addWidget(self.fase)
-        self.c10.addWidget(self.palabra_visible)
+        self.c00.addWidget(self.fase, 0, Qt.AlignCenter)
+        self.c10.addWidget(self.palabra_visible, 0, Qt.AlignCenter)
         self.c11.addWidget(self.bQ)
         self.c11.addWidget(self.bW)
         self.c11.addWidget(self.bE)

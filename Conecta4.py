@@ -26,6 +26,7 @@ from juego import Juego
 class conecta(QMainWindow, Juego):
     def __init__(self):
         super().__init__()
+        self.fondo()
         self.sonido_victoria = QSoundEffect()
         self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
         self.sonido_victoria.setVolume(0.25)
@@ -41,7 +42,7 @@ class conecta(QMainWindow, Juego):
         self.sonido_click = QSoundEffect()
         self.sonido_click.setSource(QUrl.fromLocalFile("click.wav"))
         self.sonido_click.setVolume(0.25)
-        self.turnoTexto= "Es el turno del jugador "
+        self.turno_texto= "Es el turno del jugador "
         self.puntuacion=100
         self.tablero = []
         self.space = " "
@@ -53,18 +54,99 @@ class conecta(QMainWindow, Juego):
         self.setWindowTitle("Conecta4")
         self.layoutV = QVBoxLayout()
         self.b1 = QPushButton("1")
+        self.b1.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.b2 = QPushButton("2")
+        self.b2.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.b3 = QPushButton("3")
+        self.b3.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.b4 = QPushButton("4")
+        self.b4.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.b5 = QPushButton("5")
+        self.b5.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.b6 = QPushButton("6")
+        self.b6.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.b7 = QPushButton("7")
+        self.b7.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.fin = QPushButton(self.texto_cerrar)
+        self.fin.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         if(self.jugador==1):
             figura=" (x)"
         else:
             figura=" (o)"
-        self.turno = QPushButton(str(self.turnoTexto)+str(self.jugador)+str(figura))
+        self.turno = QPushButton(str(self.turno_texto)+str(self.jugador)+str(figura))
+        self.turno.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.contenedor= QWidget()
         self.contenedor.setLayout(self.crear_tablero())
         self.b1.clicked.connect(lambda: self.colocar_ficha(0, self.jugador))
@@ -90,16 +172,7 @@ class conecta(QMainWindow, Juego):
         
         self.actualizar_tablero()
 
-    def clearLayout(self, layout):
-        if layout is not None:
-            while layout.count():
-                item = layout.takeAt(0)
-                widget = item.widget()
-                if widget is not None:
-                    if(widget!=self.fin):
-                        widget.deleteLater()
-                else:
-                    self.clearLayout(item.layout())
+
     def actualizar_tablero(self):
         self.clearLayout(self.layoutV)
         for fila in range(6):
@@ -115,7 +188,7 @@ class conecta(QMainWindow, Juego):
         if(self.juegoFin()==True):
             self.turno = QPushButton("Juego finalizado porque el tablero está lleno.")
         else:
-            self.turno = QPushButton(str(self.turnoTexto)+str(self.jugador)+str(figura))
+            self.turno = QPushButton(str(self.turno_texto)+str(self.jugador)+str(figura))
         self.b1 = QPushButton("1")
         self.b2 = QPushButton("2")
         self.b3 = QPushButton("3")

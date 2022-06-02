@@ -116,6 +116,7 @@ class BlackJack(QMainWindow, Juego):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("BlackJack")
+        self.fondo()
         self.sonido_victoria = QSoundEffect()
         self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
         self.sonido_victoria.setVolume(0.25)
@@ -141,8 +142,24 @@ class BlackJack(QMainWindow, Juego):
         self.derrota = QLabel("Lo siento, ¡Has perdido!")
         self.pasar_turno = QPushButton("Pasar turno")
         self.fin = QPushButton(self.texto_cerrar)
-        self.pasar_turno.setStyleSheet("border:7px solid #ff0000")
-        self.fin.setStyleSheet("border:7px solid #ff0000")
+        self.pasar_turno.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
+        self.fin.setStyleSheet("background-color: #1520A6;"
+                                                "color: white;"
+                                            "border-style: outset;"
+                                            "border-width: 2px;"
+                                            "border-radius: 210px;"
+                                            "border-color: blue;"
+                                            "font: bold 14px;"
+                                            "min-width: 10em;"
+                                            "padding: 6px;")                                        
         self.victoria.setStyleSheet("border:7px solid #ff0000")
         self.derrota.setStyleSheet("border:7px solid #ff0000")
         self.pasar_turno.setMinimumSize(50,50)

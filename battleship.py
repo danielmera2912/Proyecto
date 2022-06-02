@@ -26,6 +26,7 @@ from juego import Juego
 class battleship(QMainWindow, Juego):
     def __init__(self):
         super().__init__()
+        self.fondo()
         self.sonido_victoria = QSoundEffect()
         self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
         self.sonido_victoria.setVolume(0.25)
@@ -65,8 +66,26 @@ class battleship(QMainWindow, Juego):
         self.botones_usados= []
         self.setWindowTitle("Battleship")
         self.turno = QPushButton("Comienza el jugador que desee")
+        self.turno.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.layoutH = QHBoxLayout()
         self.fin = QPushButton(self.texto_cerrar)
+        self.fin.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         #self.fin.setEnabled(False)
         self.layoutPrincipal = QVBoxLayout()
         self.layoutSecundario = QHBoxLayout()
