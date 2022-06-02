@@ -27,6 +27,12 @@ class battleship(QMainWindow, Juego):
     def __init__(self):
         super().__init__()
         self.fondo()
+        self.agua  = QPixmap("agua.png")
+        self.agua_fallo  = QPixmap("agua_fallo.png")
+        self.fragmento_roto  = QPixmap("fragmento_roto.png")
+        # self.agua= self.agua.scaledToWidth(20)
+        # self.agua_fallo= self.agua_fallo.scaledToWidth(20)
+        # self.fragmento_roto= self.fragmento_roto.scaledToWidth(20)
         self.sonido_victoria = QSoundEffect()
         self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
         self.sonido_victoria.setVolume(0.25)
@@ -135,17 +141,128 @@ class battleship(QMainWindow, Juego):
     def crear_tablero_visible(self, jugador):
         self.layoutV = QVBoxLayout()
         layoutH2= QHBoxLayout()
-        layoutH2.addWidget(QPushButton(str("0")))
-        layoutH2.addWidget(QPushButton(str("A")))
-        layoutH2.addWidget(QPushButton(str("B")))
-        layoutH2.addWidget(QPushButton(str("C")))
-        layoutH2.addWidget(QPushButton(str("D")))
-        layoutH2.addWidget(QPushButton(str("E")))
-        layoutH2.addWidget(QPushButton(str("F")))
-        layoutH2.addWidget(QPushButton(str("G")))
-        layoutH2.addWidget(QPushButton(str("H")))
-        layoutH2.addWidget(QPushButton(str("I")))
-        layoutH2.addWidget(QPushButton(str("J")))
+        button0= QPushButton(str("0"))
+        buttonA= QPushButton(str("A"))
+        buttonB= QPushButton(str("B"))
+        buttonC= QPushButton(str("C"))
+        buttonD= QPushButton(str("D"))
+        buttonE= QPushButton(str("E"))
+        buttonF= QPushButton(str("F"))
+        buttonG= QPushButton(str("G"))
+        buttonH= QPushButton(str("H"))
+        buttonI= QPushButton(str("I"))
+        buttonJ= QPushButton(str("J"))
+        # button0.setStyleSheet("background-color: #1520A6;"
+        #                                     "color: white;"
+        #                                 "border-style: outset;"
+        #                                 "border-width: 2px;"
+        #                                 "border-radius: 210px;"
+        #                                 "border-color: blue;"
+        #                                 "font: bold 14px;"
+        #                                 "min-width: 10em;"
+        #                                 "padding: 6px;")
+        
+        # buttonA.setStyleSheet("background-color: #1520A6;"
+        #                                     "color: white;"
+        #                                 "border-style: outset;"
+        #                                 "border-width: 2px;"
+        #                                 "border-radius: 210px;"
+        #                                 "border-color: blue;"
+        #                                 "font: bold 14px;"
+        #                                 "min-width: 10em;"
+        #                                 "padding: 6px;")
+        # buttonB.setStyleSheet("background-color: #1520A6;"
+        #                                     "color: white;"
+        #                                 "border-style: outset;"
+        #                                 "border-width: 2px;"
+        #                                 "border-radius: 210px;"
+        #                                 "border-color: blue;"
+        #                                 "font: bold 14px;"
+        #                                 "min-width: 10em;"
+        #                                 "padding: 6px;")
+        # buttonC.setStyleSheet("background-color: #1520A6;"
+        #                                     "color: white;"
+        #                                 "border-style: outset;"
+        #                                 "border-width: 2px;"
+        #                                 "border-radius: 210px;"
+        #                                 "border-color: blue;"
+        #                                 "font: bold 14px;"
+        #                                 "min-width: 10em;"
+        #                                 "padding: 6px;")
+        # buttonD.setStyleSheet("background-color: #1520A6;"
+        #                                     "color: white;"
+        #                                 "border-style: outset;"
+        #                                 "border-width: 2px;"
+        #                                 "border-radius: 210px;"
+        #                                 "border-color: blue;"
+        #                                 "font: bold 14px;"
+        #                                 "min-width: 10em;"
+        #                                 "padding: 6px;")
+        # buttonE.setStyleSheet("background-color: #1520A6;"
+        #                                     "color: white;"
+        #                                 "border-style: outset;"
+        #                                 "border-width: 2px;"
+        #                                 "border-radius: 210px;"
+        #                                 "border-color: blue;"
+        #                                 "font: bold 14px;"
+        #                                 "min-width: 10em;"
+        #                                 "padding: 6px;")
+        # buttonF.setStyleSheet("background-color: #1520A6;"
+        #                                     "color: white;"
+        #                                 "border-style: outset;"
+        #                                 "border-width: 2px;"
+        #                                 "border-radius: 210px;"
+        #                                 "border-color: blue;"
+        #                                 "font: bold 14px;"
+        #                                 "min-width: 10em;"
+        #                                 "padding: 6px;")
+        # buttonG.setStyleSheet("background-color: #1520A6;"
+        #                                     "color: white;"
+        #                                 "border-style: outset;"
+        #                                 "border-width: 2px;"
+        #                                 "border-radius: 210px;"
+        #                                 "border-color: blue;"
+        #                                 "font: bold 14px;"
+        #                                 "min-width: 10em;"
+        #                                 "padding: 6px;")
+        # buttonH.setStyleSheet("background-color: #1520A6;"
+        #                                     "color: white;"
+        #                                 "border-style: outset;"
+        #                                 "border-width: 2px;"
+        #                                 "border-radius: 210px;"
+        #                                 "border-color: blue;"
+        #                                 "font: bold 14px;"
+        #                                 "min-width: 10em;"
+        #                                 "padding: 6px;")
+        # buttonI.setStyleSheet("background-color: #1520A6;"
+        #                                     "color: white;"
+        #                                 "border-style: outset;"
+        #                                 "border-width: 2px;"
+        #                                 "border-radius: 210px;"
+        #                                 "border-color: blue;"
+        #                                 "font: bold 14px;"
+        #                                 "min-width: 10em;"
+        #                                 "padding: 6px;")
+        # buttonJ.setStyleSheet("background-color: #1520A6;"
+        #                                     "color: white;"
+        #                                 "border-style: outset;"
+        #                                 "border-width: 2px;"
+        #                                 "border-radius: 210px;"
+        #                                 "border-color: blue;"
+        #                                 "font: bold 14px;"
+        #                                 "min-width: 10em;"
+        #                                 "padding: 6px;")
+        layoutH2.addWidget(button0)
+        layoutH2.addWidget(buttonA)
+        layoutH2.addWidget(buttonB)
+        layoutH2.addWidget(buttonC)
+        layoutH2.addWidget(buttonD)
+        layoutH2.addWidget(buttonE)
+        layoutH2.addWidget(buttonF)
+        layoutH2.addWidget(buttonG)
+        layoutH2.addWidget(buttonH)
+        layoutH2.addWidget(buttonI)
+        layoutH2.addWidget(buttonJ)
         self.layoutV.addLayout(layoutH2)
         for fila in range(10):
             layoutH = QHBoxLayout()
@@ -161,11 +278,13 @@ class battleship(QMainWindow, Juego):
                
                 if(jugador==1):
                     self.tablero1[fila].append("F"+str(fila+1)+".C"+str(columna+1))
-                    vacio = QPushButton(self.tablero1[fila][columna])
+                    vacio = QPushButton()
+                    vacio.setStyleSheet("background-image: url(agua.png); background-repeat: no-repeat")
                     self.tablero_botones1[fila].append(vacio)
                 else:
                     self.tablero2[fila].append("F"+str(fila+1)+".C"+str(columna+1))
-                    vacio = QPushButton(self.tablero2[fila][columna])
+                    vacio = QPushButton()
+                    vacio.setStyleSheet("background-image: url(agua.png); background-repeat: no-repeat")
                     self.tablero_botones2[fila].append(vacio)
                 layoutH.addWidget(vacio)
             self.layoutV.addLayout(layoutH)
@@ -187,13 +306,13 @@ class battleship(QMainWindow, Juego):
                 self.tablero1[button.fila][button.columna]="|·|"
                 self.acierto=False
                 self.tablero_botones1[button.fila][button.columna].setText("·")
-                self.tablero_botones1[button.fila][button.columna].setStyleSheet("background-color: red")
+                self.tablero_botones1[button.fila][button.columna].setStyleSheet("background-image: url(agua_fallo.png); background-repeat: no-repeat")
                 self.cont=self.cont+1
                 self.sonido_fallo.play()
             else:
                 self.tablero1[button.fila][button.columna]="|X|"
                 self.tablero_botones1[button.fila][button.columna].setText("X")
-                self.tablero_botones1[button.fila][button.columna].setStyleSheet("background-color: green")
+                self.tablero_botones1[button.fila][button.columna].setStyleSheet("background-image: url(fragmento_roto.png); background-repeat: no-repeat")
                 self.acierto=True
                 self.barcos_rotos1=self.barcos_rotos1+1
                 self.cont=self.cont+1
@@ -224,13 +343,13 @@ class battleship(QMainWindow, Juego):
                 self.tablero2[button.fila][button.columna]="|·|"
                 self.acierto=False
                 self.tablero_botones2[button.fila][button.columna].setText("·")
-                self.tablero_botones2[button.fila][button.columna].setStyleSheet("background-color: red")
+                self.tablero_botones2[button.fila][button.columna].setStyleSheet("background-image: url(agua_fallo.png); background-repeat: no-repeat")
                 self.cont=self.cont+1
                 self.sonido_fallo.play()
             else:
                 self.tablero2[button.fila][button.columna]="|X|"
                 self.tablero_botones2[button.fila][button.columna].setText("X")
-                self.tablero_botones2[button.fila][button.columna].setStyleSheet("background-color: green")
+                self.tablero_botones2[button.fila][button.columna].setStyleSheet("background-image: url(fragmento_roto.png); background-repeat: no-repeat")
                 self.acierto=True
                 self.barcos_rotos2=self.barcos_rotos2+1
                 self.cont=self.cont+1
@@ -284,7 +403,8 @@ class battleship(QMainWindow, Juego):
             self.tablero1.append([])
             for columna in range(10):
                 self.tablero1[fila].append("F"+str(fila+1)+".C"+str(columna+1))
-                vacio = QPushButton(self.tablero[fila][columna])
+                vacio = QPushButton()
+                vacio.setStyleSheet("background-image: url(agua.png); background-repeat: no-repeat")
                 layoutH.addWidget(vacio)
             self.layoutV.addLayout(layoutH)
     def establecer_barcos_tipo(self, tablero, numero, linea=None):

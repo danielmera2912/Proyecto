@@ -26,7 +26,22 @@ from juego import Juego
 class conecta(QMainWindow, Juego):
     def __init__(self):
         super().__init__()
-        self.fondo()
+        stylesheet = """
+            QMainWindow {
+                background-image: url("fondo4.png"); 
+                background-repeat: no-repeat; 
+                background-position: center;
+            }
+        """
+        self.setStyleSheet(stylesheet)
+        self.circulo_blanco  = QPixmap("circulo_blanco.png")
+        self.circulo_rojo  = QPixmap("circulo_rojo.png")
+        self.circulo_amarillo  = QPixmap("circulo_amarillo.png")
+        self.circulo_blanco= self.circulo_blanco.scaledToWidth(20)
+        self.circulo_rojo= self.circulo_rojo.scaledToWidth(20)
+        self.circulo_amarillo= self.circulo_amarillo.scaledToWidth(20)
+        self.hueco= QLabel()
+        self.hueco.setPixmap(self.circulo_blanco)
         self.sonido_victoria = QSoundEffect()
         self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
         self.sonido_victoria.setVolume(0.25)
@@ -172,14 +187,33 @@ class conecta(QMainWindow, Juego):
         
         self.actualizar_tablero()
 
-
+    def clearLayout(self, layout):
+        if layout is not None:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    if(widget!=self.fin):
+                        widget.deleteLater()
+                else:
+                    self.clearLayout(item.layout())
     def actualizar_tablero(self):
         self.clearLayout(self.layoutV)
         for fila in range(6):
             layoutH = QHBoxLayout()
             for columna in range(7):
-                vacio = QLabel(self.tablero[fila][columna])
-                layoutH.addWidget(vacio)
+                if(self.tablero[fila][columna]==self.figura1):
+                    hueco= QLabel()
+                    hueco.setPixmap(self.circulo_amarillo)
+                    layoutH.addWidget(hueco)
+                elif(self.tablero[fila][columna]==self.figura2):
+                    hueco= QLabel()
+                    hueco.setPixmap(self.circulo_rojo)
+                    layoutH.addWidget(hueco)
+                else:
+                    hueco= QLabel()
+                    hueco.setPixmap(self.circulo_blanco)
+                    layoutH.addWidget(hueco)
             self.layoutV.addLayout(layoutH)
         if(self.jugador==1):
             figura=" (x)"
@@ -187,15 +221,96 @@ class conecta(QMainWindow, Juego):
             figura=" (o)"
         if(self.juegoFin()==True):
             self.turno = QPushButton("Juego finalizado porque el tablero está lleno.")
+            self.turno.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         else:
             self.turno = QPushButton(str(self.turno_texto)+str(self.jugador)+str(figura))
+            self.turno.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.b1 = QPushButton("1")
+        self.b1.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.b2 = QPushButton("2")
+        self.b2.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.b3 = QPushButton("3")
+        self.b3.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.b4 = QPushButton("4")
+        self.b4.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.b5 = QPushButton("5")
+        self.b5.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.b6 = QPushButton("6")
+        self.b6.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.b7 = QPushButton("7")
+        self.b7.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         # self.fin = QPushButton("Fin del juego")
         self.b1.clicked.connect(lambda: self.colocar_ficha(0, self.jugador))
         self.b2.clicked.connect(lambda: self.colocar_ficha(1, self.jugador))
@@ -241,7 +356,9 @@ class conecta(QMainWindow, Juego):
             for columna in range(7):
                 self.tablero[fila].append(self.figura0)
                 vacio = QLabel(self.tablero[fila][columna])
-                layoutH.addWidget(vacio)
+                hueco= QLabel()
+                hueco.setPixmap(self.circulo_blanco)
+                layoutH.addWidget(hueco)
             self.layoutV.addLayout(layoutH)
         layoutH2 = QHBoxLayout()
         layoutH2.addWidget(self.b1)

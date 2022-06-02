@@ -116,7 +116,14 @@ class BlackJack(QMainWindow, Juego):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("BlackJack")
-        self.fondo()
+        stylesheet = """
+            QMainWindow {
+                background-image: url("fondo3.png"); 
+                background-repeat: repeat; 
+                background-position: center;
+            }
+        """
+        self.setStyleSheet(stylesheet)
         self.sonido_victoria = QSoundEffect()
         self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
         self.sonido_victoria.setVolume(0.25)
