@@ -25,3 +25,5 @@ El jugador tendrá que conseguir la averiguar todas las letras de la palabra sec
 ### Documentación
 
 ### Descargar
+
+### Visualización del juego
