@@ -20,7 +20,7 @@ Hundir la flota se ha establecido que se jugará jugador contra otro jugador, aq
 Se debe pulsar donde se desee probar suerte para hundir un fragmento de barco
 
 #### Hangman
-El jugador tendrá que conseguir la averiguar todas las letras de la palabra secreta que es establecida al azar de un diccionario de palabras distintas. Las normas del ahorcado es que un jugador escribe la palabra que tratará de adivinar el otro jugador, tendrá que pulsar de letra en letra para ir revelando si dicha letra se encuentra en la palabra o no, se perderá cuando el muñeco se complete, cada fallo procederá a que se vaya completando, y ganará cuando complete la palabra tras revelar todas sus letras.
+El jugador tendrá que conseguir averiguar todas las letras de la palabra secreta que es establecida al azar de un diccionario de palabras distintas. Las normas del ahorcado es que un jugador escribe la palabra que tratará de adivinar el otro jugador, tendrá que pulsar de letra en letra para ir revelando si dicha letra se encuentra en la palabra o no, se perderá cuando el muñeco se complete, cada fallo procederá a que se vaya completando, y ganará cuando complete la palabra tras revelar todas sus letras.
 
 ### Documentación
 
