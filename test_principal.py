@@ -2,7 +2,7 @@ import unittest, pytest
 from PySide6 import QtCore, QtGui
 from PySide6.QtCore import QSize
 from PySide6.QtWidgets import QApplication, QWidget
-from trabajo import MainWindow
+from simplegames import MainWindow
 class test(unittest.TestCase):
     def test_texto1(self):
         app=QApplication.instance()

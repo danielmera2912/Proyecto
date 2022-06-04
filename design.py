@@ -50,56 +50,24 @@ class Ui_MainWindow(object):
         self.groupBox.setObjectName(u"groupBox")
         self.formLayout = QFormLayout(self.groupBox)
         self.formLayout.setObjectName(u"formLayout")
-
         self.label = QLabel(self.groupBox)
         self.label.setObjectName(u"label")
-
-        #self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
-
         self.nombreText = QLineEdit(self.groupBox)
         self.nombreText.setObjectName(u"nombreText")
-
-        #self.formLayout.setWidget(0, QFormLayout.FieldRole, self.nombreText)
-
         self.label_2 = QLabel(self.groupBox)
         self.label_2.setObjectName(u"label_2")
-
-        #self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_2)
-
         self.scoreText = QLineEdit(self.groupBox)
         self.scoreText.setObjectName(u"scoreText")
-
-        #self.formLayout.setWidget(1, QFormLayout.FieldRole, self.scoreText)
-
         self.label_3 = QLabel(self.groupBox)
         self.label_3.setObjectName(u"label_3")
-
-        #self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_3)
-
         self.juegoText = QLineEdit(self.groupBox)
         self.juegoText.setObjectName(u"juegoText")
-
-        #self.formLayout.setWidget(2, QFormLayout.FieldRole, self.juegoText)
-
-
-
-
-        #self.verticalLayout_2.addWidget(self.groupBox)
-
         self.tabla = QTableView(self.centralwidget)
         self.tabla.setObjectName(u"tabla")
-
         self.verticalLayout_2.addWidget(self.tabla)
-
         MainWindow.setCentralWidget(self.centralwidget)
-
-        # self.toolBar.addAction(self.actionModificar)
-        # self.toolBar.addAction(self.actionEliminar)
-
         self.retranslateUi(MainWindow)
-
         QMetaObject.connectSlotsByName(MainWindow)
-    # setupUi
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))

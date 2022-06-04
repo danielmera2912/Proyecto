@@ -33,10 +33,6 @@ class Mano():
         self.sonido_click.setSource(QUrl.fromLocalFile("click.wav"))
         self.sonido_click.setVolume(0.25)
         
-    def comienzoPartida(self):
-        for i in range(3):
-            robo= self.cartas.cartas.pop()
-            self.mano.append(robo)
     def robar_carta(self, robo_manual):
         if(robo_manual==True):
             self.sonido_click.play()
@@ -139,14 +135,30 @@ class BlackJack(QMainWindow, Juego):
         self.ganador=True
         self.contenedor= QWidget()
         self.cartas_rival = QHBoxLayout()
-        self.vacio1 = QHBoxLayout()
         self.cartas_robar = QHBoxLayout()
-        self.vacio2 = QHBoxLayout()
         self.mis_cartas = QHBoxLayout()
         self.robar = QHBoxLayout()
         self.baraja= BarajaCartas()
         self.victoria = QLabel("Enhorabuena, ¡Has ganado!")
+        self.victoria.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.derrota = QLabel("Lo siento, ¡Has perdido!")
+        self.derrota.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.pasar_turno = QPushButton("Pasar turno")
         self.fin = QPushButton(self.texto_cerrar)
         self.pasar_turno.setStyleSheet("background-color: #1520A6;"
@@ -167,8 +179,6 @@ class BlackJack(QMainWindow, Juego):
                                             "font: bold 14px;"
                                             "min-width: 10em;"
                                             "padding: 6px;")                                        
-        self.victoria.setStyleSheet("border:7px solid #ff0000")
-        self.derrota.setStyleSheet("border:7px solid #ff0000")
         self.pasar_turno.setMinimumSize(50,50)
         self.fin.setMinimumSize(50,50)
         self.victoria.setMinimumSize(50,50)
@@ -317,9 +327,6 @@ class BlackJack(QMainWindow, Juego):
             self.cartas_rival.addWidget(self.mano2.mano[x].carta_jugable)
         self.celebrar()
     def celebrar(self):
-        puntuacionLabel= QLabel("La puntuación obtenida es "+str(self.puntuacion))
-        puntuacionLabel.setStyleSheet("border:7px solid #ff0000")
-        puntuacionLabel.setMinimumSize(50,50)
         for i in reversed(range(self.robar.count())): 
             self.robar.itemAt(i).widget().setParent(None)
         if(self.ganador):
@@ -327,14 +334,12 @@ class BlackJack(QMainWindow, Juego):
             self.fin.setEnabled(True)
             self.sonido_victoria.play()
             self.robar.addWidget(self.victoria)
-            self.robar.addWidget(puntuacionLabel)
             self.robar.addWidget(self.fin)
         else:
             self.pasar_turno.setEnabled(False)
             self.fin.setEnabled(True)
             self.sonido_derrota.play()
             self.robar.addWidget(self.derrota)
-            self.robar.addWidget(puntuacionLabel)
             self.robar.addWidget(self.fin)
 
     def rejugar(self):
@@ -344,9 +349,3 @@ class BlackJack(QMainWindow, Juego):
                 return True
             elif eleccion == "n":
                 return False
-
-    def main(self):
-        while True:
-            juego = self.juego()
-            if not self.rejugar():
-                break

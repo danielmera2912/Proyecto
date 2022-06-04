@@ -43,7 +43,6 @@ class hangman(QMainWindow, Juego):
         self.sonido_click.setSource(QUrl.fromLocalFile("click.wav"))
         self.sonido_click.setVolume(0.25)
         self.fase= QLabel()
-
         self.img1  = QPixmap("img2/fase1.png")
         self.img2  = QPixmap("img2/fase2.png")
         self.img3  = QPixmap("img2/fase3.png")
@@ -52,9 +51,7 @@ class hangman(QMainWindow, Juego):
         self.img6  = QPixmap("img2/fase6.png")
         self.img7  = QPixmap("img2/fase7.png")
         self.img8  = QPixmap("img2/fase8.png")
-
         self.fase.setPixmap(self.img1)
-
         self.texto_letras_usadas = "Letras utilizadas: "
         self.diccionario= ["HARRY POTTER", "LAS CRONICAS DE NARNIA", "ABECEDARIO", "DICCIONARIO", "COCHE", "VEHICULO AEREO", "BOTELLA DE AGUA", "RECICLAJE", "COLORES", "TETERA", "CHOCOLATE BLANCO", "PIZZA DE CUATRO QUESOS"]
         self.palabra_visible= QLabel()
@@ -153,7 +150,7 @@ class hangman(QMainWindow, Juego):
         self.c1.addLayout(self.c11)
         self.c1.addLayout(self.c12)
         self.c1.addLayout(self.c13)
-        self.letrasUsadas= []
+        self.letras_usadas= []
         self.palabra_secreta= self.palabra_aleatoria()
         self.palabra_oculta= []
         self.espacios= 0
@@ -199,32 +196,34 @@ class hangman(QMainWindow, Juego):
         self.layout.addLayout(self.c2)
         self.contenedor.setLayout(self.layout)
         self.setCentralWidget(self.contenedor)
-    def introducir_palabra_secreta(self):
-        palabra= str(input("Introduce la palabra secreta: "))
-        palabra = palabra.upper()
-        return palabra
+    # def introducir_palabra_secreta(self):
+    #     palabra= str(input("Introduce la palabra secreta: "))
+    #     palabra = palabra.upper()
+    #     return palabra
+ 
+    # def pedir_letra(self):
+    #     letras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+    #     while(True):
+    #         letra= str(input("Introduce una letra: ")).upper()
+    #         if(len(letra)!=1 or letra not in letras):
+    #             print("Vuelve a intentarlo")
+    #         else:
+    #             return letra
+
     def palabra_aleatoria(self):
         numero= random.randrange(len(self.diccionario))
         return self.diccionario[numero]
-    def pedir_letra(self):
-        letras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-        while(True):
-            letra= str(input("Introduce una letra: ")).upper()
-            if(len(letra)!=1 or letra not in letras):
-                print("Vuelve a intentarlo")
-            else:
-                return letra
     def descifrar(self, letra_enviada, boton):
         if(self.vidas==0 or self.acierto==len(self.palabra_secreta)):
             ...
         else:
             letra= letra_enviada
 
-        if(letra in self.letrasUsadas):
+        if(letra in self.letras_usadas):
             self.actualizador.setText("Letra repetida")
             self.sonido_click.play()
         else:
-            self.letrasUsadas.append(letra)
+            self.letras_usadas.append(letra)
             if(letra in self.palabra_secreta):
                 contador=0
                 for i in self.palabra_secreta:

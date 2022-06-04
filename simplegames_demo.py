@@ -1,5 +1,5 @@
 from PySide6 import QtWidgets
-from trabajo import MainWindow
+from simplegames import MainWindow
 from PySide6.QtCore import QUrl, Qt
 from PySide6.QtGui import QPixmap
 class Window(QtWidgets.QMainWindow):

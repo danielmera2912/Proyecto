@@ -25,7 +25,7 @@ db.setDatabaseName("chinook.sqlite")
 
 db.open()
 
-class AnotherWindow(QMainWindow, Ui_MainWindow):
+class Estadisticas(QMainWindow, Ui_MainWindow):
 
     def __init__(self):
         super().__init__()
@@ -47,9 +47,6 @@ class AnotherWindow(QMainWindow, Ui_MainWindow):
         self.nombreText.setVisible(False)
         self.scoreText.setVisible(False)
         self.juegoText.setVisible(False)
-
-
-
         self.setLayout(layout)
     def seleccion(self, seleccion):
     # Recuerda que indexes almacena los índices de la selección

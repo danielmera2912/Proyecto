@@ -3,7 +3,7 @@ from PySide6 import QtCore, QtGui
 from PySide6.QtCore import QSize
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow
 from PySide6 import QtWidgets
-from trabajo import AnotherWindow
+from simplegames import Estadisticas
 from PySide6.QtSql import QSqlDatabase, QSqlQuery, QSqlRelation, QSqlRelationalTableModel
 db = QSqlDatabase("QSQLITE")
 db.setDatabaseName("chinook.sqlite")
@@ -14,7 +14,7 @@ class introducirDatos (QMainWindow):
         if app==None:
             app= QApplication([])
         
-        window=AnotherWindow()
+        window=Estadisticas()
         nuevaFila = window.modelo.rowCount()
         total= nuevaFila+1
         

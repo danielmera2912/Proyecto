@@ -387,10 +387,3 @@ class conecta(QMainWindow, Juego):
                 return True
             elif eleccion == "n":
                 return False
-
-
-    def main(self):
-        while True:
-            juego = self.juego()
-            if not self.rejugar():
-                break

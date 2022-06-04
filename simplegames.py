@@ -19,11 +19,12 @@ from design import Ui_MainWindow
 import pyqtgraph as pg
 import pyqtgraph.exporters
 from PySide6 import QtWidgets, QtGui
-from estadisticas import AnotherWindow
+from estadisticas import Estadisticas
 from BlackJack import BlackJack
 from Conecta4 import conecta
 from battleship import battleship
 from hangman import hangman
+# from ayuda import MainWindow
 from PySide6.QtMultimedia import QSoundEffect
 # La aplicación consistiría en pulsar a jugar y se elige el juego que se desea jugar,
 #  saltaría la pantalla del juego y al acabar, salta el asistente para registrar tu puntuación en un informe
@@ -179,7 +180,6 @@ class MainWindow(QMainWindow):
         self.boton_battleship.clicked.connect(self.boton_battleship_clicked)
         self.boton_hangman.clicked.connect(self.boton_hangman_clicked)
         self.boton_back.clicked.connect(lambda: self.visibilidad_menu(1))
-
         self.layout.addWidget(self.titulo)
         self.layout.addWidget(self.boton_jugar, 0, Qt.AlignCenter)
         self.layout.addWidget(self.boton_estadisticas, 0, Qt.AlignCenter)
@@ -213,7 +213,7 @@ class MainWindow(QMainWindow):
             self.boton_hangman.setVisible(False)
             self.boton_back.setVisible(False)
             self.creditos.setVisible(True)
-    def button_clicked(self, s, puntuacion, juego):
+    def agregar_estadistica(self, s, puntuacion, juego):
         self.wizard = QWizard()
         self.wizard.setWizardStyle(QWizard.ModernStyle)
         self.wizard.setWindowTitle("Agrega nueva puntuación")
@@ -261,13 +261,11 @@ class MainWindow(QMainWindow):
         self.modelo.setData(self.modelo.index(nuevaFila, 2), juego)
         self.modelo.submit()
     def boton_estadisticas_clicked(self, checked):
-        self.estadisticas = AnotherWindow()
+        self.estadisticas = Estadisticas()
         if self.estadisticas.isVisible():
             self.estadisticas.hide()
         else:
             self.estadisticas.show()
-    def button4_clicked(self,s):
-        self.setCentralWidget(self.contenedor)
     def boton_blackjack_clicked(self,s):
         juego= BlackJack()
         juego.showMaximized()
@@ -289,6 +287,6 @@ class MainWindow(QMainWindow):
             self.sonido_victoria.play()
         ventana.close()
         puntuacion= ventana.obtener_puntuacion()
-        self.button_clicked(s, puntuacion, nombre_juego)
+        self.agregar_estadistica(s, puntuacion, nombre_juego)
     def closeEvent(self, event):
             print("---")
