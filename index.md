@@ -27,9 +27,10 @@ El jugador tendrá que conseguir averiguar todas las letras de la palabra secret
 ### Descargar
 
 ### Visualización del juego
-![Menú Principal](imagenes_documentacion/menu_principal.png)
 
 #### Menús
+
+![Menú Principal](imagenes_documentacion/menu_principal.png)
 
 Menú Principal.
 
