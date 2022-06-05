@@ -27,3 +27,74 @@ El jugador tendrá que conseguir averiguar todas las letras de la palabra secret
 ### Descargar
 
 ### Visualización del juego
+![Menú Principal](imagenes_documentacion/menu_principal.png)
+
+#### Menús
+
+Menú Principal.
+
+![Menú Principal 2](imagenes_documentacion/menu_principal2.png)
+
+Segunda ventana del menú principal.
+
+![Asistente](imagenes_documentacion/asistente.png)
+
+Asistente para rellenar los datos a la base de datos.
+
+![Base de Datos](imagenes_documentacion/base_de_datos.png)
+
+Visualización de las estadísticas.
+
+#### Juegos
+
+##### BlackJack
+
+![blackjack1](imagenes_documentacion/blacjack_comienzo.png)
+
+Visualización de una partida comenzada en BlackJack.
+
+![blackjack2](imagenes_documentacion/blackjack_robo.png)
+
+Visualización tras robar una carta.
+
+![blackjack3](imagenes_documentacion/blackjack_victoria.png)
+
+Visualización de una victoria.
+
+![Menú Principal](imagenes_documentacion/blackjack_derrota.png)
+
+Visualización de una derrota.
+
+##### Conecta4
+
+![conecta4 comienzo](imagenes_documentacion/conecta4_comienzo.png)
+
+Visualización de una partida de Conecta4 recién comenzada..
+
+![conecta4 fin](imagenes_documentacion/conecta4_tablero_lleno.png)
+
+Visualización tras rellenar el tablero completo.
+
+##### BattleShip
+
+![battleship comienzo](imagenes_documentacion/battleship_comienzo.png)
+
+Visualización del comienzo de una partida de BattleShip..
+
+![battleship final](imagenes_documentacion/battleship_final.png)
+
+Visualización de una partida acabada en BattleShip.
+
+##### Hangman
+
+![hangman comienzo](imagenes_documentacion/hangman_comienzo.png)
+
+Visualización de una partida comenzada en Hangman.
+
+![hangman victoria](imagenes_documentacion/hangman_victoria.png)
+
+Visualización de una partida terminada en victoria de Hangman.
+
+![hangman derrota](imagenes_documentacion/hangman_derrota.png)
+
+Visualización de una partida terminada en derrota de Hangman.
