@@ -5,7 +5,7 @@ import sys, os
 import textwrap
 from tkinter import CENTER
 from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QApplication, QComboBox, QMainWindow, QPushButton, QWizard, QWizardPage, QLineEdit, QHBoxLayout, QLabel, QWidget, QAbstractItemView, QVBoxLayout, QMessageBox, QFormLayout, QTextEdit, QSpinBox
+from PySide6.QtWidgets import QApplication, QTabWidget, QSplitter, QComboBox, QMainWindow, QPushButton, QWizard, QWizardPage, QLineEdit, QHBoxLayout, QLabel, QWidget, QAbstractItemView, QVBoxLayout, QMessageBox, QFormLayout, QTextEdit, QSpinBox
 from Qt import QtCore, QtGui
 from reportlab.pdfgen.canvas import Canvas
 from pdfrw import PdfReader
@@ -24,11 +24,9 @@ from BlackJack import BlackJack
 from Conecta4 import conecta
 from battleship import battleship
 from hangman import hangman
-# from ayuda import MainWindow
+from PySide6.QtHelp import QHelpEngine
+from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtMultimedia import QSoundEffect
-# La aplicación consistiría en pulsar a jugar y se elige el juego que se desea jugar,
-#  saltaría la pantalla del juego y al acabar, salta el asistente para registrar tu puntuación en un informe
-# en estadísticas se guarda las estadísticas locales en una base de datos, y el botón salir sale
 basedir = os.path.dirname(__file__)
 db = QSqlDatabase("QSQLITE")
 db.setDatabaseName("chinook.sqlite")
@@ -41,6 +39,86 @@ try:
 except ImportError:
     pass
 
+class HelpWindow(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout()
+        self.label = QLabel("Ayuda del programa")
+        
+        # Creamos una instancia de QHelpEngine con el contenido del archivo de ayuda generado
+        self.helpEngine = QHelpEngine("mycollection.qhc")
+        # Con setupData cargamos los datos
+        self.helpEngine.setupData()
+
+        # Creamos un widget de pestañas en el que añadimos el índice de contenido y el índice de palabras clave
+        self.tabWidget = QTabWidget()
+        self.tabWidget.addTab(self.helpEngine.contentWidget(), "Contenido")
+
+        # Creamos el visor web donde se mostrará la ayuda
+        self.helpBrowser = QWebEngineView()
+
+        # Cuando se haga doble clic en una palabra clave, se carga la url correspondiente
+        self.helpEngine.indexWidget().linkActivated.connect(self.cargarUrl)
+        # Cuando se haga doble clic en un capítulo, se carga la url correspondiente
+        self.helpEngine.contentWidget().linkActivated.connect(self.cargarUrl)
+
+        # Establecemos el contenido del navegador en la página principal de la ayuda
+        self.helpBrowser.setContent(self.helpEngine.fileData(QUrl("qthelp://"+self.helpEngine.registeredDocumentations()[0]+"/doc/index.html")),"text/html")
+
+        # Creamos un separador en el que ponemos las pestañas y el contenido
+        self.splitter = QSplitter()
+        self.splitter.insertWidget(0, self.tabWidget)
+        self.splitter.insertWidget(1, self.helpBrowser)
+
+        layout.addWidget(self.label)
+        layout.addWidget(self.splitter)
+        self.setLayout(layout)
+    
+    # Método que recoge la url que emite la señal y la carga en el navegador
+    def cargarUrl(self,url):
+        self.helpBrowser.setContent(self.helpEngine.fileData(url),"text/html")
+        print(url)
+
+class HelpElementWindow(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout()
+        self.label = QLabel("Ayuda del elemento generaGrafica")
+        
+        # Creamos una instancia de QHelpEngine con el contenido del archivo de ayuda generado
+        self.helpEngine = QHelpEngine("mycollection.qhc")
+        # Con setupData cargamos los datos
+        self.helpEngine.setupData()
+
+        # Creamos un widget de pestañas en el que añadimos el índice de contenido y el índice de palabras clave
+        self.tabWidget = QTabWidget()
+        self.tabWidget.addTab(self.helpEngine.contentWidget(), "Contenido")
+        self.tabWidget.addTab(self.helpEngine.indexWidget(), "Índice")
+
+        # Creamos el visor web donde se mostrará la ayuda
+        self.helpBrowser = QWebEngineView()
+
+        # Cuando se haga doble clic en una palabra clave, se carga la url correspondiente
+        self.helpEngine.indexWidget().linkActivated.connect(self.cargarUrl)
+        # Cuando se haga doble clic en un capítulo, se carga la url correspondiente
+        self.helpEngine.contentWidget().linkActivated.connect(self.cargarUrl)
+
+        
+
+        # Creamos un separador en el que ponemos las pestañas y el contenido
+        self.splitter = QSplitter()
+        self.splitter.insertWidget(0, self.tabWidget)
+        self.splitter.insertWidget(1, self.helpBrowser)
+
+        layout.addWidget(self.label)
+        layout.addWidget(self.splitter)
+        self.setLayout(layout)
+    
+    def cargarUrl(self,url):
+        self.helpBrowser.setContent(self.helpEngine.fileData(url),"text/html")
+        print(url)
 
 
 
@@ -85,7 +163,19 @@ class MainWindow(QMainWindow):
                                     "margin:80px;"
                                     "padding: 6px;")
         self.titulo.setAlignment(Qt.AlignCenter)
+        self.w = HelpWindow()
+        self.h = HelpElementWindow()
         self.ayuda = QPushButton("Ayuda")
+        self.ayuda.clicked.connect(self.toggle_helpwindow)
+        self.ayuda.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.boton_jugar = QPushButton("Jugar")
         self.boton_estadisticas = QPushButton("Estadísticas")
         self.boton_salir = QPushButton("Salir")
@@ -180,6 +270,7 @@ class MainWindow(QMainWindow):
         self.boton_battleship.clicked.connect(self.boton_battleship_clicked)
         self.boton_hangman.clicked.connect(self.boton_hangman_clicked)
         self.boton_back.clicked.connect(lambda: self.visibilidad_menu(1))
+        self.layout.addWidget(self.ayuda, 0, Qt.AlignRight)
         self.layout.addWidget(self.titulo)
         self.layout.addWidget(self.boton_jugar, 0, Qt.AlignCenter)
         self.layout.addWidget(self.boton_estadisticas, 0, Qt.AlignCenter)
@@ -192,6 +283,21 @@ class MainWindow(QMainWindow):
         self.layout.addWidget(self.creditos, 0, Qt.AlignRight)
         self.contenedor.setLayout(self.layout)
         self.setCentralWidget(self.contenedor)
+    def toggle_helpwindow(self, checked):
+        
+        if self.w.isVisible():
+            self.w.hide()
+
+        else:
+            self.w.show()
+
+    def toggle_elementhelpwindow(self, checked):
+        
+        if self.h.isVisible():
+            self.h.hide()
+
+        else:
+            self.h.show()
     def visibilidad_menu(self, accion):
         if(accion==0):
             self.boton_jugar.setVisible(False)
