@@ -1,6 +1,6 @@
 ## SimpleGames
 
-SimpleGames se tratará de realizar un programa que permita jugar varios juegos simples, con el propósito de pasar un buen rato en tus tiempos libres, se puede jugar algunos juegos sólo y otros con amigos, además de poder empezar a jugar rápido, sin interrupciones ni pantallas de carga y con un menú sencillo, accesible y directo. También almacena los datos importantes de cada juego para que no queden en el olvido y poder superar los récords de tus partidas anteriores. Se realizará mediante el editor de código Visual Code Studios y realizado en lenguaje de programación Python usando el framework de Qt. Anteriormente he realizado en mis tiempos libres o algunos trabajos algunos juegos sencillos en formato texto, la idea es ir más allá y realizarlo con interfaces visuales y una recopilación de varios de estos juegos, además de hacer que los juegos funcionen correctamente teniendo en cuenta todas las posibilidades que podría realizar el usuario.
+SimpleGames se tratará de realizar un programa que permita jugar varios juegos simples, con el propósito de pasar un buen rato en tus tiempos libres, se puede jugar algunos juegos sólo y otros con amigos, además de poder empezar a jugar rápido, sin interrupciones ni pantallas de carga y con un menú sencillo, accesible y directo. También almacena los datos importantes de cada juego para que no queden en el olvido y poder superar los récords de tus partidas anteriores. Se realizará mediante el editor de código Visual Code Studios y realizado en lenguaje de programación Python usando el framework de Qt.
 
 ### Juegos y Normas
 
@@ -23,7 +23,7 @@ Se debe pulsar donde se desee probar suerte para hundir un fragmento de barco
 El jugador tendrá que conseguir averiguar todas las letras de la palabra secreta que es establecida al azar de un diccionario de palabras distintas. Las normas del ahorcado es que un jugador escribe la palabra que tratará de adivinar el otro jugador, tendrá que pulsar de letra en letra para ir revelando si dicha letra se encuentra en la palabra o no, se perderá cuando el muñeco se complete, cada fallo procederá a que se vaya completando, y ganará cuando complete la palabra tras revelar todas sus letras.
 
 ### Documentación
-
+[Pulse aquí para descargar la documentación](https://github.com/danielmera2912/SimpleGames/releases/download/documentation/Documentacion.de.SimpleGames.pdf)
 ### Descargar
 
 ### Visualización del juego
