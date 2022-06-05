@@ -99,3 +99,9 @@ Visualización de una partida terminada en victoria de Hangman.
 ![hangman derrota](imagenes_documentacion/hangman_derrota.png)
 
 Visualización de una partida terminada en derrota de Hangman.
+
+#### Ayuda
+
+![ayuda](imagenes_documentacion/ayuda.png)
+
+Visualización de la ventana de ayuda.
