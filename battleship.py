@@ -198,13 +198,13 @@ class battleship(QMainWindow, Juego):
             if(self.tablero1_no_visible[button.fila][button.columna]=="| |"):
                 self.tablero1[button.fila][button.columna]="|·|"
                 self.acierto=False
-                self.tablero_botones1[button.fila][button.columna].setText("·")
+                # self.tablero_botones1[button.fila][button.columna].setText("·")
                 self.tablero_botones1[button.fila][button.columna].setStyleSheet("background-image: url(agua_fallo.png); background-repeat: no-repeat")
                 self.cont=self.cont+1
                 self.sonido_fallo.play()
             else:
                 self.tablero1[button.fila][button.columna]="|X|"
-                self.tablero_botones1[button.fila][button.columna].setText("X")
+                # self.tablero_botones1[button.fila][button.columna].setText("X")
                 self.tablero_botones1[button.fila][button.columna].setStyleSheet("background-image: url(fragmento_roto.png); background-repeat: no-repeat")
                 self.acierto=True
                 self.barcos_rotos1=self.barcos_rotos1+1
@@ -235,13 +235,13 @@ class battleship(QMainWindow, Juego):
             if(self.tablero2_no_visible[button.fila][button.columna]=="| |"):
                 self.tablero2[button.fila][button.columna]="|·|"
                 self.acierto=False
-                self.tablero_botones2[button.fila][button.columna].setText("·")
+                # self.tablero_botones2[button.fila][button.columna].setText("·")
                 self.tablero_botones2[button.fila][button.columna].setStyleSheet("background-image: url(agua_fallo.png); background-repeat: no-repeat")
                 self.cont=self.cont+1
                 self.sonido_fallo.play()
             else:
                 self.tablero2[button.fila][button.columna]="|X|"
-                self.tablero_botones2[button.fila][button.columna].setText("X")
+                # self.tablero_botones2[button.fila][button.columna].setText("X")
                 self.tablero_botones2[button.fila][button.columna].setStyleSheet("background-image: url(fragmento_roto.png); background-repeat: no-repeat")
                 self.acierto=True
                 self.barcos_rotos2=self.barcos_rotos2+1
