@@ -198,7 +198,6 @@ class BlackJack(QMainWindow, Juego):
         self.cartas_restantes.setIconSize(QSize(150, 190))
         self.cartas_restantes.setStyleSheet("QPushButton{border-radius:0px;border: 0px solid #345781;}") 
         self.cartas_robar.addWidget(self.cartas_restantes)
-        self.cartas_robar.addWidget(self.cartas_restantes_texto)
         for x in range(0,len(self.mano1.mano)):
             self.mis_cartas.addWidget(self.mano1.mano[x].carta_jugable)
         for x in range(0,len(self.mano2.mano)):
@@ -220,7 +219,6 @@ class BlackJack(QMainWindow, Juego):
             self.num_cartas_restantes= self.num_cartas_restantes-1
         self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
         self.cartas_robar.addWidget(self.cartas_restantes)
-        self.cartas_robar.addWidget(self.cartas_restantes_texto)
         self.mano1.info_mano()
         for x in range(0,len(self.mano1.mano)):
             self.mis_cartas.addWidget(self.mano1.mano[x].carta_jugable)
@@ -232,7 +230,6 @@ class BlackJack(QMainWindow, Juego):
                 self.num_cartas_restantes= self.num_cartas_restantes-1
                 self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
                 self.cartas_robar.addWidget(self.cartas_restantes)
-                self.cartas_robar.addWidget(self.cartas_restantes_texto)
                 self.mano2.info_mano()
                 for x in range(0,len(self.mano2.mano)):
                     self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
@@ -246,7 +243,6 @@ class BlackJack(QMainWindow, Juego):
                     self.num_cartas_restantes= self.num_cartas_restantes-1
                     self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
                     self.cartas_robar.addWidget(self.cartas_restantes)
-                    self.cartas_robar.addWidget(self.cartas_restantes_texto)
                     self.mano2.info_mano()
                     for x in range(0,len(self.mano2.mano)):
                         self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
@@ -260,7 +256,6 @@ class BlackJack(QMainWindow, Juego):
                     self.num_cartas_restantes= self.num_cartas_restantes-1
                     self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
                     self.cartas_robar.addWidget(self.cartas_restantes)
-                    self.cartas_robar.addWidget(self.cartas_restantes_texto)
                     self.mano2.info_mano()
                     for x in range(0,len(self.mano2.mano)):
                         self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
@@ -273,7 +268,6 @@ class BlackJack(QMainWindow, Juego):
                     self.num_cartas_restantes= self.num_cartas_restantes-1
                     self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
                     self.cartas_robar.addWidget(self.cartas_restantes)
-                    self.cartas_robar.addWidget(self.cartas_restantes_texto)
                     self.mano2.info_mano()
                     for x in range(0,len(self.mano2.mano)):
                         self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)

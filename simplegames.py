@@ -326,6 +326,7 @@ class MainWindow(QMainWindow):
         self.wizard = QWizard()
         self.wizard.setWizardStyle(QWizard.ModernStyle)
         self.wizard.setWindowTitle("Agrega nueva puntuación")
+        self.wizard.setWindowIcon(QtGui.QIcon('sg.ico'))
         self.watermark  = QPixmap("sg5.png")
         self.wizard.setPixmap(QWizard.WatermarkPixmap,self.watermark)
         self.wizard.setFixedSize(700,400)
