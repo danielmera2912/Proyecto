@@ -55,7 +55,7 @@ class hangman(QMainWindow, Juego):
         self.texto_letras_usadas = "Letras utilizadas: "
         self.diccionario= ["HARRY POTTER", "LAS CRONICAS DE NARNIA", "ABECEDARIO", "DICCIONARIO", "COCHE", "VEHICULO AEREO", "BOTELLA DE AGUA", "RECICLAJE", "COLORES", "TETERA", "CHOCOLATE BLANCO", "PIZZA DE CUATRO QUESOS"]
         self.palabra_visible= QLabel()
-        self.palabra_visible.setStyleSheet("font: bold 24px;")
+        self.palabra_visible.setStyleSheet("font: bold 54px;")
         self.contenedor= QWidget()
         self.layout = QVBoxLayout()
         self.c1 = QVBoxLayout()
@@ -69,9 +69,9 @@ class hangman(QMainWindow, Juego):
         self.fin.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
                                         "padding: 6px;")
@@ -259,10 +259,28 @@ class hangman(QMainWindow, Juego):
         if(self.comprobar_final()==True):
             if(self.acierto==len(self.palabra_secreta)):
                 self.actualizador.setText("Victoria, la palabra secreta SÍ era "+self.palabra_secreta)
+                self.actualizador.setStyleSheet("background-color: blue;"
+                                            "color: black;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
                 self.puntuacion= (self.vidas*5)+(self.acierto*3)
                 self.sonido_victoria.play()
             else:
                 self.actualizador.setText("Derrota, la palabra secreta era "+self.palabra_secreta)
+                self.actualizador.setStyleSheet("background-color: red;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
                 self.puntuacion=0
                 self.sonido_derrota.play()
             self.bQ.setEnabled(False)

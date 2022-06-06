@@ -72,79 +72,79 @@ class conecta(QMainWindow, Juego):
         self.b1.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;")     
         self.b2 = QPushButton("2")
         self.b2.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;")     
         self.b3 = QPushButton("3")
         self.b3.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;")     
         self.b4 = QPushButton("4")
         self.b4.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;")     
         self.b5 = QPushButton("5")
         self.b5.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;")     
         self.b6 = QPushButton("6")
         self.b6.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;")     
         self.b7 = QPushButton("7")
         self.b7.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;")     
         self.fin = QPushButton(self.texto_cerrar)
         self.fin.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
                                         "padding: 6px;")
@@ -205,15 +205,15 @@ class conecta(QMainWindow, Juego):
                 if(self.tablero[fila][columna]==self.figura1):
                     hueco= QLabel()
                     hueco.setPixmap(self.circulo_amarillo)
-                    layoutH.addWidget(hueco)
+                    layoutH.addWidget(hueco, 0, Qt.AlignCenter)
                 elif(self.tablero[fila][columna]==self.figura2):
                     hueco= QLabel()
                     hueco.setPixmap(self.circulo_rojo)
-                    layoutH.addWidget(hueco)
+                    layoutH.addWidget(hueco, 0, Qt.AlignCenter)
                 else:
                     hueco= QLabel()
                     hueco.setPixmap(self.circulo_blanco)
-                    layoutH.addWidget(hueco)
+                    layoutH.addWidget(hueco, 0, Qt.AlignCenter)
             self.layoutV.addLayout(layoutH)
         if(self.jugador==1):
             figura=" (x)"
@@ -231,9 +231,20 @@ class conecta(QMainWindow, Juego):
                                         "min-width: 10em;"
                                         "padding: 6px;")
         else:
-            self.turno = QPushButton(str(self.turno_texto)+str(self.jugador)+str(figura))
-            self.turno.setStyleSheet("background-color: #1520A6;"
-                                            "color: white;"
+            self.turno = QPushButton(str(self.turno_texto)+str(self.jugador))
+            if(self.jugador==1):
+                self.turno.setStyleSheet("background-color: #1520A6;"
+                                            "color: orange;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
+            else:
+                self.turno.setStyleSheet("background-color: #1520A6;"
+                                            "color: red;"
                                         "border-style: outset;"
                                         "border-width: 2px;"
                                         "border-radius: 210px;"
@@ -245,72 +256,72 @@ class conecta(QMainWindow, Juego):
         self.b1.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;") 
         self.b2 = QPushButton("2")
         self.b2.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;") 
         self.b3 = QPushButton("3")
         self.b3.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;") 
         self.b4 = QPushButton("4")
         self.b4.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;") 
         self.b5 = QPushButton("5")
         self.b5.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;") 
         self.b6 = QPushButton("6")
         self.b6.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;") 
         self.b7 = QPushButton("7")
         self.b7.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;") 
         # self.fin = QPushButton("Fin del juego")
         self.b1.clicked.connect(lambda: self.colocar_ficha(0, self.jugador))
         self.b2.clicked.connect(lambda: self.colocar_ficha(1, self.jugador))
@@ -358,7 +369,7 @@ class conecta(QMainWindow, Juego):
                 vacio = QLabel(self.tablero[fila][columna])
                 hueco= QLabel()
                 hueco.setPixmap(self.circulo_blanco)
-                layoutH.addWidget(hueco)
+                layoutH.addWidget(hueco, 0, Qt.AlignCenter)
             self.layoutV.addLayout(layoutH)
         layoutH2 = QHBoxLayout()
         layoutH2.addWidget(self.b1)

@@ -140,8 +140,8 @@ class BlackJack(QMainWindow, Juego):
         self.robar = QHBoxLayout()
         self.baraja= BarajaCartas()
         self.victoria = QLabel("Enhorabuena, ¡Has ganado!")
-        self.victoria.setStyleSheet("background-color: #1520A6;"
-                                            "color: white;"
+        self.victoria.setStyleSheet("background-color: blue;"
+                                            "color: black;"
                                         "border-style: outset;"
                                         "border-width: 2px;"
                                         "border-radius: 210px;"
@@ -150,7 +150,7 @@ class BlackJack(QMainWindow, Juego):
                                         "min-width: 10em;"
                                         "padding: 6px;")
         self.derrota = QLabel("Lo siento, ¡Has perdido!")
-        self.derrota.setStyleSheet("background-color: #1520A6;"
+        self.derrota.setStyleSheet("background-color: red;"
                                             "color: white;"
                                         "border-style: outset;"
                                         "border-width: 2px;"
@@ -160,25 +160,25 @@ class BlackJack(QMainWindow, Juego):
                                         "min-width: 10em;"
                                         "padding: 6px;")
         self.pasar_turno = QPushButton("Pasar turno")
-        self.fin = QPushButton(self.texto_cerrar)
         self.pasar_turno.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
-                                        "padding: 6px;")
+                                        "padding: 6px;")     
+        self.fin = QPushButton(self.texto_cerrar)
         self.fin.setStyleSheet("background-color: #1520A6;"
-                                                "color: white;"
-                                            "border-style: outset;"
-                                            "border-width: 2px;"
-                                            "border-radius: 210px;"
-                                            "border-color: blue;"
-                                            "font: bold 14px;"
-                                            "min-width: 10em;"
-                                            "padding: 6px;")                                        
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 5px;"
+                                        "border-radius: 210px;"
+                                        "border-color: red;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")                                    
         self.pasar_turno.setMinimumSize(50,50)
         self.fin.setMinimumSize(50,50)
         self.victoria.setMinimumSize(50,50)
@@ -225,56 +225,70 @@ class BlackJack(QMainWindow, Juego):
         for x in range(0,len(self.mano1.mano)):
             self.mis_cartas.addWidget(self.mano1.mano[x].carta_jugable)
         if(self.mano2.valor<=self.mano1.valor and self.mano2.valor<21):
-                    if(self.mano2.valor<10):
-                        self.mano2.robar_carta(True)
-                        for i in reversed(range(self.cartas_robar.count())): 
-                            self.cartas_robar.itemAt(i).widget().setParent(None)
-                        self.num_cartas_restantes= self.num_cartas_restantes-1
-                        self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
-                        self.cartas_robar.addWidget(self.cartas_restantes)
-                        self.cartas_robar.addWidget(self.cartas_restantes_texto)
-                        self.mano2.info_mano()
-                        for x in range(0,len(self.mano2.mano)):
-                            self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
-                    elif(self.mano2.valor>10 and self.mano2.valor<15):
-                        chances= random.randrange(10)
-                        if(chances>4):
-                            self.mano2.robar_carta(True)
-                            for i in reversed(range(self.cartas_robar.count())): 
-                                self.cartas_robar.itemAt(i).widget().setParent(None)
-                            self.num_cartas_restantes= self.num_cartas_restantes-1
-                            self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
-                            self.cartas_robar.addWidget(self.cartas_restantes)
-                            self.cartas_robar.addWidget(self.cartas_restantes_texto)
-                            self.mano2.info_mano()
-                            for x in range(0,len(self.mano2.mano)):
-                                self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
-                    elif(self.mano2.valor>15 and self.mano2.valor<20):
-                        chances= random.randrange(3)
-                        if(chances==2):
-                            self.mano2.robar_carta(True)
-                            for i in reversed(range(self.cartas_robar.count())): 
-                                self.cartas_robar.itemAt(i).widget().setParent(None)
-                            self.num_cartas_restantes= self.num_cartas_restantes-1
-                            self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
-                            self.cartas_robar.addWidget(self.cartas_restantes)
-                            self.cartas_robar.addWidget(self.cartas_restantes_texto)
-                            self.mano2.info_mano()
-                            for x in range(0,len(self.mano2.mano)):
-                                self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
-                    elif(self.mano2.valor==20):
-                        chances= random.randrange(10)
-                        if(chances==5):
-                            self.mano2.robar_carta(True)
-                            for i in reversed(range(self.cartas_robar.count())): 
-                                self.cartas_robar.itemAt(i).widget().setParent(None)
-                            self.num_cartas_restantes= self.num_cartas_restantes-1
-                            self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
-                            self.cartas_robar.addWidget(self.cartas_restantes)
-                            self.cartas_robar.addWidget(self.cartas_restantes_texto)
-                            self.mano2.info_mano()
-                            for x in range(0,len(self.mano2.mano)):
-                                self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
+            if(self.mano2.valor<10):
+                self.mano2.robar_carta(True)
+                for i in reversed(range(self.cartas_robar.count())): 
+                    self.cartas_robar.itemAt(i).widget().setParent(None)
+                self.num_cartas_restantes= self.num_cartas_restantes-1
+                self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
+                self.cartas_robar.addWidget(self.cartas_restantes)
+                self.cartas_robar.addWidget(self.cartas_restantes_texto)
+                self.mano2.info_mano()
+                for x in range(0,len(self.mano2.mano)):
+                    self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
+            elif(self.mano2.valor>10 and self.mano2.valor<15):
+                chances= random.randrange(10)
+                print(chances)
+                if(chances>4):
+                    self.mano2.robar_carta(True)
+                    for i in reversed(range(self.cartas_robar.count())): 
+                        self.cartas_robar.itemAt(i).widget().setParent(None)
+                    self.num_cartas_restantes= self.num_cartas_restantes-1
+                    self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
+                    self.cartas_robar.addWidget(self.cartas_restantes)
+                    self.cartas_robar.addWidget(self.cartas_restantes_texto)
+                    self.mano2.info_mano()
+                    for x in range(0,len(self.mano2.mano)):
+                        self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
+            elif(self.mano2.valor>15 and self.mano2.valor<20):
+                chances= random.randrange(3)
+                print(chances)
+                if(chances==2):
+                    self.mano2.robar_carta(True)
+                    for i in reversed(range(self.cartas_robar.count())): 
+                        self.cartas_robar.itemAt(i).widget().setParent(None)
+                    self.num_cartas_restantes= self.num_cartas_restantes-1
+                    self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
+                    self.cartas_robar.addWidget(self.cartas_restantes)
+                    self.cartas_robar.addWidget(self.cartas_restantes_texto)
+                    self.mano2.info_mano()
+                    for x in range(0,len(self.mano2.mano)):
+                        self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
+            elif(self.mano2.valor==20):
+                chances= random.randrange(10)
+                if(chances==5):
+                    self.mano2.robar_carta(True)
+                    for i in reversed(range(self.cartas_robar.count())): 
+                        self.cartas_robar.itemAt(i).widget().setParent(None)
+                    self.num_cartas_restantes= self.num_cartas_restantes-1
+                    self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
+                    self.cartas_robar.addWidget(self.cartas_restantes)
+                    self.cartas_robar.addWidget(self.cartas_restantes_texto)
+                    self.mano2.info_mano()
+                    for x in range(0,len(self.mano2.mano)):
+                        self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
+        if(self.mano1.valor>=21):
+            self.cartas_restantes.setEnabled(False)
+            self.pasar_turno.setText("¡Pasa turno! ¡No puedes robar más!")
+            self.pasar_turno.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 5px;"
+                                        "border-radius: 210px;"
+                                        "border-color: green;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")     
     def finalizar_turno(self):
         print("Mano del jugador:")
         print(self.mano1.valor)
@@ -292,6 +306,10 @@ class BlackJack(QMainWindow, Juego):
             print("IA ha ganado")
             self.ganador=False
             self.puntuacion= 0
+        elif(self.mano1.valor==self.mano2.valor):
+            #EMPATE
+            self.ganador= False
+            self.puntuacion=10
         else:
             if(self.mano1.valor>21 and self.mano2.valor<21):
                 print("IA ha ganado")
@@ -317,10 +335,6 @@ class BlackJack(QMainWindow, Juego):
                         print("IA ha ganado")
                         self.ganador=False
                         self.puntuacion= 0
-                else:
-                    print("EMPATE")
-                    self.ganador=False
-                    self.puntuacion=30
         for i in reversed(range(self.cartas_rival.count())): 
             self.cartas_rival.itemAt(i).widget().setParent(None)
         for x in range(0,len(self.mano2.mano)):

@@ -80,9 +80,9 @@ class battleship(QMainWindow, Juego):
         self.fin.setStyleSheet("background-color: #1520A6;"
                                             "color: white;"
                                         "border-style: outset;"
-                                        "border-width: 2px;"
+                                        "border-width: 5px;"
                                         "border-radius: 210px;"
-                                        "border-color: blue;"
+                                        "border-color: red;"
                                         "font: bold 14px;"
                                         "min-width: 10em;"
                                         "padding: 6px;")
@@ -99,14 +99,50 @@ class battleship(QMainWindow, Juego):
         self.layoutSecundario.addLayout(self.tablero2_visible)
         self.cabecera = QHBoxLayout()
         self.texto1 = QPushButton("Tablero del Jugador 1")
+        self.texto1.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.texto2 = QPushButton("Tablero del Jugador 2")
+        self.texto2.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.cabecera.addWidget(self.texto1)
         self.cabecera.addWidget(self.texto2)
         self.layoutH3 = QHBoxLayout()
         self.layoutH3.addWidget(self.turno)
         self.layoutH3.addWidget(self.fin)
         self.datos_jugador1 = QPushButton("Jugador 1 posee "+str(int(self.barcos_totales))+" fragmentos de barcos.")
+        self.datos_jugador1.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.datos_jugador2 = QPushButton("Jugador 2 posee "+str(int(self.barcos_totales))+" fragmentos de barcos.")
+        self.datos_jugador2.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
         self.layoutH4 = QHBoxLayout()
         self.layoutH4.addWidget(self.datos_jugador1)
         self.layoutH4.addWidget(self.datos_jugador2)
@@ -135,16 +171,50 @@ class battleship(QMainWindow, Juego):
         self.layoutV = QVBoxLayout()
         layoutH2= QHBoxLayout()
         button0= QPushButton(str("0"))
+        button0.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                      )
         buttonA= QPushButton(str("A"))
+        buttonA.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                      )
         buttonB= QPushButton(str("B"))
+        buttonB.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                      )
         buttonC= QPushButton(str("C"))
+        buttonC.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                      )
         buttonD= QPushButton(str("D"))
+        buttonD.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                      )
         buttonE= QPushButton(str("E"))
+        buttonE.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                      )
         buttonF= QPushButton(str("F"))
+        buttonF.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                      )
         buttonG= QPushButton(str("G"))
+        buttonG.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                      )
         buttonH= QPushButton(str("H"))
+        buttonH.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                      )
         buttonI= QPushButton(str("I"))
+        buttonI.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                      )
         buttonJ= QPushButton(str("J"))
+        buttonJ.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                      )
+
         layoutH2.addWidget(button0)
         layoutH2.addWidget(buttonA)
         layoutH2.addWidget(buttonB)
@@ -159,7 +229,11 @@ class battleship(QMainWindow, Juego):
         self.layoutV.addLayout(layoutH2)
         for fila in range(10):
             layoutH = QHBoxLayout()
-            layoutH.addWidget(QPushButton(str(fila+1)))
+            buttonLetra = QPushButton(str(fila+1))
+            buttonLetra.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                      )
+            layoutH.addWidget(buttonLetra)
             
             if(jugador==1):
                 self.tablero1.append([])
@@ -220,12 +294,30 @@ class battleship(QMainWindow, Juego):
                                 self.tablero_botones2[fila][columna].setEnabled(True)
                     
                     self.turno.setText("Turno del jugador 1")
+                    self.turno.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: green;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
                 else:
                     for fila in range(10):
                         for columna in range(10):
                                 self.tablero_botones1[fila][columna].setEnabled(True)
                                 self.tablero_botones2[fila][columna].setEnabled(False)
                     self.turno.setText("Turno del jugador 2")
+                    self.turno.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: yellow;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
                 for i in range(len(self.botones_usados)):
                         self.botones_usados[i].setEnabled(False)
             else:
@@ -256,50 +348,35 @@ class battleship(QMainWindow, Juego):
                                 self.tablero_botones1[fila][columna].setEnabled(True)
                                 self.tablero_botones2[fila][columna].setEnabled(False)
                     self.turno.setText("Turno del jugador 2")
+                    self.turno.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: yellow;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
                 else:
                     for fila in range(10):
                         for columna in range(10):
                                 self.tablero_botones1[fila][columna].setEnabled(False)
                                 self.tablero_botones2[fila][columna].setEnabled(True)
                     self.turno.setText("Turno del jugador 1")
+                    self.turno.setStyleSheet("background-color: #1520A6;"
+                                            "color: white;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: green;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
                 for i in range(len(self.botones_usados)):
                         self.botones_usados[i].setEnabled(False)
             else:
                 self.sonido_victoria.play()
-    # def clearLayout(self, layout):
-    #     if layout is not None:
-    #         while layout.count():
-    #             item = layout.takeAt(0)
-    #             widget = item.widget()
-    #             if widget is not None:
-    #                 if(widget!=self.fin):
-    #                     widget.deleteLater()
-    #             else:
-    #                 self.clearLayout(item.layout())
-    # def actualizar_tablero(self):
-    #     self.clearLayout(self.layoutV)
-    #     layoutH2= QHBoxLayout()
-    #     layoutH2.addWidget(QPushButton(str("A")))
-    #     layoutH2.addWidget(QPushButton(str("B")))
-    #     layoutH2.addWidget(QPushButton(str("C")))
-    #     layoutH2.addWidget(QPushButton(str("D")))
-    #     layoutH2.addWidget(QPushButton(str("E")))
-    #     layoutH2.addWidget(QPushButton(str("F")))
-    #     layoutH2.addWidget(QPushButton(str("G")))
-    #     layoutH2.addWidget(QPushButton(str("H")))
-    #     layoutH2.addWidget(QPushButton(str("I")))
-    #     layoutH2.addWidget(QPushButton(str("J")))
-    #     self.layoutV.addLayout(layoutH2)
-    #     for fila in range(10):
-    #         layoutH = QHBoxLayout()
-    #         layoutH.addWidget(QPushButton(str(fila+1)))
-    #         self.tablero1.append([])
-    #         for columna in range(10):
-    #             self.tablero1[fila].append("F"+str(fila+1)+".C"+str(columna+1))
-    #             vacio = QPushButton()
-    #             vacio.setStyleSheet("background-image: url(agua.png); background-repeat: no-repeat")
-    #             layoutH.addWidget(vacio)
-    #         self.layoutV.addLayout(layoutH)
+
     def establecer_barcos_tipo(self, tablero, numero, linea=None):
         if(numero==1 and linea==None):
             self.establecer_barcos_solo(tablero)
@@ -405,6 +482,15 @@ class battleship(QMainWindow, Juego):
     def comprobar_ganador(self):
         if(self.barcos_rotos1==self.barcos_totales):
             self.turno.setText("Gana el jugador 1")
+            self.turno.setStyleSheet("background-color: white;"
+                                            "color: black;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
             self.puntuacion= 100-(self.barcos_rotos2*2)
             self.fin.setEnabled(True)
             for fila in range(10):
@@ -414,6 +500,15 @@ class battleship(QMainWindow, Juego):
             return True
         elif(self.barcos_rotos2==self.barcos_totales):
             self.turno.setText("Gana el jugador 2")
+            self.turno.setStyleSheet("background-color: white;"
+                                            "color: black;"
+                                        "border-style: outset;"
+                                        "border-width: 2px;"
+                                        "border-radius: 210px;"
+                                        "border-color: blue;"
+                                        "font: bold 14px;"
+                                        "min-width: 10em;"
+                                        "padding: 6px;")
             self.puntuacion= 100-(self.barcos_rotos1*2)
             self.fin.setEnabled(True)
             for fila in range(10):
