@@ -53,7 +53,7 @@ class hangman(QMainWindow, Juego):
         self.img8  = QPixmap("img2/fase8.png")
         self.fase.setPixmap(self.img1)
         self.texto_letras_usadas = "Letras utilizadas: "
-        self.diccionario= ["HARRY POTTER", "LAS CRONICAS DE NARNIA", "ABECEDARIO", "DICCIONARIO", "COCHE", "VEHICULO AEREO", "BOTELLA DE AGUA", "RECICLAJE", "COLORES", "TETERA", "CHOCOLATE BLANCO", "PIZZA DE CUATRO QUESOS"]
+        self.diccionario= ["HARRY POTTER","NACIONALIDAD","NACIMIENTO", "LAS CRONICAS DE NARNIA", "ABECEDARIO", "DICCIONARIO", "COCHE", "VEHICULO AEREO", "BOTELLA DE AGUA", "RECICLAJE", "COLORES", "TETERA", "CHOCOLATE BLANCO", "PIZZA DE CUATRO QUESOS", "CHAMPIÑONES", "JERSEY", "ZAPATOS", "PIÑA", "NUEVA ZELANDA", "ITALIA", "ESPAÑA", "FRANCIA", "POKER", "CONECTA CUATRO", "HUNDIR LA FLOTA", "AHORCADO","MARIPOSA", "LUCHADORES", "NARANJAS", "LIMONES", "TOMATES", "DIETA", "RELLENAR", "INFORMACION", "ANARANJADO", "DORAEMON", "ORDENADOR DE SOBREMESA", "ABANICOS", "NINJA", "PIRATA", "GUERRERO", "MAGO", "HECHICERO", "DEMONIO", "BRUJO", "CAZADOR", "PALADIN", "PICARO", "SACERDOTE", "RAICES", "SPIDERMAN", "INGENIERO", "POLICIA", "BOMBERO", "MEDICO"]
         self.palabra_visible= QLabel()
         self.palabra_visible.setStyleSheet("font: bold 54px;")
         self.contenedor= QWidget()
