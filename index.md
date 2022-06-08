@@ -115,6 +115,6 @@ Visualización de una partida terminada en derrota de Hangman.
 
 Visualización de la ventana de ayuda.
 
-## Descargar
+## Descarga
 
 [Pulsa aquí para descargar SimpleGames](https://github.com/danielmera2912/SimpleGames/releases/download/game/SimpleGames.exe)
