@@ -24,7 +24,12 @@ El jugador tendrá que conseguir averiguar todas las letras de la palabra secret
 
 ### Documentación
 [Pulse aquí para descargar la documentación](https://github.com/danielmera2912/SimpleGames/releases/download/documentation/Documentacion.de.SimpleGames.pdf)
-### Descargar
+
+### Manuales
+
+[Manual de Uso de SimpleGames, pulsa para instalar.](https://github.com/danielmera2912/SimpleGames/releases/download/manual2/Manual.de.uso.de.SimpleGames.pdf)
+
+[Manual de Instalación de SimpleGames, pulsa para instalar.](https://github.com/danielmera2912/SimpleGames/releases/download/manual/Manual.de.Instalacion.de.SimpleGames.pdf)
 
 ### Visualización del juego
 
@@ -105,3 +110,7 @@ Visualización de una partida terminada en derrota de Hangman.
 ![ayuda](imagenes_documentacion/ayuda.png)
 
 Visualización de la ventana de ayuda.
+
+### Descargar
+
+[Pulsa aquí para descargar SimpleGames](https://github.com/danielmera2912/SimpleGames/releases/download/game/SimpleGames.exe)
