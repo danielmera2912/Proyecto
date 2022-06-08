@@ -13,7 +13,7 @@ class Window(QtWidgets.QMainWindow):
         self.setCentralWidget(mainToggle)
 stylesheet = """
     MainWindow {
-        background-image: url("fondo2.png"); 
+        background-image: url("fondo/fondo2.png"); 
         background-repeat: no-repeat; 
         background-position: center;
     }
@@ -21,8 +21,8 @@ stylesheet = """
 app = QtWidgets.QApplication([])
 app.setStyleSheet(stylesheet)
 w = Window()
-w.setWindowIcon(QtGui.QIcon(os.path.join(basedir, 'sg.ico')))
-w.setWindowIcon(QtGui.QIcon('sg.ico'))
+w.setWindowIcon(QtGui.QIcon(os.path.join(basedir, 'logo/sg.ico')))
+w.setWindowIcon(QtGui.QIcon('logo/sg.ico'))
 w.setWindowTitle("SimpleGames")
 w.showMaximized()
 app.exec()

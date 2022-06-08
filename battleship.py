@@ -27,23 +27,23 @@ class battleship(QMainWindow, Juego):
     def __init__(self):
         super().__init__()
         self.fondo()
-        self.agua  = QPixmap("agua.png")
-        self.agua_fallo  = QPixmap("agua_fallo.png")
-        self.fragmento_roto  = QPixmap("fragmento_roto.png")
+        self.agua  = QPixmap("battleship/agua.png")
+        self.agua_fallo  = QPixmap("battleship/agua_fallo.png")
+        self.fragmento_roto  = QPixmap("battleship/fragmento_roto.png")
         self.sonido_victoria = QSoundEffect()
-        self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
+        self.sonido_victoria.setSource(QUrl.fromLocalFile("sonido/victoria.wav"))
         self.sonido_victoria.setVolume(0.25)
         self.sonido_derrota = QSoundEffect()
-        self.sonido_derrota.setSource(QUrl.fromLocalFile("derrota.wav"))
+        self.sonido_derrota.setSource(QUrl.fromLocalFile("sonido/derrota.wav"))
         self.sonido_derrota.setVolume(0.25)
         self.sonido_acierto = QSoundEffect()
-        self.sonido_acierto.setSource(QUrl.fromLocalFile("acierto.wav"))
+        self.sonido_acierto.setSource(QUrl.fromLocalFile("sonido/acierto.wav"))
         self.sonido_acierto.setVolume(0.25)
         self.sonido_fallo = QSoundEffect()
-        self.sonido_fallo.setSource(QUrl.fromLocalFile("fallo.wav"))
+        self.sonido_fallo.setSource(QUrl.fromLocalFile("sonido/fallo.wav"))
         self.sonido_fallo.setVolume(0.25)
         self.sonido_click = QSoundEffect()
-        self.sonido_click.setSource(QUrl.fromLocalFile("click.wav"))
+        self.sonido_click.setSource(QUrl.fromLocalFile("sonido/click.wav"))
         self.sonido_click.setVolume(0.25)
         self.barcos_totales=0
         self.barcos_rotos1=0
@@ -246,12 +246,12 @@ class battleship(QMainWindow, Juego):
                 if(jugador==1):
                     self.tablero1[fila].append("F"+str(fila+1)+".C"+str(columna+1))
                     vacio = QPushButton()
-                    vacio.setStyleSheet("background-image: url(agua.png); background-repeat: no-repeat")
+                    vacio.setStyleSheet("background-image: url(battleship/agua.png); background-repeat: no-repeat")
                     self.tablero_botones1[fila].append(vacio)
                 else:
                     self.tablero2[fila].append("F"+str(fila+1)+".C"+str(columna+1))
                     vacio = QPushButton()
-                    vacio.setStyleSheet("background-image: url(agua.png); background-repeat: no-repeat")
+                    vacio.setStyleSheet("background-image: url(battleship/agua.png); background-repeat: no-repeat")
                     self.tablero_botones2[fila].append(vacio)
                 layoutH.addWidget(vacio)
             self.layoutV.addLayout(layoutH)
@@ -272,14 +272,12 @@ class battleship(QMainWindow, Juego):
             if(self.tablero1_no_visible[button.fila][button.columna]=="| |"):
                 self.tablero1[button.fila][button.columna]="|·|"
                 self.acierto=False
-                # self.tablero_botones1[button.fila][button.columna].setText("·")
-                self.tablero_botones1[button.fila][button.columna].setStyleSheet("background-image: url(agua_fallo.png); background-repeat: no-repeat")
+                self.tablero_botones1[button.fila][button.columna].setStyleSheet("background-image: url(battleship/agua_fallo.png); background-repeat: no-repeat")
                 self.cont=self.cont+1
                 self.sonido_fallo.play()
             else:
                 self.tablero1[button.fila][button.columna]="|X|"
-                # self.tablero_botones1[button.fila][button.columna].setText("X")
-                self.tablero_botones1[button.fila][button.columna].setStyleSheet("background-image: url(fragmento_roto.png); background-repeat: no-repeat")
+                self.tablero_botones1[button.fila][button.columna].setStyleSheet("background-image: url(battleship/fragmento_roto.png); background-repeat: no-repeat")
                 self.acierto=True
                 self.barcos_rotos1=self.barcos_rotos1+1
                 self.cont=self.cont+1
@@ -327,14 +325,12 @@ class battleship(QMainWindow, Juego):
             if(self.tablero2_no_visible[button.fila][button.columna]=="| |"):
                 self.tablero2[button.fila][button.columna]="|·|"
                 self.acierto=False
-                # self.tablero_botones2[button.fila][button.columna].setText("·")
-                self.tablero_botones2[button.fila][button.columna].setStyleSheet("background-image: url(agua_fallo.png); background-repeat: no-repeat")
+                self.tablero_botones2[button.fila][button.columna].setStyleSheet("background-image: url(battleship/agua_fallo.png); background-repeat: no-repeat")
                 self.cont=self.cont+1
                 self.sonido_fallo.play()
             else:
                 self.tablero2[button.fila][button.columna]="|X|"
-                # self.tablero_botones2[button.fila][button.columna].setText("X")
-                self.tablero_botones2[button.fila][button.columna].setStyleSheet("background-image: url(fragmento_roto.png); background-repeat: no-repeat")
+                self.tablero_botones2[button.fila][button.columna].setStyleSheet("background-image: url(battleship/fragmento_roto.png); background-repeat: no-repeat")
                 self.acierto=True
                 self.barcos_rotos2=self.barcos_rotos2+1
                 self.cont=self.cont+1
@@ -477,7 +473,18 @@ class battleship(QMainWindow, Juego):
             self.establecer_barcos_tipo(tablero,2,'H')
         self.establecer_barcos_tipo(tablero,3,'V')
         self.establecer_barcos_tipo(tablero,3,'H')
-
+        self.mostrar_tablero(tablero)
+    def mostrar_tablero(self,tablero):
+            print("|0 ||A||B||C||D||E||F||G||H||I||J|")
+            for i in range(10):
+                if(i+1<10):
+                    print(str("|"+str(i+1)+" |"), end="")
+                else:
+                    print(str("|"+str(i+1)+"|"), end="")
+                for j in range(10):
+                    print(tablero[i][j], end="")
+                print("")
+            print("")
 
     def comprobar_ganador(self):
         if(self.barcos_rotos1==self.barcos_totales):
@@ -519,8 +526,6 @@ class battleship(QMainWindow, Juego):
         else:
             return False
 
-    # def obtener_puntuacion(self):
-    #     return self.puntuacion
     def rejugar(self):
         while True:
             eleccion = input("¿Quieres jugar otra partida? (s/n) ").lower()

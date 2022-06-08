@@ -30,7 +30,7 @@ class Mano():
         self.cartas.barajar()
         self.info=info
         self.sonido_click = QSoundEffect()
-        self.sonido_click.setSource(QUrl.fromLocalFile("click.wav"))
+        self.sonido_click.setSource(QUrl.fromLocalFile("sonido/click.wav"))
         self.sonido_click.setVolume(0.25)
         
     def robar_carta(self, robo_manual):
@@ -64,7 +64,7 @@ class Carta():
         self.carta_no_jugable = self.crear_carta("dorso")
     def crear_carta(self, textCard):
         card= QLabel()
-        carta_completa= 'img/'+textCard+'.png'
+        carta_completa= 'blackjack/'+textCard+'.png'
         pixmap2  = QPixmap(carta_completa)
         pixmap = pixmap2.scaledToWidth(100)
         card.setPixmap(pixmap)
@@ -78,7 +78,6 @@ class Carta():
             self.paloT="Pica"
         elif(self.palo=="t"):
             self.paloT="Trébol"
-        print(str(self.numero)+" de "+self.paloT)
 
 class BarajaCartas():
     def __init__(self):
@@ -114,23 +113,23 @@ class BlackJack(QMainWindow, Juego):
         self.setWindowTitle("BlackJack")
         stylesheet = """
             QMainWindow {
-                background-image: url("fondo3.png"); 
+                background-image: url("fondo/fondo3.png"); 
                 background-repeat: repeat; 
                 background-position: center;
             }
         """
         self.setStyleSheet(stylesheet)
         self.sonido_victoria = QSoundEffect()
-        self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
+        self.sonido_victoria.setSource(QUrl.fromLocalFile("sonido/victoria.wav"))
         self.sonido_victoria.setVolume(0.25)
         self.sonido_derrota = QSoundEffect()
-        self.sonido_derrota.setSource(QUrl.fromLocalFile("derrota.wav"))
+        self.sonido_derrota.setSource(QUrl.fromLocalFile("sonido/derrota.wav"))
         self.sonido_derrota.setVolume(0.25)
         self.sonido_acierto = QSoundEffect()
-        self.sonido_acierto.setSource(QUrl.fromLocalFile("acierto.wav"))
+        self.sonido_acierto.setSource(QUrl.fromLocalFile("sonido/acierto.wav"))
         self.sonido_acierto.setVolume(0.25)
         self.sonido_fallo = QSoundEffect()
-        self.sonido_fallo.setSource(QUrl.fromLocalFile("fallo.wav"))
+        self.sonido_fallo.setSource(QUrl.fromLocalFile("sonido/fallo.wav"))
         self.sonido_fallo.setVolume(0.25)
         self.ganador=True
         self.contenedor= QWidget()
@@ -192,7 +191,7 @@ class BlackJack(QMainWindow, Juego):
         self.num_cartas_restantes= (self.baraja.num_cartas)-2
         self.cartas_restantes= QPushButton()
         self.cartas_restantes_texto= QLabel(str(self.num_cartas_restantes))
-        dorso  = QPixmap("img/dorso2.png")
+        dorso  = QPixmap("blackjack/dorso2.png")
         dorsoD = dorso.scaledToWidth(100)
         self.cartas_restantes.setIcon(dorsoD)
         self.cartas_restantes.setIconSize(QSize(150, 190))
@@ -235,7 +234,6 @@ class BlackJack(QMainWindow, Juego):
                     self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
             elif(self.mano2.valor>10 and self.mano2.valor<15):
                 chances= random.randrange(10)
-                print(chances)
                 if(chances>4):
                     self.mano2.robar_carta(True)
                     for i in reversed(range(self.cartas_robar.count())): 
@@ -248,7 +246,6 @@ class BlackJack(QMainWindow, Juego):
                         self.cartas_rival.addWidget(self.mano2.mano[x].carta_no_jugable)
             elif(self.mano2.valor>15 and self.mano2.valor<20):
                 chances= random.randrange(3)
-                print(chances)
                 if(chances==2):
                     self.mano2.robar_carta(True)
                     for i in reversed(range(self.cartas_robar.count())): 
@@ -284,20 +281,13 @@ class BlackJack(QMainWindow, Juego):
                                         "min-width: 10em;"
                                         "padding: 6px;")     
     def finalizar_turno(self):
-        print("Mano del jugador:")
-        print(self.mano1.valor)
-        print("Mano de la IA")
         self.mano2.mostrar_mano()
-        print(self.mano2.valor)
         if(self.mano1.valor==21 and self.mano2.valor!=21):
-            print("Jugador ha ganado")
             self.puntuacion=100
         elif(self.mano1.valor==21 and self.mano2.valor==21):
-            print("Empate")
             self.ganador=False
             self.puntuacion= 30
         elif(self.mano2.valor==21 and self.mano1.valor!=21):
-            print("IA ha ganado")
             self.ganador=False
             self.puntuacion= 0
         elif(self.mano1.valor==self.mano2.valor):
@@ -306,27 +296,21 @@ class BlackJack(QMainWindow, Juego):
             self.puntuacion=10
         else:
             if(self.mano1.valor>21 and self.mano2.valor<21):
-                print("IA ha ganado")
                 self.ganador=False
                 self.puntuacion= 0
             elif(self.mano2.valor>21 and self.mano1.valor<21):
-                print("Jugador ha ganado")
                 self.puntuacion= 80
             else:
                 if(self.mano1.valor>21 and self.mano2.valor>21):
                     if(self.mano1.valor<self.mano2.valor):
-                        print("Jugador ha ganado")
                         self.puntuacion= 50
                     elif(self.mano2.valor<self.mano1.valor):
-                        print("IA ha ganado")
                         self.ganador=False
                         self.puntuacion= 0
                 elif(self.mano1.valor<21 and self.mano2.valor<21):
                     if(self.mano1.valor>self.mano2.valor):
-                        print("Jugador ha ganado")
                         self.puntuacion= 80
                     elif(self.mano2.valor>self.mano1.valor):
-                        print("IA ha ganado")
                         self.ganador=False
                         self.puntuacion= 0
         for i in reversed(range(self.cartas_rival.count())): 

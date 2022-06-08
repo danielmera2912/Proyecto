@@ -28,29 +28,29 @@ class hangman(QMainWindow, Juego):
         self.setWindowTitle("Hangman")
         self.fondo()
         self.sonido_victoria = QSoundEffect()
-        self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
+        self.sonido_victoria.setSource(QUrl.fromLocalFile("sonido/victoria.wav"))
         self.sonido_victoria.setVolume(0.25)
         self.sonido_derrota = QSoundEffect()
-        self.sonido_derrota.setSource(QUrl.fromLocalFile("derrota.wav"))
+        self.sonido_derrota.setSource(QUrl.fromLocalFile("sonido/derrota.wav"))
         self.sonido_derrota.setVolume(0.25)
         self.sonido_acierto = QSoundEffect()
-        self.sonido_acierto.setSource(QUrl.fromLocalFile("acierto.wav"))
+        self.sonido_acierto.setSource(QUrl.fromLocalFile("sonido/acierto.wav"))
         self.sonido_acierto.setVolume(0.25)
         self.sonido_fallo = QSoundEffect()
-        self.sonido_fallo.setSource(QUrl.fromLocalFile("fallo.wav"))
+        self.sonido_fallo.setSource(QUrl.fromLocalFile("sonido/fallo.wav"))
         self.sonido_fallo.setVolume(0.25)
         self.sonido_click = QSoundEffect()
-        self.sonido_click.setSource(QUrl.fromLocalFile("click.wav"))
+        self.sonido_click.setSource(QUrl.fromLocalFile("sonido/click.wav"))
         self.sonido_click.setVolume(0.25)
         self.fase= QLabel()
-        self.img1  = QPixmap("img2/fase1.png")
-        self.img2  = QPixmap("img2/fase2.png")
-        self.img3  = QPixmap("img2/fase3.png")
-        self.img4  = QPixmap("img2/fase4.png")
-        self.img5  = QPixmap("img2/fase5.png")
-        self.img6  = QPixmap("img2/fase6.png")
-        self.img7  = QPixmap("img2/fase7.png")
-        self.img8  = QPixmap("img2/fase8.png")
+        self.img1  = QPixmap("hangman/fase1.png")
+        self.img2  = QPixmap("hangman/fase2.png")
+        self.img3  = QPixmap("hangman/fase3.png")
+        self.img4  = QPixmap("hangman/fase4.png")
+        self.img5  = QPixmap("hangman/fase5.png")
+        self.img6  = QPixmap("hangman/fase6.png")
+        self.img7  = QPixmap("hangman/fase7.png")
+        self.img8  = QPixmap("hangman/fase8.png")
         self.fase.setPixmap(self.img1)
         self.texto_letras_usadas = "Letras utilizadas: "
         self.diccionario= ["HARRY POTTER","NACIONALIDAD","NACIMIENTO", "LAS CRONICAS DE NARNIA", "ABECEDARIO", "DICCIONARIO", "COCHE", "VEHICULO AEREO", "BOTELLA DE AGUA", "RECICLAJE", "COLORES", "TETERA", "CHOCOLATE BLANCO", "PIZZA DE CUATRO QUESOS", "CHAMPIÑONES", "JERSEY", "ZAPATOS", "PIÑA", "NUEVA ZELANDA", "ITALIA", "ESPAÑA", "FRANCIA", "POKER", "CONECTA CUATRO", "HUNDIR LA FLOTA", "AHORCADO","MARIPOSA", "LUCHADORES", "NARANJAS", "LIMONES", "TOMATES", "DIETA", "RELLENAR", "INFORMACION", "ANARANJADO", "DORAEMON", "ORDENADOR DE SOBREMESA", "ABANICOS", "NINJA", "PIRATA", "GUERRERO", "MAGO", "HECHICERO", "DEMONIO", "BRUJO", "CAZADOR", "PALADIN", "PICARO", "SACERDOTE", "RAICES", "SPIDERMAN", "INGENIERO", "POLICIA", "BOMBERO", "MEDICO"]
@@ -196,19 +196,6 @@ class hangman(QMainWindow, Juego):
         self.layout.addLayout(self.c2)
         self.contenedor.setLayout(self.layout)
         self.setCentralWidget(self.contenedor)
-    # def introducir_palabra_secreta(self):
-    #     palabra= str(input("Introduce la palabra secreta: "))
-    #     palabra = palabra.upper()
-    #     return palabra
- 
-    # def pedir_letra(self):
-    #     letras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-    #     while(True):
-    #         letra= str(input("Introduce una letra: ")).upper()
-    #         if(len(letra)!=1 or letra not in letras):
-    #             print("Vuelve a intentarlo")
-    #         else:
-    #             return letra
 
     def palabra_aleatoria(self):
         numero= random.randrange(len(self.diccionario))
@@ -255,7 +242,7 @@ class hangman(QMainWindow, Juego):
                     self.fase.setPixmap(self.img7)
                 elif(self.vidas==0):
                     self.fase.setPixmap(self.img8)
-                # print("Te quedan "+str(self.vidas)+" vidas")
+
         if(self.comprobar_final()==True):
             if(self.acierto==len(self.palabra_secreta)):
                 self.actualizador.setText("Victoria, la palabra secreta SÍ era "+self.palabra_secreta)

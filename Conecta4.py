@@ -28,34 +28,34 @@ class conecta(QMainWindow, Juego):
         super().__init__()
         stylesheet = """
             QMainWindow {
-                background-image: url("fondo4.png"); 
+                background-image: url("fondo/fondo4.png"); 
                 background-repeat: no-repeat; 
                 background-position: center;
             }
         """
         self.setStyleSheet(stylesheet)
-        self.circulo_blanco  = QPixmap("circulo_blanco.png")
-        self.circulo_rojo  = QPixmap("circulo_rojo.png")
-        self.circulo_amarillo  = QPixmap("circulo_amarillo.png")
+        self.circulo_blanco  = QPixmap("conecta4/circulo_blanco.png")
+        self.circulo_rojo  = QPixmap("conecta4/circulo_rojo.png")
+        self.circulo_amarillo  = QPixmap("conecta4/circulo_amarillo.png")
         self.circulo_blanco= self.circulo_blanco.scaledToWidth(20)
         self.circulo_rojo= self.circulo_rojo.scaledToWidth(20)
         self.circulo_amarillo= self.circulo_amarillo.scaledToWidth(20)
         self.hueco= QLabel()
         self.hueco.setPixmap(self.circulo_blanco)
         self.sonido_victoria = QSoundEffect()
-        self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
+        self.sonido_victoria.setSource(QUrl.fromLocalFile("sonido/victoria.wav"))
         self.sonido_victoria.setVolume(0.25)
         self.sonido_derrota = QSoundEffect()
-        self.sonido_derrota.setSource(QUrl.fromLocalFile("derrota.wav"))
+        self.sonido_derrota.setSource(QUrl.fromLocalFile("sonido/derrota.wav"))
         self.sonido_derrota.setVolume(0.25)
         self.sonido_acierto = QSoundEffect()
-        self.sonido_acierto.setSource(QUrl.fromLocalFile("acierto.wav"))
+        self.sonido_acierto.setSource(QUrl.fromLocalFile("sonido/acierto.wav"))
         self.sonido_acierto.setVolume(0.25)
         self.sonido_fallo = QSoundEffect()
-        self.sonido_fallo.setSource(QUrl.fromLocalFile("fallo.wav"))
+        self.sonido_fallo.setSource(QUrl.fromLocalFile("sonido/fallo.wav"))
         self.sonido_fallo.setVolume(0.25)
         self.sonido_click = QSoundEffect()
-        self.sonido_click.setSource(QUrl.fromLocalFile("click.wav"))
+        self.sonido_click.setSource(QUrl.fromLocalFile("sonido/click.wav"))
         self.sonido_click.setVolume(0.25)
         self.turno_texto= "Es el turno del jugador "
         self.puntuacion=100
@@ -152,9 +152,9 @@ class conecta(QMainWindow, Juego):
             figura=" (x)"
         else:
             figura=" (o)"
-        self.turno = QPushButton(str(self.turno_texto)+str(self.jugador)+str(figura))
+        self.turno = QPushButton(str(self.turno_texto)+str(self.jugador))
         self.turno.setStyleSheet("background-color: #1520A6;"
-                                            "color: white;"
+                                            "color: orange;"
                                         "border-style: outset;"
                                         "border-width: 2px;"
                                         "border-radius: 210px;"
@@ -322,7 +322,7 @@ class conecta(QMainWindow, Juego):
                                         "font: bold 14px;"
                                         "min-width: 10em;"
                                         "padding: 6px;") 
-        # self.fin = QPushButton("Fin del juego")
+
         self.b1.clicked.connect(lambda: self.colocar_ficha(0, self.jugador))
         self.b2.clicked.connect(lambda: self.colocar_ficha(1, self.jugador))
         self.b3.clicked.connect(lambda: self.colocar_ficha(2,self.jugador))

@@ -125,15 +125,15 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.sonido_victoria = QSoundEffect()
-        self.sonido_victoria.setSource(QUrl.fromLocalFile("victoria.wav"))
+        self.sonido_victoria.setSource(QUrl.fromLocalFile("sonido/victoria.wav"))
         self.sonido_victoria.setVolume(0.25)
         self.sonido_musica = QSoundEffect()
-        self.sonido_musica.setSource(QUrl.fromLocalFile("music.wav"))
+        self.sonido_musica.setSource(QUrl.fromLocalFile("sonido/music.wav"))
         self.sonido_musica.setVolume(0.01)
         self.sonido_musica.setLoopCount(QSoundEffect.Infinite)
         self.sonido_musica.play()
-        self.setWindowIcon(QtGui.QIcon(os.path.join(basedir, 'sg.ico')))
-        self.setWindowIcon(QtGui.QIcon('sg.ico'))
+        self.setWindowIcon(QtGui.QIcon(os.path.join(basedir, 'logo/sg.ico')))
+        self.setWindowIcon(QtGui.QIcon('logo/sg.ico'))
         self.setWindowTitle("SimpleGames")
         self.contenedor= QWidget()
         self.layout = QVBoxLayout()
@@ -163,11 +163,11 @@ class MainWindow(QMainWindow):
                                     "padding: 6px;")
         self.titulo.setAlignment(Qt.AlignCenter)
         self.w = HelpWindow()
-        self.h = HelpElementWindow()
-        self.w.setWindowIcon(QtGui.QIcon('sg.ico'))
-        self.h.setWindowIcon(QtGui.QIcon('sg.ico'))
+        #self.h = HelpElementWindow()
+        self.w.setWindowIcon(QtGui.QIcon('logo/sg.ico'))
+        #self.h.setWindowIcon(QtGui.QIcon('logo/sg.ico'))
         self.w.setWindowTitle("Ayuda")
-        self.h.setWindowTitle("Ayuda")
+        #self.h.setWindowTitle("Ayuda")
         self.ayuda = QPushButton("Ayuda")
         self.ayuda.clicked.connect(self.toggle_helpwindow)
         self.ayuda.setStyleSheet("background-color: #1520A6;"
@@ -294,13 +294,13 @@ class MainWindow(QMainWindow):
         else:
             self.w.show()
 
-    def toggle_elementhelpwindow(self, checked):
+    # def toggle_elementhelpwindow(self, checked):
         
-        if self.h.isVisible():
-            self.h.hide()
+    #     if self.h.isVisible():
+    #         self.h.hide()
 
-        else:
-            self.h.show()
+    #     else:
+    #         self.h.show()
     def visibilidad_menu(self, accion):
         if(accion==0):
             self.boton_jugar.setVisible(False)
@@ -326,11 +326,11 @@ class MainWindow(QMainWindow):
         self.wizard = QWizard()
         self.wizard.setWizardStyle(QWizard.ModernStyle)
         self.wizard.setWindowTitle("Agrega nueva puntuación")
-        self.wizard.setWindowIcon(QtGui.QIcon('sg.ico'))
-        self.watermark  = QPixmap("sg5.png")
+        self.wizard.setWindowIcon(QtGui.QIcon('logo/sg.ico'))
+        self.watermark  = QPixmap("logo/sg5.png")
         self.wizard.setPixmap(QWizard.WatermarkPixmap,self.watermark)
         self.wizard.setFixedSize(700,400)
-        self.wizard.setPixmap(QWizard.LogoPixmap,QPixmap('sg4.png'))
+        self.wizard.setPixmap(QWizard.LogoPixmap,QPixmap('logo/sg4.png'))
         page1 = QWizardPage()
         page1.setTitle('Acabas de finalizar una partida, regístrelo en estadísticas')
         page1.setSubTitle('Has sacado una puntuación de '+str(puntuacion)+" en el juego de "+juego)
@@ -372,7 +372,7 @@ class MainWindow(QMainWindow):
         self.modelo.submit()
     def boton_estadisticas_clicked(self, checked):
         self.estadisticas = Estadisticas()
-        self.estadisticas.setWindowIcon(QtGui.QIcon('sg.ico'))
+        self.estadisticas.setWindowIcon(QtGui.QIcon('logo/sg.ico'))
         self.estadisticas.setWindowTitle("Estadísticas")
         if self.estadisticas.isVisible():
             self.estadisticas.hide()
@@ -380,22 +380,22 @@ class MainWindow(QMainWindow):
             self.estadisticas.show()
     def boton_blackjack_clicked(self,s):
         juego= BlackJack()
-        juego.setWindowIcon(QtGui.QIcon('sg.ico'))
+        juego.setWindowIcon(QtGui.QIcon('logo/sg.ico'))
         juego.showMaximized()
         juego.fin.clicked.connect(lambda: self.asistente(s, juego, "BlackJack"))
     def boton_conecta_clicked(self,s):
         juego= conecta()
-        juego.setWindowIcon(QtGui.QIcon('sg.ico'))
+        juego.setWindowIcon(QtGui.QIcon('logo/sg.ico'))
         juego.showMaximized()
         juego.fin.clicked.connect(lambda: self.asistente(s, juego, "Conecta4"))
     def boton_battleship_clicked(self,s):
         juego= battleship()
-        juego.setWindowIcon(QtGui.QIcon('sg.ico'))
+        juego.setWindowIcon(QtGui.QIcon('logo/sg.ico'))
         juego.showMaximized()
         juego.fin.clicked.connect(lambda: self.asistente(s, juego, "BattleShip"))
     def boton_hangman_clicked(self,s):
         juego= hangman()
-        juego.setWindowIcon(QtGui.QIcon('sg.ico'))
+        juego.setWindowIcon(QtGui.QIcon('logo/sg.ico'))
         juego.showMaximized()
         juego.fin.clicked.connect(lambda: self.asistente(s, juego, "Hangman"))
     def asistente(self,s, ventana, nombre_juego):

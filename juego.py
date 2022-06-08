@@ -8,7 +8,7 @@ class Juego:
     def fondo(self):
         stylesheet = """
             QMainWindow {
-                background-image: url("fondo2.png"); 
+                background-image: url("fondo/fondo2.png"); 
                 background-repeat: no-repeat; 
                 background-position: center;
             }
