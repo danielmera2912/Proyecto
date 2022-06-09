@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="200" src="imagenes_documentacion/sg.png" alt="Material Bread logo">
+  <img width="200" src="imagenes_documentacion/sg.png" alt="logo">
 </p>
 
 # SimpleGames
