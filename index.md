@@ -31,9 +31,9 @@ El jugador tendrá que conseguir averiguar todas las letras de la palabra secret
 
 ## Manuales
 
-[Manual de Uso de SimpleGames, pulsa para instalar.](https://github.com/danielmera2912/SimpleGames/releases/download/manual2/Manual.de.uso.de.SimpleGames.pdf)
+[Manual de Uso de SimpleGames, pulsa para descargar.](https://github.com/danielmera2912/SimpleGames/releases/download/manual2/Manual.de.uso.de.SimpleGames.pdf)
 
-[Manual de Instalación de SimpleGames, pulsa para instalar.](https://github.com/danielmera2912/SimpleGames/releases/download/manual/Manual.de.Instalacion.de.SimpleGames.pdf)
+[Manual de Instalación de SimpleGames, pulsa para descargar.](https://github.com/danielmera2912/SimpleGames/releases/download/manual/Manual.de.Instalacion.de.SimpleGames.pdf)
 
 ## Visualización del juego
 
